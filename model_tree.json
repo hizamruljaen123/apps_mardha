@@ -1,0 +1,1 @@
+{"feature": "Nyeri_Dada", "threshold": 0, "left": {"value": "Tidak Ada"}, "right": {"feature": "Sistolik", "threshold": 140, "left": {"value": "ACS"}, "right": {"feature": "Sistolik", "threshold": 150, "left": {"value": "Gagal Jantung"}, "right": {"value": "PJB Sianotik"}}}}
