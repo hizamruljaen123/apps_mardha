@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <style>
+        .sidebar {
+            transition: all 0.3s;
+        }
+        .sidebar.collapsed {
+            width: 70px;
+        }
+        .sidebar.collapsed .sidebar-text {
+            display: none;
+        }
+        .sidebar.collapsed .logo-text {
+            display: none;
+        }
+        .sidebar.collapsed .nav-item {
+            justify-content: center;
+        }
+        .main-content {
+            transition: all 0.3s;
+        }
+        .sidebar.collapsed + .main-content {
+            margin-left: 70px;
+        }
+        .heatmap-cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .heatmap-cell:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .has-tooltip:hover .tooltip {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="sidebar bg-blue-800 text-white w-64 flex-shrink-0 flex flex-col">
+            <div class="p-4 flex items-center space-x-2 border-b border-blue-700">
+                <i class="fas fa-brain text-2xl"></i>
+                <span class="logo-text text-xl font-bold">Model Analytics</span>
+            </div>
+            <div class="p-4 flex justify-between items-center border-b border-blue-700">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center">
+                        <span class="text-sm">AD</span>
+                    </div>
+                    <div class="sidebar-text">
+                        <div class="text-sm font-medium">Admin</div>
+                        <div class="text-xs text-blue-200">Data Scientist</div>
+                    </div>
+                </div>
+                <button id="toggleSidebar" class="text-blue-200 hover:text-white">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <nav class="flex-1 overflow-y-auto py-4">
+                <div class="px-4 space-y-1">
+                    <a href="/" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md bg-blue-900 text-white">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span class="sidebar-text">Dashboard</span>
+                    </a>
+                    <a href="/training_data" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                        <i class="fas fa-database"></i>
+                        <span class="sidebar-text">Training Data</span>
+                    </a>
+                    <a href="/test_data" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                        <i class="fas fa-vial"></i>
+                        <span class="sidebar-text">Test Data</span>
+                    </a>
+                    <a href="/training" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span class="sidebar-text">Training</span>
+                    </a>
+                    <a href="/tree_visualization" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                        <i class="fas fa-project-diagram"></i>
+                        <span class="sidebar-text">Tree Visualization</span>
+                    </a>
+                    <a href="/rules_visualization" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                        <i class="fas fa-list-check"></i>
+                        <span class="sidebar-text">Rules Visualization</span>
+                    </a>
+                    <a href="/results" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                        <i class="fas fa-poll"></i>
+                        <span class="sidebar-text">Results</span>
+                    </a>
+                    <a href="#" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg[/blue-700 hover:text-white">
+                        <i class="fas fa-cog"></i>
+                        <span class="sidebar-text">Settings</span>
+                    </a>
+                </div>
+            </nav>
+            <div class="p-4 border-t border-blue-700">
+                <button class="nav-item flex items-center space-x-2 w-full px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="sidebar-text">Logout</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content flex-1 overflow-auto">
+            <div class="p-6">
+                <!-- Header -->
+                <div class="flex justify-between items-center mb-6">
+                    <h1 class="text-2xl font-bold text-gray-800">Model Performance Dashboard</h1>
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <select id="classFilter" class="appearance-none bg-white border border-gray-300 rounded-md pl-3 pr-8 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="all">All Classes</option>
+                                <option value="Tidak">No Disease</option>
+                                <option value="Ya">Disease</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                <i class="fas fa-chevron-down text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Total Predictions</p>
+                                <p class="text-2xl font-bold text-gray-800" id="totalPredictions">0</p>
+                            </div>
+                            <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                                <i class="fas fa-database"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Correct Predictions</p>
+                                <p class="text-2xl font-bold text-green-600" id="correctPredictions">0</p>
+                                <p class="text-sm text-gray-500" id="correctPercentage">0%</p>
+                            </div>
+                            <div class="p-3 rounded-full bg-green-100 text-green-600">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Model Accuracy</p>
+                                <p class="text-2xl font-bold text-blue-600" id="modelAccuracy">0%</p>
+                                <p class="text-sm text-gray-500" id="accuracyDescription">Accuracy score</p>
+                            </div>
+                            <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                                <i class="fas fa-percentage"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                    <!-- Confusion Matrix -->
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-medium text-gray-800">Confusion Matrix</h3>
+                            <div class="relative has-tooltip">
+                                <i class="fas fa-info-circle text-blue-500"></i>
+                                <div class="tooltip">Shows correct and incorrect predictions by actual class</div>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <div id="confusionMatrix" class="flex flex-col items-center">
+                                <div class="flex mb-2">
+                                    <div class="w-24"></div>
+                                    <div class="w-24 text-center font-medium">Predicted: No</div>
+                                    <div class="w-24 text-center font-medium">Predicted: Yes</div>
+                                </div>
+                                <div class="flex">
+                                    <div class="w-24 flex items-center justify-end pr-2 font-medium">Actual: No</div>
+                                    <div id="cm-tn" class="heatmap-cell w-24 h-24 m-1 bg-blue-100 text-blue-800 flex flex-col items-center justify-center">
+                                        <span class="text-2xl font-bold">0</span>
+                                        <span class="text-xs">True Negatives</span>
+                                    </div>
+                                    <div id="cm-fp" class="heatmap-cell w-24 h-24 m-1 bg-blue-300 text-blue-900 flex flex-col items-center justify-center">
+                                        <span class="text-2xl font-bold">0</span>
+                                        <span class="text-xs">False Positives</span>
+                                    </div>
+                                </div>
+                                <div class="flex">
+                                    <div class="w-24 flex items-center justify-end pr-2 font-medium">Actual: Yes</div>
+                                    <div id="cm-fn" class="heatmap-cell w-24 h-24 m-1 bg-blue-300 text-blue-900 flex flex-col items-center justify-center">
+                                        <span class="text-2xl font-bold">0</span>
+                                        <span class="text-xs">False Negatives</span>
+                                    </div>
+                                    <div id="cm-tp" class="heatmap-cell w-24 h-24 m-1 bg-blue-500 text-white flex flex-col items-center justify-center">
+                                        <span class="text-2xl font-bold">0</span>
+                                        <span class="text-xs">True Positives</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Correct vs Incorrect Chart -->
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-medium text-gray-800">Prediction Results by Class</h3>
+                            <div class="relative has-tooltip">
+                                <i class="fas fa-info-circle text-blue-500"></i>
+                                <div class="tooltip">Shows sample predictions with actual and predicted diseases</div>
+                            </div>
+                        </div>
+                        <div class="h-64 overflow-y-auto">
+                            <div id="resultsTable">
+                                <!-- Tabel akan diisi oleh JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Class Accuracy Table -->
+                <div class="bg-white p-4 rounded-lg shadow mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-medium text-gray-800">Accuracy by Class</h3>
+                        <div class="relative has-tooltip">
+                            <i class="fas fa-info-circle text-blue-500"></i>
+                            <div class="tooltip">Accuracy calculated per class (correct predictions / total predictions for that class)</div>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Class</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Correct Predictions</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Predictions</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Accuracy</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Performance</th>
+                                </tr>
+                            </thead>
+                            <tbody id="accuracyTableBody" class="bg-white divide-y divide-gray-200">
+                                <!-- Will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Additional Metrics -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Precision/Recall -->
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-medium text-gray-800">Precision & Recall</h3>
+                            <div class="relative has-tooltip">
+                                <i class="fas fa-info-circle text-blue-500"></i>
+                                <div class="tooltip">Precision: TP / (TP + FP)<br>Recall: TP / (TP + FN)</div>
+                            </div>
+                        </div>
+                        <div class="flex space-x-4">
+                            <div class="bg-blue-50 p-4 rounded-lg flex-1">
+                                <p class="text-sm font-medium text-gray-500">Precision</p>
+                                <p class="text-2xl font-bold text-blue-600" id="precisionValue">0%</p>
+                            </div>
+                            <div class="bg-blue-50 p-4 rounded-lg flex-1">
+                                <p class="text-sm font-medium text-gray-500">Recall</p>
+                                <p class="text-2xl font-bold text-blue-600" id="recallValue">0%</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- F1 Score -->
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-medium text-gray-800">F1 Score</h3>
+                            <div class="relative has-tooltip">
+                                <i class="fas fa-info-circle text-blue-500"></i>
+                                <div class="tooltip">F1 Score: 2 * (Precision * Recall) / (Precision + Recall)</div>
+                            </div>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <p class="text-sm font-medium text-gray-500">F1 Score</p>
+                            <p class="text-2xl font-bold text-green-600" id="f1ScoreValue">0%</p>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fetch data from API
+        async function fetchData() {
+            const response = await fetch('/api/predictions');
+            const data = await response.json();
+            return data;
+        }
+    
+        // Update summary cards
+        function updateSummaryCards(stats) {
+            document.getElementById('totalPredictions').textContent = stats.total;
+            document.getElementById('correctPredictions').textContent = stats.correct;
+            document.getElementById('correctPercentage').textContent = `${((stats.correct / stats.total) * 100).toFixed(2)}% of total`;
+            document.getElementById('modelAccuracy').textContent = `${stats.accuracy.toFixed(2)}%`;
+            document.getElementById('accuracyDescription').textContent = 
+                stats.accuracy >= 80 ? 'Excellent performance' : 
+                stats.accuracy >= 60 ? 'Good performance' : 
+                stats.accuracy >= 40 ? 'Fair performance' : 'Needs improvement';
+        }
+    
+        // Update confusion matrix
+        function updateConfusionMatrix(matrix) {
+            document.getElementById('cm-tn').querySelector('span:first-child').textContent = matrix['Tidak Ada']['Tidak Ada'];
+            document.getElementById('cm-fp').querySelector('span:first-child').textContent = matrix['Tidak Ada']['Ya'];
+            document.getElementById('cm-fn').querySelector('span:first-child').textContent = matrix['Ya']['Tidak Ada'];
+            document.getElementById('cm-tp').querySelector('span:first-child').textContent = matrix['Ya']['Ya'];
+        }
+    
+        // Update class accuracy table
+        function updateClassAccuracyTable(classAccuracy) {
+            const tableBody = document.getElementById('accuracyTableBody');
+            tableBody.innerHTML = '';
+            classAccuracy.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-4 py-3 whitespace-nowrap">${item.class === 'Tidak Ada' ? 'No Disease' : 'Disease'}</td>
+                    <td class="px-4 py-3 whitespace-nowrap">${item.correct}</td>
+                    <td class="px-4 py-3 whitespace-nowrap">${item.total}</td>
+                    <td class="px-4 py-3 whitespace-nowrap">${item.accuracy.toFixed(2)}%</td>
+                    <td class="px-4 py-3 whitespace-nowrap">
+                        <span class="px-2 py-1 text-xs font-semibold rounded-full 
+                            ${item.performance === 'Excellent' ? 'bg-green-100 text-green-800' : 
+                              item.performance === 'Good' ? 'bg-blue-100 text-blue-800' : 
+                              item.performance === 'Fair' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'}">
+                            ${item.performance}
+                        </span>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+    
+        // Create results table (Prediction Results by Class)
+        function createResultsTable(data) {
+            const tableContainer = document.getElementById('resultsTable');
+            tableContainer.innerHTML = ''; // Clear previous content
+    
+            // Create table
+            const table = document.createElement('table');
+            table.className = 'min-w-full divide-y divide-gray-200';
+    
+            // Create table header
+            const thead = document.createElement('thead');
+            thead.className = 'bg-gray-50';
+            thead.innerHTML = `
+                <tr>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sample #</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actual Disease</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Predicted Disease</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Correct</th>
+                </tr>
+            `;
+            table.appendChild(thead);
+    
+            // Create table body
+            const tbody = document.createElement('tbody');
+            tbody.className = 'bg-white divide-y divide-gray-200';
+    
+            // Populate table rows
+            data.forEach((item, index) => {
+                const isCorrect = item.Aktual === item.Prediksi;
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-4 py-3 whitespace-nowrap">${index + 1}</td>
+                    <td class="px-4 py-3 whitespace-nowrap">${item.Aktual}</td>
+                    <td class="px-4 py-3 whitespace-nowrap">${item.Prediksi}</td>
+                    <td class="px-4 py-3 whitespace-nowrap">
+                        <span class="px-2 py-1 text-xs font-semibold rounded-full 
+                            ${isCorrect ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                            ${isCorrect ? 'TRUE' : 'FALSE'}
+                        </span>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+    
+            table.appendChild(tbody);
+            tableContainer.appendChild(table);
+        }
+    
+        // Display Precision and Recall values in cards
+        function displayPRValues(precision, recall) {
+            document.getElementById('precisionValue').textContent = `${precision.toFixed(2)}%`;
+            document.getElementById('recallValue').textContent = `${recall.toFixed(2)}%`;
+        }
+    
+        // Display F1 Score value in card
+        function displayF1Value(f1Score) {
+            document.getElementById('f1ScoreValue').textContent = `${f1Score.toFixed(2)}%`;
+        }
+    
+        // Filter data by class
+        function filterDataByClass(stats, classFilter) {
+            if (classFilter === 'all') return stats;
+    
+            // Filter the raw data
+            const filteredData = stats.data.filter(item => {
+                const isDisease = item.Aktual !== 'Tidak Ada';
+                return classFilter === 'Tidak' ? !isDisease : isDisease;
+            });
+    
+            // Recalculate metrics based on filtered data
+            const filteredTotal = filteredData.length;
+            const filteredCorrect = filteredData.filter(item => item.Aktual === item.Prediksi).length;
+            const filteredAccuracy = (filteredCorrect / filteredTotal * 100) || 0;
+    
+            // Recalculate confusion matrix for filtered data
+            const filteredConfusionMatrix = {
+                'Tidak Ada': {'Tidak Ada': 0, 'Ya': 0},
+                'Ya': {'Tidak Ada': 0, 'Ya': 0}
+            };
+    
+            filteredData.forEach(item => {
+                const actual = item.Aktual === 'Tidak Ada' ? 'Tidak Ada' : 'Ya';
+                const predicted = item.Prediksi === 'Tidak Ada' ? 'Tidak Ada' : 'Ya';
+                filteredConfusionMatrix[actual][predicted]++;
+            });
+    
+            // Recalculate class accuracy for filtered data
+            const filteredClassAccuracy = [];
+            for (const cls of ['Tidak Ada', 'Ya']) {
+                const totalCls = filteredData.filter(item => (item.Aktual === 'Tidak Ada') === (cls === 'Tidak Ada')).length;
+                const correctCls = filteredConfusionMatrix[cls][cls];
+                const clsAccuracy = (correctCls / totalCls * 100) || 0;
+                const performance = clsAccuracy >= 80 ? 'Excellent' :
+                                  clsAccuracy >= 60 ? 'Good' :
+                                  clsAccuracy >= 40 ? 'Fair' : 'Poor';
+                filteredClassAccuracy.push({
+                    class: cls,
+                    correct: correctCls,
+                    total: totalCls,
+                    accuracy: clsAccuracy,
+                    performance: performance
+                });
+            }
+    
+            // Recalculate precision, recall, and F1 score for filtered data
+            const tp = filteredConfusionMatrix['Ya']['Ya'];
+            const fp = filteredConfusionMatrix['Tidak Ada']['Ya'];
+            const fn = filteredConfusionMatrix['Ya']['Tidak Ada'];
+            const precision = (tp / (tp + fp) * 100) || 0;
+            const recall = (tp / (tp + fn) * 100) || 0;
+            const f1Score = (2 * precision * recall / (precision + recall)) || 0;
+    
+            return {
+                total: filteredTotal,
+                correct: filteredCorrect,
+                accuracy: filteredAccuracy,
+                confusionMatrix: filteredConfusionMatrix,
+                classAccuracy: filteredClassAccuracy,
+                precision: precision,
+                recall: recall,
+                f1Score: f1Score,
+                data: filteredData
+            };
+        }
+    
+        // Initialize the dashboard
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Toggle sidebar
+            document.getElementById('toggleSidebar').addEventListener('click', () => {
+                document.querySelector('.sidebar').classList.toggle('collapsed');
+            });
+            
+            // Fetch and display data
+            const stats = await fetchData();
+            updateSummaryCards(stats);
+            updateConfusionMatrix(stats.confusionMatrix);
+            updateClassAccuracyTable(stats.classAccuracy);
+            
+            // Initialize table and cards with original data
+            createResultsTable(stats.data);
+            displayPRValues(stats.precision, stats.recall);
+            displayF1Value(stats.f1Score);
+            
+            // Class filter
+            document.getElementById('classFilter').addEventListener('change', (e) => {
+                const classFilter = e.target.value;
+                const filteredStats = filterDataByClass(stats, classFilter);
+                updateSummaryCards(filteredStats);
+                updateConfusionMatrix(filteredStats.confusionMatrix);
+                updateClassAccuracyTable(filteredStats.classAccuracy);
+                createResultsTable(filteredStats.data);
+                displayPRValues(filteredStats.precision, filteredStats.recall);
+                displayF1Value(filteredStats.f1Score);
+            });
+        });
+    </script>
+</body>
+</html>

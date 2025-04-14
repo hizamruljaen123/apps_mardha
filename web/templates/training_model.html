@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sidebar {
+            transition: all 0.3s;
+        }
+        .sidebar.collapsed {
+            width: 70px;
+        }
+        .sidebar.collapsed .sidebar-text {
+            display: none;
+        }
+        .sidebar.collapsed .logo-text {
+            display: none;
+        }
+        .sidebar.collapsed .nav-item {
+            justify-content: center;
+        }
+        .main-content {
+            transition: all 0.3s;
+        }
+        .sidebar.collapsed + .main-content {
+            margin-left: 70px;
+        }
+        .tree-node {
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            background-color: #f9fafb;
+            padding: 0.5rem;
+            margin: 0.5rem;
+            font-family: monospace;
+            position: relative;
+        }
+        .tree-node.root {
+            background-color: #3b82f6;
+            color: white;
+        }
+        .tree-node.leaf {
+            background-color: #10b981;
+            color: white;
+        }
+        .tree-node.branch {
+            background-color: #f59e0b;
+            color: white;
+        }
+        .tree-children {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        .tree-child {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 1rem;
+        }
+        .tree-line {
+            width: 2px;
+            height: 20px;
+            background-color: #d1d5db;
+            margin-bottom: 0.5rem;
+        }
+        .progress-bar {
+            height: 6px;
+            background-color: #e5e7eb;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: #3b82f6;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .feature-importance-bar {
+            height: 8px;
+            background-color: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .feature-importance-fill {
+            height: 100%;
+            background-color: #10b981;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="sidebar bg-blue-800 text-white w-64 flex-shrink-0 flex flex-col">
+            <div class="p-4 flex items-center space-x-2 border-b border-blue-700">
+                <i class="fas fa-brain text-2xl"></i>
+                <span class="logo-text text-xl font-bold">Model Analytics</span>
+            </div>
+            <div class="p-4 flex justify-between items-center border-b border-blue-700">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center">
+                        <span class="text-sm">AD</span>
+                    </div>
+                    <div class="sidebar-text">
+                        <div class="text-sm font-medium">Admin</div>
+                        <div class="text-xs text-blue-200">Data Scientist</div>
+                    </div>
+                </div>
+                <button id="toggleSidebar" class="text-blue-200 hover:text-white">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <nav class="flex-1 overflow-y-auto py-4">
+                <div class="px-4 space-y-1">
+                    <a href="#" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span class="sidebar-text">Dashboard</span>
+                    </a>
+                    <a href="#" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md bg-blue-900 text-white">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span class="sidebar-text">Training</span>
+                    </a>
+                    <a href="#" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                        <i class="fas fa-vial"></i>
+                        <span class="sidebar-text">Testing</span>
+                    </a>
+                    <a href="#" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                        <i class="fas fa-project-diagram"></i>
+                        <span class="sidebar-text">Tree Visualization</span>
+                    </a>
+                    <a href="#" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                        <i class="fas fa-list-check"></i>
+                        <span class="sidebar-text">Rules</span>
+                    </a>
+                    <a href="#" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                        <i class="fas fa-cog"></i>
+                        <span class="sidebar-text">Settings</span>
+                    </a>
+                </div>
+            </nav>
+            <div class="p-4 border-t border-blue-700">
+                <button class="nav-item flex items-center space-x-2 w-full px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="sidebar-text">Logout</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content flex-1 overflow-auto">
+            <div class="p-6">
+                <!-- Header -->
+                <div class="flex justify-between items-center mb-6">
+                    <h1 class="text-2xl font-bold text-gray-800">Model Training Dashboard</h1>
+                    <div class="flex items-center space-x-4">
+                        <div class="text-sm text-gray-500">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            <span>C5.0 Decision Tree Algorithm</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Training Configuration Card -->
+                <div class="bg-white p-6 rounded-lg shadow mb-6">
+                    <h2 class="text-lg font-medium text-gray-800 mb-4">Training Configuration</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Dataset Selection -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Training Dataset</label>
+                            <div class="flex space-x-2">
+                                <select id="datasetSelect" class="flex-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                    <option value="default">Default Dataset</option>
+                                    <option value="uploaded">Uploaded Dataset</option>
+                                </select>
+                                <button id="uploadDatasetBtn" class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                    <i class="fas fa-upload mr-1"></i> Upload
+                                </button>
+                                <input type="file" id="fileUpload" class="hidden" accept=".csv,.json">
+                            </div>
+                            <p class="mt-1 text-xs text-gray-500" id="datasetInfo">Default dataset contains 1000 records with 10 features</p>
+                        </div>
+                        
+                        <!-- Training Parameters -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Training Parameters</label>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label for="maxDepth" class="block text-xs font-medium text-gray-500">Max Depth</label>
+                                    <input type="number" id="maxDepth" min="1" max="10" value="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                </div>
+                                <div>
+                                    <label for="minSamples" class="block text-xs font-medium text-gray-500">Min Samples Split</label>
+                                    <input type="number" id="minSamples" min="2" max="20" value="5" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                </div>
+                                <div>
+                                    <label for="confidence" class="block text-xs font-medium text-gray-500">Confidence Factor</label>
+                                    <input type="number" id="confidence" min="0" max="1" step="0.01" value="0.25" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                </div>
+                                <div>
+                                    <label for="boosting" class="block text-xs font-medium text-gray-500">Boosting</label>
+                                    <select id="boosting" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                        <option value="false">Disabled</option>
+                                        <option value="true">Enabled</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 flex justify-end">
+                        <button id="trainBtn" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            <i class="fas fa-graduation-cap mr-2"></i> Train Model
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Training Progress -->
+                <div id="trainingProgress" class="bg-white p-6 rounded-lg shadow mb-6 hidden">
+                    <h2 class="text-lg font-medium text-gray-800 mb-4">Training Progress</h2>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">Building Decision Tree</span>
+                                <span class="text-sm text-gray-500" id="progressPercent">0%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-gray-50 p-3 rounded-md">
+                                <div class="flex items-center">
+                                    <div class="p-2 rounded-full bg-blue-100 text-blue-600 mr-3">
+                                        <i class="fas fa-code-branch"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500">Current Depth</p>
+                                        <p class="font-medium" id="currentDepth">0</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-md">
+                                <div class="flex items-center">
+                                    <div class="p-2 rounded-full bg-green-100 text-green-600 mr-3">
+                                        <i class="fas fa-sitemap"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500">Nodes Created</p>
+                                        <p class="font-medium" id="nodesCreated">0</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-md">
+                                <div class="flex items-center">
+                                    <div class="p-2 rounded-full bg-purple-100 text-purple-600 mr-3">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500">Time Elapsed</p>
+                                        <p class="font-medium" id="timeElapsed">0s</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 hidden" id="trainingWarning">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-exclamation-triangle text-yellow-400"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm text-yellow-700" id="warningMessage">
+                                        Training large datasets may take several minutes. Please be patient.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Model Summary -->
+                <div id="modelSummary" class="bg-white p-6 rounded-lg shadow mb-6 hidden">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-lg font-medium text-gray-800">Model Summary</h2>
+                        <div class="flex space-x-2">
+                            <button id="saveModelBtn" class="inline-flex items-center px-3 py-1 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                <i class="fas fa-save mr-1"></i> Save Model
+                            </button>
+                            <button id="downloadModelBtn" class="inline-flex items-center px-3 py-1 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                <i class="fas fa-download mr-1"></i> Download
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Model Metrics -->
+                        <div class="space-y-4">
+                            <div class="bg-gray-50 p-4 rounded-md">
+                                <h3 class="text-sm font-medium text-gray-700 mb-2">Model Metrics</h3>
+                                <div class="space-y-3">
+                                    <div>
+                                        <div class="flex justify-between text-sm">
+                                            <span class="text-gray-500">Tree Depth</span>
+                                            <span class="font-medium" id="summaryDepth">3</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between text-sm">
+                                            <span class="text-gray-500">Total Nodes</span>
+                                            <span class="font-medium" id="summaryNodes">7</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between text-sm">
+                                            <span class="text-gray-500">Leaf Nodes</span>
+                                            <span class="font-medium" id="summaryLeaves">4</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between text-sm">
+                                            <span class="text-gray-500">Training Time</span>
+                                            <span class="font-medium" id="summaryTime">1.24s</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gray-50 p-4 rounded-md">
+                                <h3 class="text-sm font-medium text-gray-700 mb-2">Feature Importance</h3>
+                                <div class="space-y-2" id="featureImportance">
+                                    <!-- Feature importance bars will be added here -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Tree Preview -->
+                        <div class="md:col-span-2">
+                            <div class="bg-gray-50 p-4 rounded-md h-full">
+                                <h3 class="text-sm font-medium text-gray-700 mb-2">Tree Structure Preview</h3>
+                                <div class="overflow-auto max-h-96 p-2 border border-gray-200 rounded">
+                                    <div id="treePreview" class="flex justify-center">
+                                        <!-- Tree visualization will be added here -->
+                                    </div>
+                                </div>
+                                <div class="mt-3 flex justify-center space-x-4">
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 rounded-full bg-blue-500 mr-1"></div>
+                                        <span class="text-xs">Root Node</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 rounded-full bg-orange-500 mr-1"></div>
+                                        <span class="text-xs">Branch Node</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 rounded-full bg-green-500 mr-1"></div>
+                                        <span class="text-xs">Leaf Node</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Training Log -->
+                <div id="trainingLog" class="bg-white p-6 rounded-lg shadow hidden">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-lg font-medium text-gray-800">Training Log</h2>
+                        <button id="clearLogBtn" class="inline-flex items-center px-3 py-1 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            <i class="fas fa-trash-alt mr-1"></i> Clear
+                        </button>
+                    </div>
+                    <div class="bg-gray-900 text-gray-100 p-3 rounded-md font-mono text-sm overflow-auto max-h-64">
+                        <div id="logContent">
+                            <!-- Log entries will be added here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample training data
+        const defaultDataset = {
+            name: "Default Heart Disease Dataset",
+            size: 1000,
+            features: ["Usia", "Jenis Kelamin", "Sistolik", "Diastolik", "Kolesterol", "Gula Darah", "Nyeri Dada", "Sesak Napas", "Kelelahan", "Denyut Jantung"],
+            target: "Penyakit Jantung"
+        };
+    
+        // Initialize the dashboard
+        document.addEventListener('DOMContentLoaded', () => {
+            // Toggle sidebar
+            document.getElementById('toggleSidebar').addEventListener('click', () => {
+                document.querySelector('.sidebar').classList.toggle('collapsed');
+            });
+    
+            // Dataset selection
+            document.getElementById('datasetSelect').addEventListener('change', function() {
+                if (this.value === 'default') {
+                    document.getElementById('datasetInfo').textContent = 
+                        `Default dataset contains ${defaultDataset.size} records with ${defaultDataset.features.length} features`;
+                } else {
+                    document.getElementById('datasetInfo').textContent = 
+                        'No uploaded dataset selected. Click Upload to add a new dataset.';
+                }
+            });
+    
+            // Upload dataset button
+            document.getElementById('uploadDatasetBtn').addEventListener('click', function() {
+                document.getElementById('fileUpload').click();
+            });
+    
+            // File upload handler
+            document.getElementById('fileUpload').addEventListener('change', function(e) {
+                if (e.target.files.length > 0) {
+                    const file = e.target.files[0];
+                    const formData = new FormData();
+                    formData.append('file', file);
+    
+                    fetch('/upload_training_data', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            document.getElementById('datasetInfo').textContent = 
+                                `Uploaded file: ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+                            document.getElementById('datasetSelect').value = 'uploaded';
+                        } else {
+                            alert('Upload failed: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Upload error:', error);
+                        alert('An error occurred during file upload.');
+                    });
+                }
+            });
+    
+            // Train model button
+            document.getElementById('trainBtn').addEventListener('click', function() {
+                startTraining();
+            });
+    
+            // Save model button
+            document.getElementById('saveModelBtn').addEventListener('click', function() {
+                saveModel();
+            });
+    
+            // Download model button
+            document.getElementById('downloadModelBtn').addEventListener('click', function() {
+                downloadModel();
+            });
+    
+            // Clear log button
+            document.getElementById('clearLogBtn').addEventListener('click', function() {
+                document.getElementById('logContent').innerHTML = '';
+            });
+        });
+    
+        // Start training process
+        function startTraining() {
+            // Show progress section
+            document.getElementById('trainingProgress').classList.remove('hidden');
+            document.getElementById('trainingLog').classList.remove('hidden');
+    
+            // Get training parameters
+            const maxDepth = document.getElementById('maxDepth').value;
+            const minSamples = document.getElementById('minSamples').value;
+            const confidence = document.getElementById('confidence').value;
+            const boosting = document.getElementById('boosting').value;
+    
+            // Add to log
+            addLogEntry('Starting model training...');
+            addLogEntry(`Parameters: max_depth=${maxDepth}, min_samples_split=${minSamples}, confidence=${confidence}, boosting=${boosting}`);
+    
+            // Send request to train model
+            fetch('/train_model', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `max_depth=${maxDepth}&min_samples_split=${minSamples}&confidence=${confidence}&boosting=${boosting}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    addLogEntry('Model training completed successfully!');
+                    showModelSummary(data.metrics, data.tree_structure);
+                } else {
+                    addLogEntry('Training failed: ' + data.message);
+                    alert('Training failed: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Training error:', error);
+                addLogEntry('Error during training: ' + error.message);
+                alert('An error occurred during training.');
+            });
+    
+            // Simulate progress (opsional, bisa dihapus jika tidak diperlukan)
+            let progress = 0;
+            const trainingInterval = setInterval(() => {
+                progress += 10;
+                if (progress >= 100) {
+                    clearInterval(trainingInterval);
+                    document.getElementById('progressPercent').textContent = '100%';
+                    document.getElementById('progressFill').style.width = '100%';
+                } else {
+                    document.getElementById('progressPercent').textContent = `${progress}%`;
+                    document.getElementById('progressFill').style.width = `${progress}%`;
+                }
+            }, 200);
+        }
+    
+        // Show model summary
+        function showModelSummary(metrics, treeStructure) {
+            document.getElementById('summaryDepth').textContent = metrics.depth;
+            document.getElementById('summaryNodes').textContent = metrics.nodes;
+            document.getElementById('summaryLeaves').textContent = metrics.leaves;
+            document.getElementById('summaryTime').textContent = 'N/A'; // Bisa diperbarui dengan waktu dari backend
+    
+            // Generate feature importance (placeholder, perlu logika backend)
+            const featureImportanceContainer = document.getElementById('featureImportance');
+            featureImportanceContainer.innerHTML = '';
+            defaultDataset.features.forEach(feature => {
+                const importance = Math.random() * 100; // Ganti dengan data dari backend jika ada
+                const div = document.createElement('div');
+                div.className = 'space-y-1';
+                div.innerHTML = `
+                    <div class="flex justify-between text-xs">
+                        <span>${feature}</span>
+                        <span>${importance.toFixed(1)}%</span>
+                    </div>
+                    <div class="feature-importance-bar">
+                        <div class="feature-importance-fill" style="width: ${importance}%"></div>
+                    </div>
+                `;
+                featureImportanceContainer.appendChild(div);
+            });
+    
+            // Generate tree preview
+            const treePreviewContainer = document.getElementById('treePreview');
+            treePreviewContainer.innerHTML = '';
+            treePreviewContainer.appendChild(renderTreeNode(treeStructure));
+    
+            // Show summary section
+            document.getElementById('modelSummary').classList.remove('hidden');
+        }
+    
+        // Render tree node recursively
+        function renderTreeNode(node, depth = 0) {
+            const nodeElement = document.createElement('div');
+            
+            if (node.value === 'Leaf') {
+                nodeElement.className = 'tree-node leaf';
+                nodeElement.innerHTML = `
+                    <div class="text-xs font-semibold">${node.name}</div>
+                    <div class="text-xxs">samples: ${node.samples}</div>
+                `;
+            } else {
+                nodeElement.className = 'tree-node branch';
+                nodeElement.innerHTML = `
+                    <div class="text-xs font-semibold">${node.name}</div>
+                    <div class="text-xxs">samples: ${node.samples}</div>
+                `;
+                
+                const childrenContainer = document.createElement('div');
+                childrenContainer.className = 'tree-children';
+                
+                node.children.forEach(child => {
+                    if (child) {
+                        const childContainer = document.createElement('div');
+                        childContainer.className = 'tree-child';
+                        
+                        const line = document.createElement('div');
+                        line.className = 'tree-line';
+                        childContainer.appendChild(line);
+                        
+                        childContainer.appendChild(renderTreeNode(child, depth + 1));
+                        childrenContainer.appendChild(childContainer);
+                    }
+                });
+                
+                nodeElement.appendChild(childrenContainer);
+            }
+            
+            if (depth === 0) {
+                nodeElement.classList.remove('branch', 'leaf');
+                nodeElement.classList.add('root');
+            }
+            
+            return nodeElement;
+        }
+    
+        // Add entry to training log
+        function addLogEntry(message) {
+            const logEntry = document.createElement('div');
+            logEntry.className = 'mb-1';
+            logEntry.innerHTML = `
+                <span class="text-green-400">[${new Date().toLocaleTimeString()}]</span> ${message}
+            `;
+            document.getElementById('logContent').appendChild(logEntry);
+            document.getElementById('logContent').scrollTop = document.getElementById('logContent').scrollHeight;
+        }
+    
+        // Save model handler (placeholder)
+        function saveModel() {
+            addLogEntry('Saving model to server...');
+            setTimeout(() => {
+                addLogEntry('Model saved successfully!');
+                alert('Model saved to server successfully!');
+            }, 1000);
+        }
+    
+        // Download model handler (placeholder)
+        function downloadModel() {
+            addLogEntry('Preparing model download...');
+            fetch('/download_rules')
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'decision_rules.csv';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                    addLogEntry('Model downloaded successfully!');
+                });
+        }
+    </script>
+</body>
+</html>
