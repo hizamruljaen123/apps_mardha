@@ -383,45 +383,107 @@ def get_results():
     })
 @app.route('/api/tree_visualization')
 def get_tree_visualization():
-    def tree_to_dict(node):
-        if node.value is not None:
-            return {'name': f"Prediction: {node.value}", 'value': 'Leaf', 'samples': 50}
-        return {
-            'name': f"{node.feature} ≤ {node.threshold}",
-            'value': 'Decision',
-            'samples': 100,
-            'children': [
-                tree_to_dict(node.left) if node.left else None,
-                tree_to_dict(node.right) if node.right else None
-            ]
-        }
+    # Fungsi untuk menghitung impurity (entropy) berdasarkan data
+    def calculate_impurity(data, target):
+        if data.empty:
+            return 0
+        counts = data[target].value_counts()
+        probabilities = counts / len(data)
+        return -sum(p * math.log2(p) for p in probabilities if p > 0)
+
+    # Fungsi untuk mengkonversi pohon menjadi dictionary
+    def tree_to_dict(node, data=train_data):
+        if node.value is not None:  # Node daun
+            subset = data
+            impurity = calculate_impurity(subset, target)
+            return {
+                'name': f"Prediction: {node.value}",
+                'value': 'Leaf',
+                'samples': len(subset),
+                'impurity': round(impurity, 3),
+                'class': node.value
+            }
+        else:  # Node keputusan
+            left_data = data[data[node.feature] <= node.threshold]
+            right_data = data[data[node.feature] > node.threshold]
+            impurity = calculate_impurity(data, target)
+            return {
+                'name': f"{node.feature} ≤ {node.threshold}",
+                'value': 'Decision',
+                'samples': len(data),
+                'impurity': round(impurity, 3),
+                'children': [
+                    tree_to_dict(node.left, left_data) if node.left else None,
+                    tree_to_dict(node.right, right_data) if node.right else None
+                ]
+            }
+
+    # Validasi apakah pohon tersedia
+    if not tree:
+        return jsonify({'error': 'No trained model available'}), 400
+    
+    # Kembalikan struktur pohon dalam format JSON
     return jsonify(tree_to_dict(tree))
 
 @app.route('/api/rules')
 def get_rules():
     rules = []
-    def extract_rules(node, rule_conditions=[]):
+    def extract_rules(node, rule_conditions=[], path_data=train_data):
         if node.value is not None:
+            # Hitung confidence dan coverage berdasarkan data
+            subset = path_data
+            if not subset.empty:
+                correct = len(subset[subset[target] == node.value])
+                total = len(subset)
+                confidence = correct / total if total > 0 else 0
+                coverage = total / len(train_data)
+            else:
+                confidence = 0
+                coverage = 0
             rules.append({
-                'rule': " AND ".join(rule_conditions),
+                'id': len(rules) + 1,
+                'conditions': rule_conditions,  # List of conditions
                 'prediction': node.value,
-                'confidence': 0.9,  # Placeholder confidence
-                'coverage': 0.3     # Placeholder coverage
+                'confidence': round(confidence, 2),
+                'coverage': round(coverage, 2),
+                'samples': total
             })
             return
         if node.feature and node.threshold:
-            extract_rules(node.left, rule_conditions + [f"{node.feature} <= {node.threshold}"])
-            extract_rules(node.right, rule_conditions + [f"{node.feature} > {node.threshold}"])
+            left_data = path_data[path_data[node.feature] <= node.threshold]
+            right_data = path_data[path_data[node.feature] > node.threshold]
+            extract_rules(node.left, rule_conditions + [f"{node.feature} <= {node.threshold}"], left_data)
+            extract_rules(node.right, rule_conditions + [f"{node.feature} > {node.threshold}"], right_data)
     
     extract_rules(tree)
+    
+    # Hitung statistik
+    total_rules = len(rules)
+    prediction_counts = {}
+    total_conditions = 0
+    for rule in rules:
+        pred = rule['prediction']
+        prediction_counts[pred] = prediction_counts.get(pred, 0) + 1
+        total_conditions += len(rule['conditions'])
+    avg_conditions = round(total_conditions / total_rules, 1) if total_rules > 0 else 0
+    
+    stats = {
+        'total_rules': total_rules,
+        'prediction_counts': prediction_counts,
+        'avg_conditions': avg_conditions
+    }
+    
+    # Paginasi
     page = int(request.args.get('page', 1))
     per_page = 10
     start = (page - 1) * per_page
     end = start + per_page
     paginated_rules = rules[start:end]
+    
     return jsonify({
         'data': paginated_rules,
         'total': len(rules),
+        'stats': stats,
         'page': page,
         'per_page': per_page
     })

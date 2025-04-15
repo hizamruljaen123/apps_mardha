@@ -130,23 +130,35 @@
             </div>
             <nav class="flex-1 overflow-y-auto py-4">
                 <div class="px-4 space-y-1">
-                    <a href="#" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                    <a href="/" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md bg-blue-900 text-white">
                         <i class="fas fa-tachometer-alt"></i>
                         <span class="sidebar-text">Dashboard</span>
                     </a>
-                    <a href="#" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md bg-blue-900 text-white">
+                    <a href="/training_data" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                        <i class="fas fa-database"></i>
+                        <span class="sidebar-text">Training Data</span>
+                    </a>
+                    <a href="/test_data" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                        <i class="fas fa-vial"></i>
+                        <span class="sidebar-text">Test Data</span>
+                    </a>
+                    <a href="/training" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span class="sidebar-text">Training</span>
+                    </a>
+                    <a href="/tree_visualization" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
                         <i class="fas fa-project-diagram"></i>
                         <span class="sidebar-text">Tree Visualization</span>
                     </a>
-                    <a href="#" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                    <a href="/rules_visualization" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                        <i class="fas fa-list-check"></i>
+                        <span class="sidebar-text">Rules Visualization</span>
+                    </a>
+                    <a href="/results" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
                         <i class="fas fa-poll"></i>
                         <span class="sidebar-text">Results</span>
                     </a>
-                    <a href="#" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
-                        <i class="fas fa-chart-line"></i>
-                        <span class="sidebar-text">Analytics</span>
-                    </a>
-                    <a href="#" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                    <a href="#" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg[/blue-700 hover:text-white">
                         <i class="fas fa-cog"></i>
                         <span class="sidebar-text">Settings</span>
                     </a>
@@ -286,86 +298,25 @@
     <div class="tooltip" id="nodeTooltip"></div>
 
     <script>
-        // Sample tree data - in a real app, this would come from an API
-        const treeData = {
-            name: "Usia ≤ 50",
-            value: "Decision",
-            samples: 150,
-            children: [
-                {
-                    name: "Kolesterol = Tinggi",
-                    value: "Decision",
-                    samples: 90,
-                    children: [
-                        {
-                            name: "Gula Darah = Tinggi",
-                            value: "Decision",
-                            samples: 60,
-                            children: [
-                                {
-                                    name: "Prediction: ACS",
-                                    value: "Leaf",
-                                    class: "Ya",
-                                    samples: 45,
-                                    impurity: 0.1
-                                },
-                                {
-                                    name: "Prediction: No ACS",
-                                    value: "Leaf",
-                                    class: "Tidak",
-                                    samples: 15,
-                                    impurity: 0.3
-                                }
-                            ]
-                        },
-                        {
-                            name: "Prediction: No ACS",
-                            value: "Leaf",
-                            class: "Tidak",
-                            samples: 30,
-                            impurity: 0.2
-                        }
-                    ]
-                },
-                {
-                    name: "Nyeri Dada = Ya",
-                    value: "Decision",
-                    samples: 60,
-                    children: [
-                        {
-                            name: "Prediction: ACS",
-                            value: "Leaf",
-                            class: "Ya",
-                            samples: 40,
-                            impurity: 0.15
-                        },
-                        {
-                            name: "Sistolik ≤ 140",
-                            value: "Decision",
-                            samples: 20,
-                            children: [
-                                {
-                                    name: "Prediction: No ACS",
-                                    value: "Leaf",
-                                    class: "Tidak",
-                                    samples: 15,
-                                    impurity: 0.25
-                                },
-                                {
-                                    name: "Prediction: ACS",
-                                    value: "Leaf",
-                                    class: "Ya",
-                                    samples: 5,
-                                    impurity: 0.4
-                                }
-                            ]
-                        }
-                    ]
+        // Variabel untuk menyimpan data pohon
+        let treeData = null;
+    
+        // Fungsi untuk mengambil data dari API
+        async function fetchTreeData() {
+            try {
+                const response = await fetch('/api/tree_visualization');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch tree data');
                 }
-            ]
-        };
-
-        // Calculate tree statistics
+                treeData = await response.json();
+                initTreeVisualization();
+            } catch (error) {
+                console.error('Error fetching tree data:', error);
+                alert('Failed to load tree visualization. Please train the model first.');
+            }
+        }
+    
+        // Fungsi untuk menghitung statistik pohon
         function calculateTreeStats(data) {
             let maxDepth = 0;
             let totalNodes = 0;
@@ -380,7 +331,11 @@
                 }
                 
                 if (node.children) {
-                    node.children.forEach(child => traverse(child, depth + 1));
+                    node.children.forEach(child => {
+                        if (child) { // Pastikan child tidak null
+                            traverse(child, depth + 1);
+                        }
+                    });
                 }
             }
             
@@ -392,20 +347,20 @@
                 leafNodes
             };
         }
-
-        // Initialize the tree visualization
+    
+        // Fungsi untuk menginisialisasi visualisasi pohon
         function initTreeVisualization() {
             const container = document.getElementById('tree-container');
             const width = container.clientWidth;
             const height = container.clientHeight;
             
-            // Calculate tree statistics
+            // Hitung statistik pohon
             const stats = calculateTreeStats(treeData);
             document.getElementById('treeDepth').textContent = stats.depth;
             document.getElementById('totalNodes').textContent = stats.totalNodes;
             document.getElementById('leafNodes').textContent = stats.leafNodes;
             
-            // Create SVG
+            // Buat SVG
             const svg = d3.select('#tree-container')
                 .append('svg')
                 .attr('width', width)
@@ -419,19 +374,19 @@
             
             const g = svg.append('g');
             
-            // Create a tooltip
+            // Buat tooltip
             const tooltip = d3.select('#nodeTooltip');
             
-            // Create a cluster layout
+            // Buat layout pohon
             const cluster = d3.tree()
                 .size([width - 100, height - 100])
                 .separation((a, b) => a.parent === b.parent ? 1 : 1.5);
             
-            // Convert the data to a hierarchy
-            const root = d3.hierarchy(treeData);
+            // Konversi data ke hierarki
+            const root = d3.hierarchy(treeData, d => d.children ? d.children.filter(child => child !== null) : []);
             const treeDataHierarchy = cluster(root);
             
-            // Add links
+            // Tambahkan link
             g.selectAll('.link')
                 .data(treeDataHierarchy.links())
                 .enter()
@@ -441,7 +396,7 @@
                     .x(d => d.x)
                     .y(d => d.y));
             
-            // Add nodes
+            // Tambahkan node
             const node = g.selectAll('.node')
                 .data(treeDataHierarchy.descendants())
                 .enter()
@@ -449,17 +404,17 @@
                 .attr('class', 'node')
                 .attr('transform', d => `translate(${d.x},${d.y})`);
             
-            // Add circles to the nodes
+            // Tambahkan lingkaran ke node
             node.append('circle')
                 .attr('r', d => {
-                    // Scale node size based on sample count
+                    // Skala ukuran node berdasarkan jumlah sampel
                     const baseSize = 10;
                     const scaleFactor = 0.2;
                     return baseSize + (d.data.samples * scaleFactor);
                 })
                 .attr('class', d => d.data.value === 'Leaf' ? 'leaf-node' : 'decision-node')
                 .on('mouseover', function(event, d) {
-                    // Show tooltip
+                    // Tampilkan tooltip
                     tooltip.transition()
                         .duration(200)
                         .style('opacity', 1);
@@ -468,33 +423,34 @@
                     tooltipContent += `Samples: ${d.data.samples}<br>`;
                     
                     if (d.data.value === 'Leaf') {
-                        tooltipContent += `Class: ${d.data.class === 'Ya' ? 'ACS' : 'No ACS'}<br>`;
+                        tooltipContent += `Class: ${d.data.class}<br>`;
                         tooltipContent += `Impurity: ${d.data.impurity.toFixed(3)}`;
                     } else {
-                        tooltipContent += `Decision Node`;
+                        tooltipContent += `Decision Node<br>`;
+                        tooltipContent += `Impurity: ${d.data.impurity.toFixed(3)}`;
                     }
                     
                     tooltip.html(tooltipContent)
                         .style('left', (event.pageX + 10) + 'px')
                         .style('top', (event.pageY + 10) + 'px');
                     
-                    // Highlight node
+                    // Sorot node
                     d3.select(this)
                         .attr('stroke-width', 3)
                         .attr('stroke', '#000');
                 })
                 .on('mouseout', function() {
-                    // Hide tooltip
+                    // Sembunyikan tooltip
                     tooltip.transition()
                         .duration(500)
                         .style('opacity', 0);
                     
-                    // Remove highlight
+                    // Hapus sorotan
                     d3.select(this)
                         .attr('stroke-width', 1.5);
                 })
                 .on('click', function(event, d) {
-                    // Show node details panel
+                    // Tampilkan panel detail node
                     const detailsPanel = document.getElementById('nodeDetails');
                     detailsPanel.classList.remove('hidden');
                     
@@ -502,21 +458,21 @@
                     document.getElementById('nodeSamples').textContent = d.data.samples;
                     
                     if (d.data.value === 'Leaf') {
-                        document.getElementById('nodeValue').textContent = d.data.class === 'Ya' ? 'ACS' : 'No ACS';
-                        document.getElementById('nodeDescription').textContent = `This leaf node predicts ${d.data.class === 'Ya' ? 'ACS' : 'No ACS'} with ${d.data.samples} samples.`;
+                        document.getElementById('nodeValue').textContent = d.data.class;
+                        document.getElementById('nodeDescription').textContent = `This leaf node predicts ${d.data.class} with ${d.data.samples} samples.`;
                     } else {
                         document.getElementById('nodeValue').textContent = '-';
                         document.getElementById('nodeDescription').textContent = `This decision node splits on ${d.data.name} with ${d.data.samples} samples.`;
                     }
                 });
             
-            // Add text to the nodes
+            // Tambahkan teks ke node
             node.append('text')
                 .attr('dy', '.31em')
                 .attr('text-anchor', 'middle')
                 .attr('fill', '#fff')
                 .text(d => {
-                    // Shorten the text if it's too long
+                    // Persingkat teks jika terlalu panjang
                     const maxLength = 15;
                     if (d.data.name.length > maxLength) {
                         return d.data.name.substring(0, maxLength) + '...';
@@ -524,14 +480,14 @@
                     return d.data.name;
                 });
             
-            // Center the tree
+            // Posisikan pohon di tengah
             const initialScale = 0.8;
             const initialX = (width - (width * initialScale)) / 2;
             const initialY = (height - (height * initialScale)) / 2;
             
             g.attr('transform', `translate(${initialX}, ${initialY}) scale(${initialScale})`);
             
-            // Zoom controls
+            // Kontrol zoom
             document.getElementById('zoomIn').addEventListener('click', () => {
                 svg.transition().call(svg.zoom.scaleBy, 1.2);
             });
@@ -548,7 +504,7 @@
                 svg.transition().call(svg.zoom.transform, d3.zoomIdentity.translate(initialX, initialY).scale(initialScale));
             });
             
-            // Export as image
+            // Ekspor sebagai gambar
             document.getElementById('exportBtn').addEventListener('click', () => {
                 html2canvas(container).then(canvas => {
                     const link = document.createElement('a');
@@ -558,31 +514,31 @@
                 });
             });
         }
-
-        // Initialize the dashboard
+    
+        // Inisialisasi dashboard
         document.addEventListener('DOMContentLoaded', () => {
             // Toggle sidebar
             document.getElementById('toggleSidebar').addEventListener('click', () => {
                 document.querySelector('.sidebar').classList.toggle('collapsed');
             });
             
-            // Initialize tree visualization
-            initTreeVisualization();
+            // Ambil data pohon dari API
+            fetchTreeData();
             
-            // Filter controls
+            // Filter controls (placeholder untuk implementasi lebih lanjut)
             document.getElementById('depthFilter').addEventListener('change', (e) => {
-                // In a real implementation, this would filter the tree data
                 console.log('Filter by depth:', e.target.value);
+                // Tambahkan logika untuk memfilter pohon berdasarkan kedalaman
             });
             
             document.getElementById('nodeSizeFilter').addEventListener('change', (e) => {
-                // In a real implementation, this would adjust node sizes
                 console.log('Node size by:', e.target.value);
+                // Tambahkan logika untuk mengubah ukuran node
             });
             
             document.getElementById('colorScheme').addEventListener('change', (e) => {
-                // In a real implementation, this would change the color scheme
                 console.log('Color scheme:', e.target.value);
+                // Tambahkan logika untuk mengubah skema warna
             });
         });
     </script>

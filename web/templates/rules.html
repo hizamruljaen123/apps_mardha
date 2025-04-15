@@ -13,10 +13,7 @@
         .sidebar.collapsed {
             width: 70px;
         }
-        .sidebar.collapsed .sidebar-text {
-            display: none;
-        }
-        .sidebar.collapsed .logo-text {
+        .sidebar.collapsed .sidebar-text, .sidebar.collapsed .logo-text {
             display: none;
         }
         .sidebar.collapsed .nav-item {
@@ -34,16 +31,6 @@
         .rule-condition {
             font-family: monospace;
             color: #3b82f6;
-        }
-        .prediction-acs {
-            background-color: #f0fdf4;
-            color: #16a34a;
-            font-weight: 500;
-        }
-        .prediction-no-acs {
-            background-color: #fff1f2;
-            color: #dc2626;
-            font-weight: 500;
         }
     </style>
 </head>
@@ -71,23 +58,35 @@
             </div>
             <nav class="flex-1 overflow-y-auto py-4">
                 <div class="px-4 space-y-1">
-                    <a href="#" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                    <a href="/" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md bg-blue-900 text-white">
                         <i class="fas fa-tachometer-alt"></i>
                         <span class="sidebar-text">Dashboard</span>
                     </a>
-                    <a href="#" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                    <a href="/training_data" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                        <i class="fas fa-database"></i>
+                        <span class="sidebar-text">Training Data</span>
+                    </a>
+                    <a href="/test_data" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                        <i class="fas fa-vial"></i>
+                        <span class="sidebar-text">Test Data</span>
+                    </a>
+                    <a href="/training" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span class="sidebar-text">Training</span>
+                    </a>
+                    <a href="/tree_visualization" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
                         <i class="fas fa-project-diagram"></i>
                         <span class="sidebar-text">Tree Visualization</span>
                     </a>
-                    <a href="#" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md bg-blue-900 text-white">
+                    <a href="/rules_visualization" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
                         <i class="fas fa-list-check"></i>
                         <span class="sidebar-text">Rules Visualization</span>
                     </a>
-                    <a href="#" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                    <a href="/results" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
                         <i class="fas fa-poll"></i>
                         <span class="sidebar-text">Results</span>
                     </a>
-                    <a href="#" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                    <a href="#" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg[/blue-700 hover:text-white">
                         <i class="fas fa-cog"></i>
                         <span class="sidebar-text">Settings</span>
                     </a>
@@ -116,51 +115,8 @@
                 </div>
 
                 <!-- Stats Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500">Total Rules</p>
-                                <p id="totalRules" class="text-2xl font-bold text-gray-800">0</p>
-                            </div>
-                            <div class="p-3 rounded-full bg-blue-100 text-blue-600">
-                                <i class="fas fa-list-ol"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500">ACS Rules</p>
-                                <p id="acsRules" class="text-2xl font-bold text-gray-800">0</p>
-                            </div>
-                            <div class="p-3 rounded-full bg-green-100 text-green-600">
-                                <i class="fas fa-heartbeat"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500">No ACS Rules</p>
-                                <p id="noAcsRules" class="text-2xl font-bold text-gray-800">0</p>
-                            </div>
-                            <div class="p-3 rounded-full bg-red-100 text-red-600">
-                                <i class="fas fa-heart"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500">Avg Conditions</p>
-                                <p id="avgConditions" class="text-2xl font-bold text-gray-800">0</p>
-                            </div>
-                            <div class="p-3 rounded-full bg-purple-100 text-purple-600">
-                                <i class="fas fa-sitemap"></i>
-                            </div>
-                        </div>
-                    </div>
+                <div id="statsContainer" class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                    <!-- Stats will be inserted dynamically -->
                 </div>
 
                 <!-- Search and Filters -->
@@ -180,8 +136,7 @@
                                 <label for="predictionFilter" class="sr-only">Filter by prediction</label>
                                 <select id="predictionFilter" class="appearance-none bg-white border border-gray-300 rounded-md pl-3 pr-8 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                                     <option value="all">All Predictions</option>
-                                    <option value="ACS">ACS</option>
-                                    <option value="No ACS">No ACS</option>
+                                    <!-- Options will be added dynamically -->
                                 </select>
                             </div>
                             <div>
@@ -214,7 +169,7 @@
                                 </tr>
                             </thead>
                             <tbody id="rulesTableBody" class="bg-white divide-y divide-gray-200">
-                                <!-- Rules will be inserted here by JavaScript -->
+                                <!-- Rules will be inserted here -->
                             </tbody>
                         </table>
                     </div>
@@ -256,171 +211,124 @@
     </div>
 
     <script>
-        // Sample rules data - in a real app, this would come from an API
-        const rulesData = [
-            {
-                id: 1,
-                conditions: ["Usia ≤ 50", "Kolesterol = Tinggi", "Gula Darah = Tinggi"],
-                prediction: "ACS",
-                confidence: 0.92,
-                coverage: 0.30,
-                samples: 45
-            },
-            {
-                id: 2,
-                conditions: ["Usia ≤ 50", "Kolesterol = Tinggi", "Gula Darah = Normal"],
-                prediction: "No ACS",
-                confidence: 0.85,
-                coverage: 0.20,
-                samples: 30
-            },
-            {
-                id: 3,
-                conditions: ["Usia ≤ 50", "Nyeri Dada = Ya"],
-                prediction: "ACS",
-                confidence: 0.78,
-                coverage: 0.27,
-                samples: 40
-            },
-            {
-                id: 4,
-                conditions: ["Usia ≤ 50", "Nyeri Dada = Tidak", "Sistolik ≤ 140"],
-                prediction: "No ACS",
-                confidence: 0.88,
-                coverage: 0.10,
-                samples: 15
-            },
-            {
-                id: 5,
-                conditions: ["Usia > 50", "Riwayat Keluarga = Ya"],
-                prediction: "ACS",
-                confidence: 0.95,
-                coverage: 0.35,
-                samples: 52
-            },
-            {
-                id: 6,
-                conditions: ["Usia > 50", "Riwayat Keluarga = Tidak", "Obesitas = Tidak"],
-                prediction: "No ACS",
-                confidence: 0.82,
-                coverage: 0.25,
-                samples: 38
-            },
-            {
-                id: 7,
-                conditions: ["Usia > 50", "Riwayat Keluarga = Tidak", "Obesitas = Ya", "Merokok = Ya"],
-                prediction: "ACS",
-                confidence: 0.75,
-                coverage: 0.18,
-                samples: 27
-            },
-            {
-                id: 8,
-                conditions: ["Usia > 50", "Riwayat Keluarga = Tidak", "Obesitas = Ya", "Merokok = Tidak"],
-                prediction: "No ACS",
-                confidence: 0.68,
-                coverage: 0.12,
-                samples: 18
-            },
-            {
-                id: 9,
-                conditions: ["Usia ≤ 50", "Nyeri Dada = Ya", "Sistolik > 140"],
-                prediction: "ACS",
-                confidence: 0.65,
-                coverage: 0.08,
-                samples: 12
-            },
-            {
-                id: 10,
-                conditions: ["Usia ≤ 50", "Nyeri Dada = Tidak", "Sistolik > 140"],
-                prediction: "No ACS",
-                confidence: 0.72,
-                coverage: 0.15,
-                samples: 22
-            },
-            {
-                id: 11,
-                conditions: ["Usia > 50", "Aktivitas Fisik = Sedikit"],
-                prediction: "ACS",
-                confidence: 0.88,
-                coverage: 0.28,
-                samples: 42
-            },
-            {
-                id: 12,
-                conditions: ["Usia > 50", "Aktivitas Fisik = Cukup"],
-                prediction: "No ACS",
-                confidence: 0.79,
-                coverage: 0.22,
-                samples: 33
+        let rulesData = [];
+        let totalRules = 0;
+        let predictionClasses = [];
+
+        // Fetch rules from API
+        async function fetchRules(page = 1) {
+            try {
+                const response = await fetch(`/api/rules?page=${page}`);
+                if (!response.ok) throw new Error('Failed to fetch rules');
+                const data = await response.json();
+                rulesData = data.data;
+                totalRules = data.total;
+                predictionClasses = Object.keys(data.stats.prediction_counts);
+                updateStats(data.stats);
+                updatePredictionFilter();
+                renderRulesTable(rulesData, page);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to load rules. Please try again.');
             }
-        ];
+        }
 
-        // Calculate statistics
-        function calculateStats() {
-            const totalRules = rulesData.length;
-            const acsRules = rulesData.filter(rule => rule.prediction === "ACS").length;
-            const noAcsRules = rulesData.filter(rule => rule.prediction === "No ACS").length;
-            
-            let totalConditions = 0;
-            rulesData.forEach(rule => {
-                totalConditions += rule.conditions.length;
+        // Update stats cards
+        function updateStats(stats) {
+            const container = document.getElementById('statsContainer');
+            container.innerHTML = `
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Total Rules</p>
+                            <p class="text-2xl font-bold text-gray-800">${stats.total_rules}</p>
+                        </div>
+                        <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                            <i class="fas fa-list-ol"></i>
+                        </div>
+                    </div>
+                </div>
+            `;
+            // Warna dinamis untuk setiap kelas
+            const colors = [
+                'bg-green-100 text-green-600',
+                'bg-red-100 text-red-600',
+                'bg-blue-100 text-blue-600',
+                'bg-yellow-100 text-yellow-600',
+                'bg-purple-100 text-purple-600'
+            ];
+            Object.entries(stats.prediction_counts).forEach(([pred, count], i) => {
+                container.innerHTML += `
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">${pred} Rules</p>
+                                <p class="text-2xl font-bold text-gray-800">${count}</p>
+                            </div>
+                            <div class="p-3 rounded-full ${colors[i % colors.length]}">
+                                <i class="fas fa-heartbeat"></i>
+                            </div>
+                        </div>
+                    </div>
+                `;
             });
-            const avgConditions = (totalConditions / totalRules).toFixed(1);
-            
-            return {
-                totalRules,
-                acsRules,
-                noAcsRules,
-                avgConditions
-            };
+            container.innerHTML += `
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Avg Conditions</p>
+                            <p class="text-2xl font-bold text-gray-800">${stats.avg_conditions}</p>
+                        </div>
+                        <div class="p-3 rounded-full bg-purple-100 text-purple-600">
+                            <i class="fas fa-sitemap"></i>
+                        </div>
+                    </div>
+                </div>
+            `;
         }
 
-        // Format conditions for display
+        // Update prediction filter options
+        function updatePredictionFilter() {
+            const select = document.getElementById('predictionFilter');
+            select.innerHTML = '<option value="all">All Predictions</option>';
+            predictionClasses.forEach(cls => {
+                select.innerHTML += `<option value="${cls}">${cls}</option>`;
+            });
+        }
+
+        // Format conditions
         function formatConditions(conditions) {
-            return conditions.map(cond => {
-                return `<span class="rule-condition">${cond}</span>`;
-            }).join(' <span class="text-gray-400">AND</span> ');
+            return conditions.map(cond => `<span class="rule-condition">${cond}</span>`).join(' <span class="text-gray-400">AND</span> ');
         }
 
-        // Format confidence as percentage
+        // Format confidence
         function formatConfidence(confidence) {
             const percentage = Math.round(confidence * 100);
-            let colorClass = '';
-            
-            if (percentage >= 90) {
-                colorClass = 'text-green-600';
-            } else if (percentage >= 70) {
-                colorClass = 'text-yellow-600';
-            } else {
-                colorClass = 'text-red-600';
-            }
-            
+            const colorClass = percentage >= 90 ? 'text-green-600' : percentage >= 70 ? 'text-yellow-600' : 'text-red-600';
             return `<span class="${colorClass} font-medium">${percentage}%</span>`;
         }
 
-        // Format coverage as percentage
+        // Format coverage
         function formatCoverage(coverage) {
-            const percentage = Math.round(coverage * 100);
-            return `${percentage}%`;
+            return `${Math.round(coverage * 100)}%`;
         }
 
-        // Format prediction with appropriate styling
+        // Format prediction
         function formatPrediction(prediction) {
-            const className = prediction === "ACS" ? "prediction-acs" : "prediction-no-acs";
+            const colorMap = {
+                'ACS': 'bg-green-100 text-green-600',
+                'No ACS': 'bg-red-100 text-red-600'
+                // Tambahkan lebih banyak jika diperlukan
+            };
+            const className = colorMap[prediction] || 'bg-gray-100 text-gray-600';
             return `<span class="${className} px-2 py-1 rounded-md text-sm">${prediction}</span>`;
         }
 
-        // Render the rules table
+        // Render rules table
         function renderRulesTable(rules, page = 1, pageSize = 10) {
-            const startIndex = (page - 1) * pageSize;
-            const endIndex = startIndex + pageSize;
-            const paginatedRules = rules.slice(startIndex, endIndex);
-            
             const tbody = document.getElementById('rulesTableBody');
             tbody.innerHTML = '';
-            
-            paginatedRules.forEach(rule => {
+            rules.forEach(rule => {
                 const row = document.createElement('tr');
                 row.className = 'hover:bg-gray-50';
                 row.innerHTML = `
@@ -432,220 +340,109 @@
                 `;
                 tbody.appendChild(row);
             });
-            
+
             // Update pagination info
-            const totalRules = rules.length;
-            const startRule = startIndex + 1;
-            const endRule = Math.min(endIndex, totalRules);
-            
+            const start = (page - 1) * pageSize + 1;
+            const end = Math.min(page * pageSize, totalRules);
             document.getElementById('paginationInfo').innerHTML = `
-                Showing <span class="font-medium">${startRule}</span> to <span class="font-medium">${endRule}</span> of <span class="font-medium">${totalRules}</span> rules
+                Showing <span class="font-medium">${start}</span> to <span class="font-medium">${end}</span> of <span class="font-medium">${totalRules}</span> rules
             `;
-            
+
             // Update page numbers
             const totalPages = Math.ceil(totalRules / pageSize);
-            const pageNumbersContainer = document.getElementById('pageNumbers');
-            pageNumbersContainer.innerHTML = '';
-            
-            // Always show first page
+            const pageNumbers = document.getElementById('pageNumbers');
+            pageNumbers.innerHTML = '';
             if (page > 2) {
-                const firstPage = document.createElement('button');
-                firstPage.className = 'relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50';
-                firstPage.textContent = '1';
-                firstPage.addEventListener('click', () => {
-                    renderRulesTable(rules, 1, pageSize);
-                });
-                pageNumbersContainer.appendChild(firstPage);
-                
-                if (page > 3) {
-                    const ellipsis = document.createElement('span');
-                    ellipsis.className = 'relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700';
-                    ellipsis.textContent = '...';
-                    pageNumbersContainer.appendChild(ellipsis);
-                }
+                pageNumbers.innerHTML += `<button class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50" onclick="fetchRules(1)">1</button>`;
+                if (page > 3) pageNumbers.innerHTML += `<span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>`;
             }
-            
-            // Show pages around current page
             for (let i = Math.max(1, page - 1); i <= Math.min(totalPages, page + 1); i++) {
-                const pageButton = document.createElement('button');
-                pageButton.className = `relative inline-flex items-center px-4 py-2 border text-sm font-medium ${i === page ? 'z-10 bg-blue-50 border-blue-500 text-blue-600' : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'}`;
-                pageButton.textContent = i;
-                pageButton.addEventListener('click', () => {
-                    renderRulesTable(rules, i, pageSize);
-                });
-                pageNumbersContainer.appendChild(pageButton);
+                pageNumbers.innerHTML += `<button class="relative inline-flex items-center px-4 py-2 border ${i === page ? 'z-10 bg-blue-50 border-blue-500 text-blue-600' : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'} text-sm font-medium" onclick="fetchRules(${i})">${i}</button>`;
             }
-            
-            // Always show last page
             if (page < totalPages - 1) {
-                if (page < totalPages - 2) {
-                    const ellipsis = document.createElement('span');
-                    ellipsis.className = 'relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700';
-                    ellipsis.textContent = '...';
-                    pageNumbersContainer.appendChild(ellipsis);
-                }
-                
-                const lastPage = document.createElement('button');
-                lastPage.className = 'relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50';
-                lastPage.textContent = totalPages;
-                lastPage.addEventListener('click', () => {
-                    renderRulesTable(rules, totalPages, pageSize);
-                });
-                pageNumbersContainer.appendChild(lastPage);
+                if (page < totalPages - 2) pageNumbers.innerHTML += `<span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>`;
+                pageNumbers.innerHTML += `<button class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50" onclick="fetchRules(${totalPages})">${totalPages}</button>`;
             }
-            
-            // Update button states
+
             document.getElementById('prevPage').disabled = page === 1;
-            document.getElementById('nextPage').disabled = page === totalPages;
+            document.getElementById('nextPage').disabled = page >= totalPages;
             document.getElementById('prevPageMobile').disabled = page === 1;
-            document.getElementById('nextPageMobile').disabled = page === totalPages;
+            document.getElementById('nextPageMobile').disabled = page >= totalPages;
         }
 
-        // Filter rules based on search and filters
+        // Filter rules
         function filterRules() {
             const searchTerm = document.getElementById('searchRules').value.toLowerCase();
             const predictionFilter = document.getElementById('predictionFilter').value;
             const confidenceFilter = document.getElementById('confidenceFilter').value;
-            
+
             return rulesData.filter(rule => {
-                // Search term filter
-                const matchesSearch = 
-                    rule.conditions.some(cond => cond.toLowerCase().includes(searchTerm)) ||
-                    rule.prediction.toLowerCase().includes(searchTerm);
-                
+                const matchesSearch = rule.conditions.some(cond => cond.toLowerCase().includes(searchTerm)) || rule.prediction.toLowerCase().includes(searchTerm);
                 if (!matchesSearch) return false;
-                
-                // Prediction filter
-                if (predictionFilter !== 'all' && rule.prediction !== predictionFilter) {
-                    return false;
-                }
-                
-                // Confidence filter
-                if (confidenceFilter !== 'all') {
-                    const confidencePercentage = rule.confidence * 100;
-                    
-                    if (confidenceFilter === 'high' && confidencePercentage < 90) {
-                        return false;
-                    }
-                    if (confidenceFilter === 'medium' && (confidencePercentage < 70 || confidencePercentage >= 90)) {
-                        return false;
-                    }
-                    if (confidenceFilter === 'low' && confidencePercentage >= 70) {
-                        return false;
-                    }
-                }
-                
+                if (predictionFilter !== 'all' && rule.prediction !== predictionFilter) return false;
+                const confidencePercentage = rule.confidence * 100;
+                if (confidenceFilter === 'high' && confidencePercentage < 90) return false;
+                if (confidenceFilter === 'medium' && (confidencePercentage < 70 || confidencePercentage >= 90)) return false;
+                if (confidenceFilter === 'low' && confidencePercentage >= 70) return false;
                 return true;
             });
         }
 
-        // Export rules to CSV
+        // Export to CSV
         function exportToCSV() {
             const filteredRules = filterRules();
-            
-            let csvContent = "Rule ID,Conditions,Prediction,Confidence,Coverage,Samples\n";
-            
+            let csv = 'Rule ID,Conditions,Prediction,Confidence,Coverage,Samples\n';
             filteredRules.forEach(rule => {
                 const conditions = rule.conditions.join(' AND ');
-                const prediction = rule.prediction;
-                const confidence = `${Math.round(rule.confidence * 100)}%`;
-                const coverage = `${Math.round(rule.coverage * 100)}%`;
-                const samples = rule.samples;
-                
-                csvContent += `${rule.id},"${conditions}",${prediction},${confidence},${coverage},${samples}\n`;
+                csv += `${rule.id},"${conditions}",${rule.prediction},${Math.round(rule.confidence * 100)}%,${Math.round(rule.coverage * 100)}%,${rule.samples}\n`;
             });
-            
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
-            link.setAttribute('href', url);
-            link.setAttribute('download', 'decision_rules.csv');
-            link.style.visibility = 'hidden';
+            link.href = url;
+            link.download = 'decision_rules.csv';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         }
 
-        // Initialize the dashboard
+        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            // Toggle sidebar
             document.getElementById('toggleSidebar').addEventListener('click', () => {
                 document.querySelector('.sidebar').classList.toggle('collapsed');
             });
-            
-            // Calculate and display statistics
-            const stats = calculateStats();
-            document.getElementById('totalRules').textContent = stats.totalRules;
-            document.getElementById('acsRules').textContent = stats.acsRules;
-            document.getElementById('noAcsRules').textContent = stats.noAcsRules;
-            document.getElementById('avgConditions').textContent = stats.avgConditions;
-            
-            // Initial render of rules table
-            renderRulesTable(rulesData);
-            
-            // Search functionality
-            document.getElementById('searchRules').addEventListener('input', () => {
-                const filteredRules = filterRules();
-                renderRulesTable(filteredRules);
-            });
-            
-            // Filter functionality
-            document.getElementById('predictionFilter').addEventListener('change', () => {
-                const filteredRules = filterRules();
-                renderRulesTable(filteredRules);
-            });
-            
-            document.getElementById('confidenceFilter').addEventListener('change', () => {
-                const filteredRules = filterRules();
-                renderRulesTable(filteredRules);
-            });
-            
-            // Reset filters
+
+            fetchRules();
+
+            document.getElementById('searchRules').addEventListener('input', () => renderRulesTable(filterRules()));
+            document.getElementById('predictionFilter').addEventListener('change', () => renderRulesTable(filterRules()));
+            document.getElementById('confidenceFilter').addEventListener('change', () => renderRulesTable(filterRules()));
             document.getElementById('resetFilters').addEventListener('click', () => {
                 document.getElementById('searchRules').value = '';
                 document.getElementById('predictionFilter').value = 'all';
                 document.getElementById('confidenceFilter').value = 'all';
-                
-                const filteredRules = filterRules();
-                renderRulesTable(filteredRules);
+                renderRulesTable(rulesData);
             });
-            
-            // Pagination controls
             document.getElementById('prevPage').addEventListener('click', () => {
-                const filteredRules = filterRules();
                 const currentPage = parseInt(document.querySelector('#pageNumbers button[class*="bg-blue-50"]')?.textContent || '1');
-                if (currentPage > 1) {
-                    renderRulesTable(filteredRules, currentPage - 1);
-                }
+                if (currentPage > 1) fetchRules(currentPage - 1);
             });
-            
             document.getElementById('nextPage').addEventListener('click', () => {
-                const filteredRules = filterRules();
                 const currentPage = parseInt(document.querySelector('#pageNumbers button[class*="bg-blue-50"]')?.textContent || '1');
-                const totalPages = Math.ceil(filteredRules.length / 10);
-                if (currentPage < totalPages) {
-                    renderRulesTable(filteredRules, currentPage + 1);
-                }
+                const totalPages = Math.ceil(totalRules / 10);
+                if (currentPage < totalPages) fetchRules(currentPage + 1);
             });
-            
-            document.getElementById('prevPageMobile').addEventListener('click', () => {
-                const filteredRules = filterRules();
+
+
+document.getElementById('prevPageMobile').addEventListener('click', () => {
                 const currentPage = parseInt(document.querySelector('#pageNumbers button[class*="bg-blue-50"]')?.textContent || '1');
-                if (currentPage > 1) {
-                    renderRulesTable(filteredRules, currentPage - 1);
-                }
+                if (currentPage > 1) fetchRules(currentPage - 1);
             });
-            
             document.getElementById('nextPageMobile').addEventListener('click', () => {
-                const filteredRules = filterRules();
                 const currentPage = parseInt(document.querySelector('#pageNumbers button[class*="bg-blue-50"]')?.textContent || '1');
-                const totalPages = Math.ceil(filteredRules.length / 10);
-                if (currentPage < totalPages) {
-                    renderRulesTable(filteredRules, currentPage + 1);
-                }
+                const totalPages = Math.ceil(totalRules / 10);
+                if (currentPage < totalPages) fetchRules(currentPage + 1);
             });
-            
-            // Export to CSV
             document.getElementById('exportBtn').addEventListener('click', exportToCSV);
         });
     </script>
