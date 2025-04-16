@@ -10,20 +10,7 @@ import os
 app = Flask(__name__)
 
 # Initial sample data
-data = {
-    'Usia': [45, 50, 60, 35, 55, 40, 65, 48, 52, 58],
-    'Jenis_Kelamin': ['L', 'P', 'L', 'P', 'L', 'P', 'L', 'P', 'L', 'P'],
-    'Tekanan_Darah': ['140/90', '130/85', '150/95', '120/80', '160/100', '110/70', '170/110', '140/90', '130/85', '150/95'],
-    'Kolesterol': [220, 180, 240, 160, 260, 170, 280, 200, 190, 230],
-    'Gula_Darah': [120, 110, 140, 90, 150, 100, 160, 120, 110, 130],
-    'Nyeri_Dada': ['Ya', 'Tidak', 'Ya', 'Tidak', 'Ya', 'Tidak', 'Ya', 'Ya', 'Tidak', 'Ya'],
-    'Sesak_Napas': ['Ya', 'Tidak', 'Ya', 'Tidak', 'Ya', 'Tidak', 'Ya', 'Tidak', 'Tidak', 'Ya'],
-    'Kelelahan': ['Ya', 'Tidak', 'Ya', 'Tidak', 'Ya', 'Tidak', 'Ya', 'Ya', 'Tidak', 'Ya'],
-    'Denyut_Jantung': [80, 75, 90, 70, 85, 72, 95, 78, 74, 88],
-    'Penyakit_Jantung': ['ACS', 'Tidak Ada', 'Gagal Jantung', 'Tidak Ada', 'PJB Sianotik', 'Tidak Ada', 'Demam Reumatik', 'ACS', 'Tidak Ada', 'Gagal Jantung']
-}
-
-df = pd.DataFrame(data)
+df = pd.read_excel('data_latih.xlsx')
 
 # Preprocess data
 df[['Sistolik', 'Diastolik']] = df['Tekanan_Darah'].str.split('/', expand=True).astype(int)
@@ -637,6 +624,66 @@ def train_model():
         'tree_structure': tree_structure
     })
 
+@app.route('/api/test_data')
+def get_test_data():
+    page = int(request.args.get('page', 1))
+    per_page = 10
+    start = (page - 1) * per_page
+    end = start + per_page
+    
+    # Convert test_data to list of dictionaries
+    test_list = test_data.to_dict('records')
+    
+    # Calculate statistics for each disease class
+    total_records = len(test_list)
+    disease_counts = {}
+    for record in test_list:
+        disease = record['Penyakit_Jantung']
+        disease_counts[disease] = disease_counts.get(disease, 0) + 1
+    
+    # Calculate percentages for each disease
+    disease_stats = [
+        {
+            'disease': disease,
+            'count': count,
+            'percent': round((count / total_records * 100) if total_records > 0 else 0, 2)
+        }
+        for disease, count in disease_counts.items()
+    ]
+    
+    # Format data for frontend
+    formatted_data = [
+        {
+            'id': idx + 1,  # Generate ID dynamically
+            'usia': record['Usia'],
+            'jenis_kelamin': 'Laki-laki' if record['Jenis_Kelamin'] == 0 else 'Perempuan',
+            'sistolik': record['Sistolik'],
+            'diastolik': record['Diastolik'],
+            'kolesterol': 'Tinggi' if record['Kolesterol'] > 200 else 'Normal',
+            'gula_darah': 'Tinggi' if record['Gula_Darah'] > 120 else 'Normal',
+            'nyeri_dada': 'Ya' if record['Nyeri_Dada'] == 1 else 'Tidak',
+            'sesak_napas': 'Ya' if record['Sesak_Napas'] == 1 else 'Tidak',
+            'kelelahan': 'Ya' if record['Kelelahan'] == 1 else 'Tidak',
+            'denyut_jantung': record['Denyut_Jantung'],
+            'penyakit_jantung': record['Penyakit_Jantung']
+        }
+        for idx, record in enumerate(test_list)
+    ]
+    
+    # Paginate data
+    paginated_data = formatted_data[start:end]
+    
+    # Return response
+    return jsonify({
+        'data': paginated_data,
+        'total': total_records,
+        'stats': {
+            'total_records': total_records,
+            'disease_stats': disease_stats
+        },
+        'page': page,
+        'per_page': per_page
+    })
 # Export Endpoints
 @app.route('/download_results')
 def download_results():
