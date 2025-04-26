@@ -105,26 +105,6 @@ def predict(tree, sample):
     else:
         return predict(tree.right, sample)
 
-# Generate predictions
-results = []
-for idx, row in df.iterrows():
-    pred = predict(tree, row)
-    result_dict = {
-        'Usia': row['Usia'],
-        'Jenis_Kelamin': 'Laki-laki' if row['Jenis_Kelamin'] == 0 else 'Perempuan',
-        'Sistolik': row['Sistolik'],
-        'Diastolik': row['Diastolik'],
-        'Kolesterol': row['Kolesterol'],
-        'Gula_Darah': row['Gula_Darah'],
-        'Nyeri_Dada': 'Ya' if row['Nyeri_Dada'] == 1 else 'Tidak',
-        'Sesak_Napas': 'Ya' if row['Sesak_Napas'] == 1 else 'Tidak',
-        'Kelelahan': 'Ya' if row['Kelelahan'] == 1 else 'Tidak',
-        'Denyut_Jantung': row['Denyut_Jantung'],
-        'Aktual': row[target],
-        'Prediksi': pred
-    }
-    results.append(result_dict)
-
 # Routes for HTML Pages
 @app.route('/')
 def dashboard():
@@ -156,10 +136,35 @@ def results_page():
 
 # API Endpoints
 
+@app.route('/api/all_predictions')
+def get_all_predictions():
+    global df, tree, target
+    # Generate predictions
+    results = []
+    for idx, row in df.iterrows():
+        pred = predict(tree, row)
+        result_dict = {
+            'Usia': row['Usia'],
+            'Jenis_Kelamin': 'Laki-laki' if row['Jenis_Kelamin'] == 0 else 'Perempuan',
+            'Sistolik': row['Sistolik'],
+            'Diastolik': row['Diastolik'],
+            'Kolesterol': row['Kolesterol'],
+            'Gula_Darah': row['Gula_Darah'],
+            'Nyeri_Dada': 'Ya' if row['Nyeri_Dada'] == 1 else 'Tidak',
+            'Sesak_Napas': 'Ya' if row['Sesak_Napas'] == 1 else 'Tidak',
+            'Kelelahan': 'Ya' if row['Kelelahan'] == 1 else 'Tidak',
+            'Denyut_Jantung': row['Denyut_Jantung'],
+            'Aktual': row[target],
+            'Prediksi': pred
+        }
+        results.append(result_dict)
+    return jsonify(results)
 
 @app.route('/api/predictions')
 def get_predictions():
-    # Convert results to DataFrame for easier manipulation
+    # Fetch predictions from the /api/all_predictions endpoint
+    response = requests.get(request.url_root + 'api/all_predictions')
+    results = response.json()
     results_df = pd.DataFrame(results)
 
     # Calculate total predictions
@@ -263,6 +268,7 @@ def get_training_data():
     formatted_data = [
         {
             'id': idx + 1,  # Generate ID dynamically
+            'nama': record.get('Nama', f'Pasien {idx + 1}'),
             'usia': record['Usia'],
             'jenis_kelamin': 'Laki-laki' if record['Jenis_Kelamin'] == 0 else 'Perempuan',
             'sistolik': record['Sistolik'],
@@ -299,9 +305,11 @@ def get_results():
     start = (page - 1) * per_page
     end = start + per_page
     
-    # Convert results to DataFrame for easier manipulation
+    # Fetch predictions from the /api/all_predictions endpoint
+    response = requests.get(request.url_root + 'api/all_predictions')
+    results = response.json()
     results_df = pd.DataFrame(results)
-    
+
     # Calculate statistics
     total_predictions = len(results_df)
     correct_predictions = len(results_df[results_df['Aktual'] == results_df['Prediksi']])
@@ -481,7 +489,13 @@ def upload_training_data():
     file = request.files['file']
     if file and file.filename.endswith('.csv'):
         global train_data
-        train_data = pd.read_csv(file)
+        try:
+            train_data = pd.read_csv(file)
+            # Handle missing 'Nama' column
+            if 'Nama' not in train_data.columns:
+                train_data['Nama'] = [f'Pasien {i+1}' for i in range(len(train_data))]
+        except Exception as e:
+            return jsonify({'status': 'error', 'message': f'Error processing file: {str(e)}'}), 500
         return jsonify({'status': 'success', 'message': 'Data uploaded successfully'})
     return jsonify({'status': 'error', 'message': 'Invalid file'})
 
@@ -714,6 +728,8 @@ def download_rules():
     rules_df.to_csv(output, index=False)
     output.seek(0)
     return send_file(output, download_name='decision_rules.csv', as_attachment=True)
+
+import requests
 
 if __name__ == '__main__':
     app.run(debug=True)
