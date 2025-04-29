@@ -210,9 +210,13 @@
                                 <div>
                                     <label for="boosting" class="block text-xs font-medium text-gray-500">Boosting</label>
                                     <select id="boosting" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
-                                        <option value="false">Disabled</option>
+                                        <option value="false" selected>Disabled</option>
                                         <option value="true">Enabled</option>
                                     </select>
+                                </div>
+                                <div id="estimatorsDiv" class="hidden"> <!-- Hidden by default -->
+                                    <label for="n_estimators" class="block text-xs font-medium text-gray-500">Number of Estimators</label>
+                                    <input type="number" id="n_estimators" min="2" max="100" value="10" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                                 </div>
                             </div>
                         </div>
@@ -451,6 +455,16 @@
                     });
                 }
             });
+            
+            // Show/hide n_estimators based on boosting selection
+            document.getElementById('boosting').addEventListener('change', function() {
+                const estimatorsDiv = document.getElementById('estimatorsDiv');
+                if (this.value === 'true') {
+                    estimatorsDiv.classList.remove('hidden');
+                } else {
+                    estimatorsDiv.classList.add('hidden');
+                }
+            });
     
             // Train model button
             document.getElementById('trainBtn').addEventListener('click', function() {
@@ -482,12 +496,27 @@
             // Get training parameters
             const maxDepth = document.getElementById('maxDepth').value;
             const minSamples = document.getElementById('minSamples').value;
-            const confidence = document.getElementById('confidence').value;
+            const confidence = document.getElementById('confidence').value; // Confidence not used in backend currently
             const boosting = document.getElementById('boosting').value;
+            const n_estimators = document.getElementById('n_estimators').value;
+    
+            // Build request body
+            const formData = new URLSearchParams();
+            formData.append('max_depth', maxDepth);
+            formData.append('min_samples_split', minSamples);
+            formData.append('confidence', confidence); // Send even if not used
+            formData.append('boosting', boosting);
+            if (boosting === 'true') {
+                formData.append('n_estimators', n_estimators);
+            }
     
             // Add to log
             addLogEntry('Starting model training...');
-            addLogEntry(`Parameters: max_depth=${maxDepth}, min_samples_split=${minSamples}, confidence=${confidence}, boosting=${boosting}`);
+            let logParams = `Parameters: max_depth=${maxDepth}, min_samples_split=${minSamples}, boosting=${boosting}`;
+            if (boosting === 'true') {
+                logParams += `, n_estimators=${n_estimators}`;
+            }
+            addLogEntry(logParams);
     
             // Send request to train model
             fetch('/train_model', {
@@ -495,7 +524,7 @@
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: `max_depth=${maxDepth}&min_samples_split=${minSamples}&confidence=${confidence}&boosting=${boosting}`
+                body: formData.toString() // Send form data
             })
             .then(response => response.json())
             .then(data => {
@@ -568,16 +597,16 @@
             const nodeElement = document.createElement('div');
             
             if (node.value === 'Leaf') {
-                nodeElement.className = 'tree-node leaf';
+                nodeElement.className = 'tree-node leaf p-1 text-center'; // Adjusted styling
                 nodeElement.innerHTML = `
                     <div class="text-xs font-semibold">${node.name}</div>
-                    <div class="text-xxs">samples: ${node.samples}</div>
+                    <!-- Samples might not be available from API, removed -->
                 `;
             } else {
-                nodeElement.className = 'tree-node branch';
+                nodeElement.className = 'tree-node branch p-1 text-center'; // Adjusted styling
                 nodeElement.innerHTML = `
                     <div class="text-xs font-semibold">${node.name}</div>
-                    <div class="text-xxs">samples: ${node.samples}</div>
+                     <!-- Samples might not be available from API, removed -->
                 `;
                 
                 const childrenContainer = document.createElement('div');
@@ -601,8 +630,11 @@
             }
             
             if (depth === 0) {
-                nodeElement.classList.remove('branch', 'leaf');
-                nodeElement.classList.add('root');
+                // Apply root styling if depth is 0
+                if (depth === 0) {
+                     nodeElement.classList.remove('branch'); // Remove branch style if it was added
+                     nodeElement.classList.add('root');
+                }
             }
             
             return nodeElement;

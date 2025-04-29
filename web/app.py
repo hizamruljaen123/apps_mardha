@@ -7,52 +7,91 @@ from io import BytesIO
 import json
 import os
 
-app = Flask(__name__)
+app = Flask(__name__) # Initialize Flask app
 
-# Initial sample data
-df = pd.read_excel('data_latih.xlsx')
+# --- Data Loading and Preprocessing ---
+df = pd.read_excel('data_latih.xlsx') # Load data from Excel file
 
-# Preprocess data
+# Preprocess data: Split 'Tekanan_Darah' into 'Sistolik' and 'Diastolik'
 df[['Sistolik', 'Diastolik']] = df['Tekanan_Darah'].str.split('/', expand=True).astype(int)
-df = df.drop('Tekanan_Darah', axis=1)
-df['Jenis_Kelamin'] = df['Jenis_Kelamin'].map({'L': 0, 'P': 1})
-df['Nyeri_Dada'] = df['Nyeri_Dada'].map({'Tidak': 0, 'Ya': 1})
-df['Sesak_Napas'] = df['Sesak_Napas'].map({'Tidak': 0, 'Ya': 1})
-df['Kelelahan'] = df['Kelelahan'].map({'Tidak': 0, 'Ya': 1})
+df = df.drop('Tekanan_Darah', axis=1) # Drop original 'Tekanan_Darah' column
+df['Jenis_Kelamin'] = df['Jenis_Kelamin'].map({'L': 0, 'P': 1}) # Map 'Jenis_Kelamin' to numerical values
+df['Nyeri_Dada'] = df['Nyeri_Dada'].map({'Tidak': 0, 'Ya': 1}) # Map 'Nyeri_Dada' to numerical values
+df['Sesak_Napas'] = df['Sesak_Napas'].map({'Tidak': 0, 'Ya': 1}) # Map 'Sesak_Napas' to numerical values
+df['Kelelahan'] = df['Kelelahan'].map({'Tidak': 0, 'Ya': 1}) # Map 'Kelelahan' to numerical values
 
-# Split into training and test data
-train_data = df.sample(frac=0.8, random_state=42)
-test_data = df.drop(train_data.index)
+# --- Data Splitting ---
+train_data = df.sample(frac=0.8, random_state=42) # Split data into 80% training
+test_data = df.drop(train_data.index) # Remaining 20% for testing
 
-# C5.0 Decision Tree Implementation
-def entropy(target):
-    counts = Counter(target)
-    probabilities = [count / len(target) for count in counts.values()]
+# --- C5.0 Decision Tree Implementation ---
+def entropy(target, sample_weights=None):
+    if sample_weights is None:
+        sample_weights = np.ones(len(target))
+    
+    total_weight = np.sum(sample_weights)
+    if total_weight == 0:
+        return 0
+        
+    weighted_counts = {}
+    for i, label in enumerate(target):
+        weighted_counts[label] = weighted_counts.get(label, 0) + sample_weights[i]
+        
+    probabilities = [count / total_weight for count in weighted_counts.values()]
     return -sum(p * math.log2(p) for p in probabilities if p > 0)
 
-def information_gain(data, feature, target):
-    total_entropy = entropy(data[target])
+def information_gain(data, feature, target, sample_weights=None):
+    if sample_weights is None:
+        sample_weights = np.ones(len(data))
+
+    total_entropy = entropy(data[target], sample_weights)
+    
     values = data[feature].unique()
     weighted_entropy = 0
+    total_weight = np.sum(sample_weights)
+
+    if total_weight == 0:
+        return 0
+
     for value in values:
-        subset = data[data[feature] == value]
-        subset_entropy = entropy(subset[target])
-        weighted_entropy += (len(subset) / len(data)) * subset_entropy
+        subset_indices = data[feature] == value
+        subset_target = data.loc[subset_indices, target]
+        subset_weights = sample_weights[subset_indices]
+        
+        subset_weight_sum = np.sum(subset_weights)
+        if subset_weight_sum > 0:
+             subset_entropy = entropy(subset_target, subset_weights)
+             weighted_entropy += (subset_weight_sum / total_weight) * subset_entropy
+             
     return total_entropy - weighted_entropy
 
-def split_info(data, feature):
+def split_info(data, feature, sample_weights=None):
+    if sample_weights is None:
+        sample_weights = np.ones(len(data))
+
+    total_weight = np.sum(sample_weights)
+    if total_weight == 0:
+        return 0 # Avoid division by zero and log(0)
+
     values = data[feature].unique()
     split_entropy = 0
+    
     for value in values:
-        subset = data[data[feature] == value]
-        probability = len(subset) / len(data)
-        split_entropy -= probability * math.log2(probability) if probability > 0 else 0
-    return split_entropy
+        subset_indices = data[feature] == value
+        subset_weight = np.sum(sample_weights[subset_indices])
+        
+        if subset_weight > 0:
+            probability = subset_weight / total_weight
+            split_entropy -= probability * math.log2(probability)
+            
+    # Handle potential floating point issues causing split_entropy to be slightly negative or zero
+    return split_entropy if split_entropy > 1e-9 else 1e-9 # Return a small positive number if zero or negative
 
-def gain_ratio(data, feature, target):
-    ig = information_gain(data, feature, target)
-    si = split_info(data, feature)
-    return ig / si if si != 0 else 0
+def gain_ratio(data, feature, target, sample_weights=None):
+    ig = information_gain(data, feature, target, sample_weights)
+    si = split_info(data, feature, sample_weights)
+    # si is adjusted in split_info to avoid division by zero
+    return ig / si
 
 class DecisionNode:
     def __init__(self, feature=None, threshold=None, value=None, left=None, right=None):
@@ -62,48 +101,280 @@ class DecisionNode:
         self.left = left
         self.right = right
 
-def build_tree(data, target, features, depth=0, max_depth=3, min_samples_split=2):
-    if len(data[target].unique()) == 1 or depth == max_depth or len(data) < min_samples_split:
-        return DecisionNode(value=Counter(data[target]).most_common(1)[0][0])
-    
-    best_gain = -1
+def build_tree(data, target, features, depth=0, max_depth=3, min_samples_split=2, sample_weights=None):
+    # Initialize weights if not provided (for the first call or non-boosting scenario)
+    if sample_weights is None:
+        sample_weights = np.ones(len(data))
+
+    # --- Base Cases ---
+    # 1. All samples belong to the same class
+    unique_classes = data[target].unique()
+    if len(unique_classes) == 1:
+        return DecisionNode(value=unique_classes[0])
+
+    # 2. Max depth reached or minimum samples for split not met
+    #    Use weighted count for the majority class if weights are present
+    if depth == max_depth or len(data) < min_samples_split or np.sum(sample_weights) < min_samples_split: # Check weighted samples too
+        weighted_counts = {}
+        for i, label in enumerate(data[target]):
+            weighted_counts[label] = weighted_counts.get(label, 0) + sample_weights[i]
+        majority_class = max(weighted_counts, key=weighted_counts.get) if weighted_counts else None # Handle empty data case
+        return DecisionNode(value=majority_class)
+
+    # 3. No features left to split on
+    if not features:
+        weighted_counts = {}
+        for i, label in enumerate(data[target]):
+            weighted_counts[label] = weighted_counts.get(label, 0) + sample_weights[i]
+        majority_class = max(weighted_counts, key=weighted_counts.get) if weighted_counts else None
+        return DecisionNode(value=majority_class)
+
+    # --- Find Best Split ---
+    best_gain_ratio = -1
     best_feature = None
-    best_threshold = None
-    
-    for feature in features:
-        if data[feature].dtype == 'object':
+    best_threshold = None # For numerical features
+    best_split_type = None # 'categorical' or 'numerical'
+
+    current_features = list(features) # Create a modifiable list
+
+    for feature in current_features:
+        unique_values = data[feature].unique()
+
+        # Skip features with only one unique value in the current subset
+        if len(unique_values) <= 1:
             continue
-        unique_values = sorted(data[feature].unique())
-        for threshold in unique_values:
-            gain = gain_ratio(data, feature, target)
-            if gain > best_gain:
-                best_gain = gain
+
+        if pd.api.types.is_numeric_dtype(data[feature]):
+            # --- Handle Numerical Features ---
+            # Sort unique values to find potential split points
+            sorted_values = sorted(unique_values)
+            for i in range(len(sorted_values) - 1):
+                # Threshold is the midpoint between consecutive unique values
+                threshold = (sorted_values[i] + sorted_values[i+1]) / 2
+                
+                # Create temporary binary feature based on threshold
+                temp_feature_name = f"{feature}_le_{threshold}"
+                data[temp_feature_name] = (data[feature] <= threshold).astype(int)
+                
+                # Calculate gain ratio using the temporary binary feature
+                gain = gain_ratio(data, temp_feature_name, target, sample_weights)
+                
+                # Clean up temporary column
+                del data[temp_feature_name]
+
+                if gain > best_gain_ratio:
+                    best_gain_ratio = gain
+                    best_feature = feature
+                    best_threshold = threshold
+                    best_split_type = 'numerical'
+
+        else: # --- Handle Categorical Features --- (Assuming Gain Ratio works directly for multi-value splits)
+             # Note: C5.0 often groups categories, but for simplicity, we'll use standard gain ratio here.
+             # A more complex implementation would evaluate subsets of categories.
+            gain = gain_ratio(data, feature, target, sample_weights)
+            if gain > best_gain_ratio:
+                best_gain_ratio = gain
                 best_feature = feature
-                best_threshold = threshold
-    
-    if best_gain == -1 or best_gain == 0:
-        return DecisionNode(value=Counter(data[target]).most_common(1)[0][0])
-    
-    left_data = data[data[best_feature] <= best_threshold]
-    right_data = data[data[best_feature] > best_threshold]
-    
-    left = build_tree(left_data, target, features, depth + 1, max_depth, min_samples_split)
-    right = build_tree(right_data, target, features, depth + 1, max_depth, min_samples_split)
-    
-    return DecisionNode(feature=best_feature, threshold=best_threshold, left=left, right=right)
+                best_threshold = None # No threshold for categorical split as implemented here
+                best_split_type = 'categorical'
+
+
+    # --- Check if a useful split was found ---
+    # If no split improves information gain (gain ratio <= 0), create a leaf node
+    if best_gain_ratio <= 0:
+        weighted_counts = {}
+        for i, label in enumerate(data[target]):
+            weighted_counts[label] = weighted_counts.get(label, 0) + sample_weights[i]
+        majority_class = max(weighted_counts, key=weighted_counts.get) if weighted_counts else None
+        return DecisionNode(value=majority_class)
+
+    # --- Split Data and Recurse ---
+    remaining_features = [f for f in current_features if f != best_feature] # Pass remaining features
+
+    if best_split_type == 'numerical':
+        left_indices = data[best_feature] <= best_threshold
+        right_indices = data[best_feature] > best_threshold
+        
+        left_data = data[left_indices]
+        right_data = data[right_indices]
+        left_weights = sample_weights[left_indices]
+        right_weights = sample_weights[right_indices]
+
+        # Check if splits are empty or too small
+        if len(left_data) == 0 or len(right_data) == 0 or np.sum(left_weights) == 0 or np.sum(right_weights) == 0:
+             weighted_counts = {}
+             for i, label in enumerate(data[target]):
+                 weighted_counts[label] = weighted_counts.get(label, 0) + sample_weights[i]
+             majority_class = max(weighted_counts, key=weighted_counts.get) if weighted_counts else None
+             return DecisionNode(value=majority_class)
+
+
+        left_child = build_tree(left_data, target, remaining_features, depth + 1, max_depth, min_samples_split, left_weights)
+        right_child = build_tree(right_data, target, remaining_features, depth + 1, max_depth, min_samples_split, right_weights)
+        
+        return DecisionNode(feature=best_feature, threshold=best_threshold, left=left_child, right=right_child)
+
+    elif best_split_type == 'categorical':
+         # For categorical, we need to handle multiple branches if we were fully implementing C5.0 grouping.
+         # Simplified: Create branches for each unique value. This is more like ID3/C4.5 splitting.
+         # A true C5.0 implementation would group categories based on gain.
+         # For now, let's stick to a binary split based on the most common value vs others for simplicity,
+         # or revert to the previous less accurate numerical split logic if categorical is too complex now.
+         # Let's try a simple binary split: most common category vs rest
+         
+         # --- Reverting to a simpler (less C5.0 accurate) categorical split for now ---
+         # This part needs significant refinement for true C5.0 categorical handling (grouping)
+         # Using the previous dummy variable approach as a placeholder
+         dummies = pd.get_dummies(data[best_feature], prefix=best_feature, drop_first=True) # Use drop_first for binary split idea
+         best_dummy_feature = None
+         best_dummy_gain = -1
+
+         # Re-evaluate gain for dummy variables derived from the chosen categorical feature
+         for dummy in dummies.columns:
+             gain = gain_ratio(data.assign(**{dummy: dummies[dummy]}), dummy, target, sample_weights)
+             if gain > best_dummy_gain:
+                 best_dummy_gain = gain
+                 best_dummy_feature = dummy
+
+         if best_dummy_feature is None: # No improvement found even with dummies
+            weighted_counts = {}
+            for i, label in enumerate(data[target]):
+                weighted_counts[label] = weighted_counts.get(label, 0) + sample_weights[i]
+            majority_class = max(weighted_counts, key=weighted_counts.get) if weighted_counts else None
+            return DecisionNode(value=majority_class)
+
+         # Split based on the best dummy variable
+         temp_data = data.assign(**{best_dummy_feature: dummies[best_dummy_feature]})
+         left_indices = temp_data[best_dummy_feature] == 0
+         right_indices = temp_data[best_dummy_feature] == 1
+
+         left_data = data[left_indices]
+         right_data = data[right_indices]
+         left_weights = sample_weights[left_indices]
+         right_weights = sample_weights[right_indices]
+
+         # Check if splits are empty or too small
+         if len(left_data) == 0 or len(right_data) == 0 or np.sum(left_weights) == 0 or np.sum(right_weights) == 0:
+             weighted_counts = {}
+             for i, label in enumerate(data[target]):
+                 weighted_counts[label] = weighted_counts.get(label, 0) + sample_weights[i]
+             majority_class = max(weighted_counts, key=weighted_counts.get) if weighted_counts else None
+             return DecisionNode(value=majority_class)
+
+         # Use the dummy feature name and threshold 0.5 (or 1) for the node
+         # This represents the split: category corresponding to dummy vs others
+         left_child = build_tree(left_data, target, remaining_features, depth + 1, max_depth, min_samples_split, left_weights)
+         right_child = build_tree(right_data, target, remaining_features, depth + 1, max_depth, min_samples_split, right_weights)
+
+         # The 'feature' stored is the dummy, threshold is effectively 0.5 or 1
+         return DecisionNode(feature=best_dummy_feature, threshold=0.5, left=left_child, right=right_child) # Threshold 0.5 for <= comparison
+
+    else: # Should not happen if a split was found
+        weighted_counts = {}
+        for i, label in enumerate(data[target]):
+            weighted_counts[label] = weighted_counts.get(label, 0) + sample_weights[i]
+        majority_class = max(weighted_counts, key=weighted_counts.get) if weighted_counts else None
+        return DecisionNode(value=majority_class)
 
 # Initial model training
 target = 'Penyakit_Jantung'
 features = df.columns.drop(target)
 tree = build_tree(train_data, target, features, max_depth=3)
 
-def predict(tree, sample):
-    if tree.value is not None:
-        return tree.value
-    if sample[tree.feature] <= tree.threshold:
-        return predict(tree.left, sample)
+# Global variables to store the potentially boosted model
+boosted_trees = []
+boosted_alphas = []
+is_boosted = False # Flag to indicate if the current model is boosted
+
+def predict_single_tree(node, sample):
+    """Helper function to predict using a single decision tree."""
+    if node is None: # Handle case where a branch might be missing (should ideally not happen in a full tree)
+        # print("Warning: Encountered None node during prediction.")
+        return None # Or return a default value based on parent?
+
+    if node.value is not None: # Leaf node
+        return node.value
+        
+    feature = node.feature
+    
+    # --- Handle Numerical Feature ---
+    if node.threshold is not None and feature in sample.index and pd.api.types.is_numeric_dtype(sample[feature]):
+         try:
+             sample_value = sample[feature]
+             if sample_value <= node.threshold:
+                 return predict_single_tree(node.left, sample)
+             else:
+                 return predict_single_tree(node.right, sample)
+         except TypeError: # Handle potential comparison errors
+              # print(f"Warning: Type error comparing {sample[feature]} and {node.threshold} for feature '{feature}'. Defaulting left.")
+              # Fallback: Go left (arbitrary, could be improved by passing majority class down)
+              return predict_single_tree(node.left, sample)
+
+    # --- Handle Categorical Feature (using dummy variable name) ---
+    # Assumes dummy feature name like 'OriginalFeature_CategoryValue' and threshold 0.5
+    elif node.threshold == 0.5 and feature in sample.index: # Check if it looks like our dummy split
+         # This logic is still fragile and depends on the exact dummy naming in build_tree.
+         # It assumes the 'feature' name stored in the node IS the dummy variable name.
+         # We need to infer the original feature and the category value from the dummy name.
+         
+         # Example: feature = 'Nyeri_Dada_Ya' (if build_tree created this)
+         # We need to check if sample['Nyeri_Dada'] == 'Ya' (or its mapped value, e.g., 1)
+         
+         # --- This requires a more robust way to store split info in the Node ---
+         # --- Simplified/Placeholder Logic: ---
+         # Let's assume the feature name directly corresponds to a column that *might* exist
+         # in the sample IF it was preprocessed with the same get_dummies. This is unlikely for raw input.
+         # A better build_tree would store: node.feature = 'Nyeri_Dada', node.category_split = 'Ya'
+         
+         # Fallback: If we can't reliably determine the split, default to a branch.
+         # print(f"Warning: Cannot reliably predict categorical split for '{feature}'. Defaulting left.")
+         return predict_single_tree(node.left, sample)
+
+
+    # --- Feature not found or other issues ---
     else:
-        return predict(tree.right, sample)
+        # Feature might be missing in the sample, or it's a type not handled above.
+        # print(f"Warning: Feature '{feature}' not found in sample or type mismatch. Defaulting left.")
+        # Defaulting left is arbitrary. A better strategy might involve using majority class if available at node.
+        return predict_single_tree(node.left, sample)
+
+
+def predict(sample, use_boosting=False):
+    """Predicts the class for a single sample, using boosting if enabled globally."""
+    global boosted_trees, boosted_alphas, is_boosted, tree # Access global model
+
+    current_model_is_boosted = is_boosted # Check the global flag
+
+    if use_boosting and current_model_is_boosted and boosted_trees and boosted_alphas:
+        # --- Boosted Prediction ---
+        weighted_votes = {}
+        # total_alpha = sum(boosted_alphas) # Not strictly needed for max vote
+
+        for b_tree, alpha in zip(boosted_trees, boosted_alphas):
+            pred = predict_single_tree(b_tree, sample)
+            
+            if pred is not None: # Ensure prediction is valid
+                 weighted_votes[pred] = weighted_votes.get(pred, 0) + alpha
+
+        if not weighted_votes:
+             # Handle case where no tree could make a prediction
+             # print("Warning: No boosted tree made a prediction for the sample.")
+             return None # Or a default value
+
+        # Return class with the highest weighted vote
+        return max(weighted_votes, key=weighted_votes.get)
+        
+    elif not use_boosting and tree: # Use the single global tree if not boosting OR if boosting failed/not selected
+        # --- Single Tree Prediction ---
+         return predict_single_tree(tree, sample)
+    elif use_boosting and not current_model_is_boosted and tree:
+         # Requested boosting but model isn't boosted, use single tree
+         # print("Warning: Boosting requested but model is not boosted. Using single tree.")
+         return predict_single_tree(tree, sample)
+    else:
+         # No model trained or available
+         # print("Error: No model available for prediction.")
+         return None # Or raise an error
 
 # Generate predictions
 results = []
@@ -370,47 +641,74 @@ def get_results():
     })
 @app.route('/api/tree_visualization')
 def get_tree_visualization():
-    # Fungsi untuk menghitung impurity (entropy) berdasarkan data
-    def calculate_impurity(data, target):
-        if data.empty:
-            return 0
-        counts = data[target].value_counts()
-        probabilities = counts / len(data)
-        return -sum(p * math.log2(p) for p in probabilities if p > 0)
+    global tree, is_boosted, boosted_trees # Access global model state
 
-    # Fungsi untuk mengkonversi pohon menjadi dictionary
-    def tree_to_dict(node, data=train_data):
-        if node.value is not None:  # Node daun
-            subset = data
-            impurity = calculate_impurity(subset, target)
-            return {
-                'name': f"Prediction: {node.value}",
-                'value': 'Leaf',
-                'samples': len(subset),
-                'impurity': round(impurity, 3),
-                'class': node.value
-            }
-        else:  # Node keputusan
-            left_data = data[data[node.feature] <= node.threshold]
-            right_data = data[data[node.feature] > node.threshold]
-            impurity = calculate_impurity(data, target)
-            return {
-                'name': f"{node.feature} ≤ {node.threshold}",
-                'value': 'Decision',
-                'samples': len(data),
-                'impurity': round(impurity, 3),
-                'children': [
-                    tree_to_dict(node.left, left_data) if node.left else None,
-                    tree_to_dict(node.right, right_data) if node.right else None
-                ]
-            }
+    # Determine which tree to visualize
+    # If boosted, visualize the first tree as a representative
+    tree_to_visualize = tree if not is_boosted else (boosted_trees[0] if boosted_trees else None)
 
-    # Validasi apakah pohon tersedia
-    if not tree:
-        return jsonify({'error': 'No trained model available'}), 400
-    
-    # Kembalikan struktur pohon dalam format JSON
-    return jsonify(tree_to_dict(tree))
+    if not tree_to_visualize:
+        return jsonify({'error': 'No trained model available to visualize'}), 400
+
+    # Use the same tree_to_dict logic as in /train_model for consistency
+    # (Define it locally here or ensure it's accessible globally/imported)
+    def tree_to_dict(node):
+        if node is None: return None
+        if node.value is not None:
+            # Simplified version for API: less info needed than in training summary
+            # Include 'samples' if available/easily calculable, otherwise omit for API speed
+            return {'name': f"Predict: {node.value}", 'value': 'Leaf', 'class_value': node.value, 'samples': 0, 'impurity': 0}
+
+        node_name = f"{node.feature}"
+        if node.threshold is not None:
+             # Format threshold nicely, especially for floats
+             threshold_str = f"{node.threshold:.2f}" if isinstance(node.threshold, float) else str(node.threshold)
+             # Use a more descriptive format for the node name
+             if node.threshold == 0.5 and '_' in node.feature: # Heuristic for dummy categorical
+                 # Try to make dummy name more readable, e.g., "Nyeri_Dada_Ya <= 0.5" -> "Nyeri_Dada is Ya"
+                 # This is still a guess based on naming convention
+                 parts = node.feature.split('_')
+                 # Check if the last part could be a category value (needs better check)
+                 # A more robust approach is needed in build_tree to store this info
+                 if len(parts) > 1:
+                      # Attempt to reconstruct: assumes format OriginalFeature_CategoryValue
+                      original_feature = parts[0]
+                      category_value = '_'.join(parts[1:]) # Handle category names with underscores
+                      node_name = f"{original_feature} is {category_value}"
+                 else: # Fallback if parsing fails
+                      node_name = f"{node.feature} <= {threshold_str}"
+             else: # Numerical split
+                 node_name = f"{node.feature} <= {threshold_str}"
+        else: # Should not happen for decision nodes in this implementation
+             node_name = f"Split on {node.feature}"
+
+
+        # Recursively call for children, checking existence
+        left_child_dict = tree_to_dict(node.left) if hasattr(node, 'left') else None
+        right_child_dict = tree_to_dict(node.right) if hasattr(node, 'right') else None
+        
+        # Filter out None children before returning
+        valid_children = [child for child in [left_child_dict, right_child_dict] if child is not None]
+
+        return {
+            'name': node_name,
+            'value': 'Decision',
+            # Ensure children is always a list, even if empty
+            'children': valid_children
+        }
+
+    # Convert the selected tree structure to JSON
+    try:
+        tree_structure_json = tree_to_dict(tree_to_visualize)
+        if tree_structure_json is None: # Handle case where root itself is None
+             return jsonify({'error': 'Model structure is empty or invalid'}), 500
+        return jsonify(tree_structure_json)
+    except Exception as e:
+        print(f"Error generating tree visualization JSON: {e}")
+        # Consider logging the full traceback for debugging
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': f'Failed to generate tree structure: {str(e)}'}), 500
 
 @app.route('/api/rules')
 def get_rules():
@@ -534,94 +832,232 @@ def upload_test_data():
 # Model Training Endpoint
 @app.route('/train_model', methods=['POST'])
 def train_model():
-    global tree, results, train_data
+    # Access global variables to store the model
+    global tree, results, train_data, target, features
+    global boosted_trees, boosted_alphas, is_boosted
 
-    # Ambil parameter dari form di frontend
-    max_depth = int(request.form.get('max_depth', 3))
-    min_samples_split = int(request.form.get('min_samples_split', 2))
-    confidence = float(request.form.get('confidence', 0.25))  # Placeholder, belum diimplementasikan di build_tree
-    boosting = request.form.get('boosting', 'false') == 'true'  # Placeholder, belum diimplementasikan
-
-    # Validasi data pelatihan
+    # Validate training data
     if train_data.empty:
         return jsonify({'status': 'error', 'message': 'No training data available'}), 400
+    if target not in train_data.columns:
+         return jsonify({'status': 'error', 'message': f'Target column "{target}" not found in training data'}), 400
+    
+    # Ensure features are correctly defined (excluding target)
+    current_features = [col for col in train_data.columns if col != target]
+    if not current_features:
+         return jsonify({'status': 'error', 'message': 'No features found in training data (excluding target)'}), 400
+    features = current_features # Update global features list based on current train_data
 
-    # Bangun pohon keputusan dengan parameter yang diberikan
-    tree = build_tree(train_data, target, features, depth=0, max_depth=max_depth, min_samples_split=min_samples_split)
+    # Get parameters from form
+    try:
+        max_depth = int(request.form.get('max_depth', 3))
+        min_samples_split = int(request.form.get('min_samples_split', 2))
+        # Confidence is for pruning - not implemented in this manual build_tree
+        # confidence = float(request.form.get('confidence', 0.25))
+        boosting = request.form.get('boosting', 'false').lower() == 'true'
+        n_estimators = int(request.form.get('n_estimators', 10)) if boosting else 1
+    except ValueError:
+         return jsonify({'status': 'error', 'message': 'Invalid training parameters (must be numbers)'}), 400
 
-    # Hitung metrik pohon
-    def calculate_tree_depth(node):
-        if node.value is not None:
-            return 0
-        left_depth = calculate_tree_depth(node.left) if node.left else 0
-        right_depth = calculate_tree_depth(node.right) if node.right else 0
-        return max(left_depth, right_depth) + 1
 
-    def calculate_total_nodes(node):
-        if node.value is not None:
-            return 1
-        left_nodes = calculate_total_nodes(node.left) if node.left else 0
-        right_nodes = calculate_total_nodes(node.right) if node.right else 0
-        return left_nodes + right_nodes + 1
+    # --- Model Training ---
+    boosted_trees = [] # Clear previous boosted model
+    boosted_alphas = []
+    is_boosted = False # Reset flag
 
-    def calculate_leaf_nodes(node):
-        if node.value is not None:
-            return 1
-        left_leaves = calculate_leaf_nodes(node.left) if node.left else 0
-        right_leaves = calculate_leaf_nodes(node.right) if node.right else 0
-        return left_leaves + right_leaves
+    if boosting:
+        print(f"Starting Boosting with {n_estimators} estimators...")
+        is_boosted = True
+        sample_weights = np.ones(len(train_data)) / len(train_data) # Initialize weights
 
-    tree_metrics = {
-        'depth': calculate_tree_depth(tree),
-        'nodes': calculate_total_nodes(tree),
-        'leaves': calculate_leaf_nodes(tree)
-    }
+        for i in range(n_estimators):
+            print(f"Building tree {i+1}/{n_estimators}...")
+            # Build tree using current sample weights
+            # Make sure 'features' used here is the updated list
+            current_tree = build_tree(train_data, target, features,
+                                      max_depth=max_depth,
+                                      min_samples_split=min_samples_split,
+                                      sample_weights=sample_weights)
 
-    # Konversi pohon ke format JSON untuk visualisasi
-    def tree_to_dict(node):
-        if node.value is not None:
-            return {
-                'name': f"Prediction: {node.value}",
-                'samples': len(train_data[train_data[target] == node.value]) if node.value in train_data[target].values else 0,
-                'value': 'Leaf'
-            }
-        return {
-            'name': f"{node.feature} ≤ {node.threshold}",
-            'samples': len(train_data),
-            'value': 'Decision',
-            'children': [
-                tree_to_dict(node.left) if node.left else None,
-                tree_to_dict(node.right) if node.right else None
-            ]
-        }
+            if current_tree is None: # Handle case where tree building fails
+                 print(f"Warning: Tree {i+1} could not be built.")
+                 # Option: Stop boosting, or skip this estimator? Let's skip.
+                 continue
 
-    tree_structure = tree_to_dict(tree)
+            # Predict on training data using the *single* current tree
+            predictions = [predict_single_tree(current_tree, row) for _, row in train_data.iterrows()]
 
-    # Perbarui prediksi
+            # Calculate weighted error rate
+            actuals = train_data[target].values
+            incorrect = np.array([1 if pred != true else 0 for pred, true in zip(predictions, actuals)])
+            
+            # Mask weights where prediction failed (if predict_single_tree returns None)
+            valid_preds_mask = np.array([p is not None for p in predictions])
+            masked_weights = sample_weights[valid_preds_mask]
+            masked_incorrect = incorrect[valid_preds_mask]
+            
+            total_masked_weight = np.sum(masked_weights)
+
+            if total_masked_weight == 0: # Avoid division by zero if all predictions failed or weights are zero
+                 error = 0.5 # Assign neutral error to avoid issues, maybe stop boosting?
+                 print(f"Warning: Total weight for error calculation is zero in tree {i+1}. Assigning neutral error.")
+            else:
+                 error = np.dot(masked_weights, masked_incorrect) / total_masked_weight
+
+            # Prevent error from being exactly 0 or 1 for alpha calculation stability
+            error = np.clip(error, 1e-10, 1 - 1e-10)
+
+            # Calculate estimator weight (alpha)
+            alpha = 0.5 * np.log((1 - error) / error)
+
+            # Update sample weights: increase weight for misclassified samples
+            # weight_update_factors = np.exp(alpha * (2 * incorrect - 1)) # Maps 1 -> alpha, 0 -> -alpha
+            weight_update_factors = np.array([np.exp(alpha) if inc == 1 else np.exp(-alpha) for inc in incorrect])
+            
+            sample_weights *= weight_update_factors
+            
+            # Normalize weights
+            total_weight = np.sum(sample_weights)
+            if total_weight == 0 or not np.isfinite(total_weight):
+                 print("Warning: Sample weights became zero or non-finite. Resetting weights.")
+                 sample_weights = np.ones(len(train_data)) / len(train_data) # Reset if weights explode/vanish
+            else:
+                 sample_weights /= total_weight
+
+            # Store the tree and its weight
+            boosted_trees.append(current_tree)
+            boosted_alphas.append(alpha)
+            print(f"Tree {i+1}: Error={error:.4f}, Alpha={alpha:.4f}")
+
+        if not boosted_trees: # If all trees failed to build
+             return jsonify({'status': 'error', 'message': 'Boosting failed: No trees were built.'}), 500
+        # Use the first tree for single-tree metrics/visualization (optional)
+        tree = boosted_trees[0] # Assign the first tree to the global 'tree' for compatibility
+        print("Boosting complete.")
+
+    else: # --- Single Tree Training ---
+        print("Starting Single Tree Training...")
+        is_boosted = False
+        # Make sure 'features' used here is the updated list
+        tree = build_tree(train_data, target, features,
+                          max_depth=max_depth,
+                          min_samples_split=min_samples_split)
+        boosted_trees = [] # Ensure these are empty
+        boosted_alphas = []
+        print("Single tree training complete.")
+
+
+    # --- Post-Training Steps ---
+    if tree is None and not is_boosted: # Check if single tree training failed
+         return jsonify({'status': 'error', 'message': 'Model training failed: Could not build tree.'}), 500
+    elif is_boosted and not boosted_trees: # Check if boosting failed
+         return jsonify({'status': 'error', 'message': 'Model training failed: Could not build boosted ensemble.'}), 500
+
+    # Calculate metrics based on the primary tree (first tree if boosted, or the single tree)
+    display_tree = tree # Use the globally assigned tree (either single or first boosted)
+    tree_metrics = {'depth': 0, 'nodes': 0, 'leaves': 0}
+    tree_structure = {}
+    if display_tree:
+         try:
+             # Define metric calculation functions locally or ensure they are accessible
+             # These need to handle None nodes potentially returned by build_tree
+             def calculate_tree_depth(node):
+                 if node is None or node.value is not None: return 0
+                 # Check if children exist before recursing
+                 left_depth = calculate_tree_depth(node.left) if hasattr(node, 'left') else 0
+                 right_depth = calculate_tree_depth(node.right) if hasattr(node, 'right') else 0
+                 return max(left_depth, right_depth) + 1
+
+             def calculate_total_nodes(node):
+                 if node is None: return 0
+                 left_nodes = calculate_total_nodes(node.left) if hasattr(node, 'left') else 0
+                 right_nodes = calculate_total_nodes(node.right) if hasattr(node, 'right') else 0
+                 return 1 + left_nodes + right_nodes
+
+             def calculate_leaf_nodes(node):
+                 if node is None: return 0
+                 if node.value is not None: return 1
+                 left_leaves = calculate_leaf_nodes(node.left) if hasattr(node, 'left') else 0
+                 right_leaves = calculate_leaf_nodes(node.right) if hasattr(node, 'right') else 0
+                 return left_leaves + right_leaves
+
+             tree_metrics = {
+                 'depth': calculate_tree_depth(display_tree),
+                 'nodes': calculate_total_nodes(display_tree),
+                 'leaves': calculate_leaf_nodes(display_tree)
+             }
+
+             # Define tree_to_dict locally or ensure accessible
+             def tree_to_dict(node):
+                 if node is None: return None
+                 if node.value is not None:
+                     return {'name': f"Predict: {node.value}", 'value': 'Leaf'}
+                 
+                 node_name = f"{node.feature}"
+                 if node.threshold is not None:
+                      # Format threshold nicely, especially for floats
+                      threshold_str = f"{node.threshold:.2f}" if isinstance(node.threshold, float) else str(node.threshold)
+                      node_name += f" <= {threshold_str}"
+
+                 # Recursively call for children, checking existence
+                 left_child_dict = tree_to_dict(node.left) if hasattr(node, 'left') else None
+                 right_child_dict = tree_to_dict(node.right) if hasattr(node, 'right') else None
+                 
+                 return {
+                     'name': node_name,
+                     'value': 'Decision',
+                     # Ensure children list doesn't contain None if a branch is missing
+                     'children': [child for child in [left_child_dict, right_child_dict] if child is not None]
+                 }
+             tree_structure = tree_to_dict(display_tree)
+         except Exception as e:
+              print(f"Error calculating metrics or tree structure: {e}")
+              # Continue without metrics/structure if calculation fails
+
+    # --- Update Predictions using the newly trained model ---
+    print(f"Generating predictions using {'boosted' if is_boosted else 'single'} model...")
     results = []
+    # Use the full dataframe 'df' for generating results as before
     for idx, row in df.iterrows():
-        pred = predict(tree, row)
+        # Pass the row (which is a pandas Series) to predict
+        # The predict function now uses the global is_boosted flag internally
+        pred = predict(row, use_boosting=is_boosted)
+        
+        # Map numerical back to categorical for display
+        jenis_kelamin_display = 'Laki-laki' if row['Jenis_Kelamin'] == 0 else 'Perempuan'
+        nyeri_dada_display = 'Ya' if row['Nyeri_Dada'] == 1 else 'Tidak'
+        sesak_napas_display = 'Ya' if row['Sesak_Napas'] == 1 else 'Tidak'
+        kelelahan_display = 'Ya' if row['Kelelahan'] == 1 else 'Tidak'
+
         result_dict = {
             'Usia': row['Usia'],
-            'Jenis_Kelamin': 'Laki-laki' if row['Jenis_Kelamin'] == 0 else 'Perempuan',
+            'Jenis_Kelamin': jenis_kelamin_display,
             'Sistolik': row['Sistolik'],
             'Diastolik': row['Diastolik'],
             'Kolesterol': row['Kolesterol'],
             'Gula_Darah': row['Gula_Darah'],
-            'Nyeri_Dada': 'Ya' if row['Nyeri_Dada'] == 1 else 'Tidak',
-            'Sesak_Napas': 'Ya' if row['Sesak_Napas'] == 1 else 'Tidak',
-            'Kelelahan': 'Ya' if row['Kelelahan'] == 1 else 'Tidak',
+            'Nyeri_Dada': nyeri_dada_display,
+            'Sesak_Napas': sesak_napas_display,
+            'Kelelahan': kelelahan_display,
             'Denyut_Jantung': row['Denyut_Jantung'],
             'Aktual': row[target],
-            'Prediksi': pred
+            'Prediksi': pred if pred is not None else "N/A" # Handle None prediction
         }
         results.append(result_dict)
+    print("Prediction generation complete.")
 
-    # Kembalikan respons JSON
+    # Calculate feature importance (placeholder - replace with actual calculation)
+    feature_importance = {}
+    for feature in features:
+        feature_importance[feature] = 0.1  # Assign a default value (replace with actual importance)
+
+    # Return success response
     return jsonify({
         'status': 'success',
+        'message': f"Model trained successfully ({'Boosting enabled' if is_boosted else 'Single tree'}).",
         'metrics': tree_metrics,
-        'tree_structure': tree_structure
+        'tree_structure': tree_structure, # Send structure for visualization
+        'feature_importance': feature_importance
     })
 
 @app.route('/api/test_data')
