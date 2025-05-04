@@ -111,7 +111,7 @@ def build_tree(data, target, features, depth=0, max_depth=3, min_samples_split=2
         majority_class = max(weighted_counts, key=weighted_counts.get) if weighted_counts else None
         return DecisionNode(value=majority_class)
 
-    if features.empty:
+    if not features: # Check if the list is empty
         weighted_counts = {}
         for i, label in enumerate(data[target]):
             weighted_counts[label] = weighted_counts.get(label, 0) + sample_weights[i]
