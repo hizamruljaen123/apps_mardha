@@ -234,8 +234,9 @@ def build_tree(data, target, features, depth=0, max_depth=3, min_samples_split=2
         return DecisionNode(value=majority_class)
 
 target = 'Penyakit_Jantung'
-features = df.columns.drop(target)
-tree = build_tree(train_data, target, features, max_depth=3)
+features = df.columns.drop(target) # Initial features based on df
+tree = None # Initialize tree as None, build it inside train_model route
+# tree = build_tree(train_data, target, features, max_depth=3) # Removed initial build
 
 boosted_trees = []
 boosted_alphas = []
