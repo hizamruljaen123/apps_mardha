@@ -1,0 +1,115 @@
+[
+  {
+    "display_rule": "JIKA Gula_Darah LEBIH KECIL SAMA DENGAN 159.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 169.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 170.5 MAKA PREDICT Penyakit katup jantung",
+    "machine_rule": {
+      "conditions": [
+        "Gula_Darah <= 159.5",
+        "Sistolik <= 169.5",
+        "Kolesterol <= 170.5"
+      ],
+      "prediction": "Penyakit katup jantung"
+    },
+    "confidence": 0.5,
+    "coverage": 0.02
+  },
+  {
+    "display_rule": "JIKA Gula_Darah LEBIH KECIL SAMA DENGAN 159.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 169.5 DAN Kolesterol LEBIH BESAR DARI 170.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 70.5 DAN Usia LEBIH KECIL SAMA DENGAN 48.0 MAKA PREDICT Penyakit katup jantung",
+    "machine_rule": {
+      "conditions": [
+        "Gula_Darah <= 159.5",
+        "Sistolik <= 169.5",
+        "Kolesterol > 170.5",
+        "Diastolik <= 70.5",
+        "Usia <= 48.0"
+      ],
+      "prediction": "Penyakit katup jantung"
+    },
+    "confidence": 1.0,
+    "coverage": 0.0
+  },
+  {
+    "display_rule": "JIKA Gula_Darah LEBIH KECIL SAMA DENGAN 159.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 169.5 DAN Kolesterol LEBIH BESAR DARI 170.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 70.5 DAN Usia LEBIH BESAR DARI 48.0 MAKA PREDICT Angina pektoris",
+    "machine_rule": {
+      "conditions": [
+        "Gula_Darah <= 159.5",
+        "Sistolik <= 169.5",
+        "Kolesterol > 170.5",
+        "Diastolik <= 70.5",
+        "Usia > 48.0"
+      ],
+      "prediction": "Angina pektoris"
+    },
+    "confidence": 0.5,
+    "coverage": 0.02
+  },
+  {
+    "display_rule": "JIKA Gula_Darah LEBIH KECIL SAMA DENGAN 159.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 169.5 DAN Kolesterol LEBIH BESAR DARI 170.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Denyut_Jantung LEBIH KECIL SAMA DENGAN 99.5 DAN Usia LEBIH KECIL SAMA DENGAN 69.5 MAKA PREDICT Diseksi aorta",
+    "machine_rule": {
+      "conditions": [
+        "Gula_Darah <= 159.5",
+        "Sistolik <= 169.5",
+        "Kolesterol > 170.5",
+        "Diastolik > 70.5",
+        "Denyut_Jantung <= 99.5",
+        "Usia <= 69.5"
+      ],
+      "prediction": "Diseksi aorta"
+    },
+    "confidence": 0.09,
+    "coverage": 0.9
+  },
+  {
+    "display_rule": "JIKA Gula_Darah LEBIH KECIL SAMA DENGAN 159.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 169.5 DAN Kolesterol LEBIH BESAR DARI 170.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Denyut_Jantung LEBIH KECIL SAMA DENGAN 99.5 DAN Usia LEBIH BESAR DARI 69.5 MAKA PREDICT Tidak Ada",
+    "machine_rule": {
+      "conditions": [
+        "Gula_Darah <= 159.5",
+        "Sistolik <= 169.5",
+        "Kolesterol > 170.5",
+        "Diastolik > 70.5",
+        "Denyut_Jantung <= 99.5",
+        "Usia > 69.5"
+      ],
+      "prediction": "Tidak Ada"
+    },
+    "confidence": 0.33,
+    "coverage": 0.03
+  },
+  {
+    "display_rule": "JIKA Gula_Darah LEBIH KECIL SAMA DENGAN 159.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 169.5 DAN Kolesterol LEBIH BESAR DARI 170.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Denyut_Jantung LEBIH BESAR DARI 99.5 MAKA PREDICT Endokarditis",
+    "machine_rule": {
+      "conditions": [
+        "Gula_Darah <= 159.5",
+        "Sistolik <= 169.5",
+        "Kolesterol > 170.5",
+        "Diastolik > 70.5",
+        "Denyut_Jantung > 99.5"
+      ],
+      "prediction": "Endokarditis"
+    },
+    "confidence": 0.25,
+    "coverage": 0.02
+  },
+  {
+    "display_rule": "JIKA Gula_Darah LEBIH KECIL SAMA DENGAN 159.5 DAN Sistolik LEBIH BESAR DARI 169.5 MAKA PREDICT Serangan jantung (infark miokard)",
+    "machine_rule": {
+      "conditions": [
+        "Gula_Darah <= 159.5",
+        "Sistolik > 169.5"
+      ],
+      "prediction": "Serangan jantung (infark miokard)"
+    },
+    "confidence": 1.0,
+    "coverage": 0.01
+  },
+  {
+    "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 159.5 MAKA PREDICT Penyakit jantung bawaan",
+    "machine_rule": {
+      "conditions": [
+        "Gula_Darah > 159.5"
+      ],
+      "prediction": "Penyakit jantung bawaan"
+    },
+    "confidence": 1.0,
+    "coverage": 0.01
+  }
+]

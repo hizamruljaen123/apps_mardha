@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Results Dashboard</title>
+    <title>Prediction Results</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <style>
         .sidebar {
             transition: all 0.3s;
@@ -102,11 +103,11 @@
                         <i class="fas fa-list-check"></i>
                         <span class="sidebar-text">Rules Visualization</span>
                     </a>
-                    <a href="/results" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                    <a href="/results" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md bg-blue-900 text-white">
                         <i class="fas fa-poll"></i>
                         <span class="sidebar-text">Results</span>
                     </a>
-                    <a href="#" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg[/blue-700 hover:text-white">
+                    <a href="#" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
                         <i class="fas fa-cog"></i>
                         <span class="sidebar-text">Settings</span>
                     </a>
@@ -248,7 +249,7 @@
     </div>
 
     <script>
-        // Format kolesterol dan gula darah ke kategori (opsional)
+        // Function to format kolesterol and gula darah to categories
         function formatKolesterol(value) {
             return value > 200 ? 'Tinggi' : 'Normal';
         }
@@ -257,105 +258,156 @@
             return value > 120 ? 'Tinggi' : 'Normal';
         }
 
-        // Populate the table with data
-        function populateTable(data) {
-            const tableBody = document.getElementById('tableBody');
-            tableBody.innerHTML = '';
-
-            data.forEach(item => {
-                const statusClass = item.status === 'Correct' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
-
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td class="px-4 py-3 whitespace-nowrap">${item.usia}</td>
-                    <td class="px-4 py-3 whitespace-nowrap">${item.jenis_kelamin}</td>
-                    <td class="px-4 py-3 whitespace-nowrap">${item.sistolik}</td>
-                    <td class="px-4 py-3 whitespace-nowrap">${item.diastolik}</td>
-                    <td class="px-4 py-3 whitespace-nowrap">${formatKolesterol(item.kolesterol)}</td>
-                    <td class="px-4 py-3 whitespace-nowrap">${formatGulaDarah(item.gula_darah)}</td>
-                    <td class="px-4 py-3 whitespace-nowrap">${item.nyeri_dada}</td>
-                    <td class="px-4 py-3 whitespace-nowrap">${item.sesak_napas}</td>
-                    <td class="px-4 py-3 whitespace-nowrap">${item.kelelahan}</td>
-                    <td class="px-4 py-3 whitespace-nowrap">${item.denyut_jantung}</td>
-                    <td class="px-4 py-3 whitespace-nowrap">${item.aktual}</td>
-                    <td class="px-4 py-3 whitespace-nowrap">${item.prediksi}</td>
-                    <td class="px-4 py-3 whitespace-nowrap">
-                        <span class="px-2 py-1 text-xs font-semibold rounded-full ${statusClass}">${item.status}</span>
-                    </td>
-                `;
-                tableBody.appendChild(row);
+        // Function to read CSV file
+        function readCSV(file) {
+            return new Promise((resolve, reject) => {
+                fetch(file)
+                    .then(response => response.text())
+                    .then(csv => {
+                        const results = Papa.parse(csv, { header: true, skipEmptyLines: true });
+                        resolve(results.data);
+                    })
+                    .catch(error => reject(error));
             });
+        }
 
-            // Destroy existing DataTable if initialized
-            if ($.fn.DataTable.isDataTable('#resultsTable')) {
-                $('#resultsTable').DataTable().destroy();
+        // Function to populate the table with merged data
+        async function populateTable() {
+            try {
+                const originalData = await readCSV('/static/test_data_original.csv');
+                const predictedData = await readCSV('/static/hasil_prediksi.csv');
+
+                // Merge data based on index (assuming the order is the same)
+                const mergedData = originalData.map((item, index) => ({
+                    ...item,
+                    Prediksi: predictedData[index] ? predictedData[index].Prediksi : 'N/A'
+                }));
+
+                const tableBody = document.getElementById('tableBody');
+                tableBody.innerHTML = '';
+
+                mergedData.forEach(item => {
+                    const statusClass = item.Penyakit_Jantung === item.Prediksi ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
+                    const status = item.Penyakit_Jantung === item.Prediksi ? 'Correct' : 'Incorrect';
+
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="px-4 py-3 whitespace-nowrap">${item.Usia}</td>
+                        <td class="px-4 py-3 whitespace-nowrap">${item.Jenis_Kelamin}</td>
+                        <td class="px-4 py-3 whitespace-nowrap">${item.Sistolik}</td>
+                        <td class="px-4 py-3 whitespace-nowrap">${item.Diastolik}</td>
+                        <td class="px-4 py-3 whitespace-nowrap">${formatKolesterol(item.Kolesterol)}</td>
+                        <td class="px-4 py-3 whitespace-nowrap">${formatGulaDarah(item.Gula_Darah)}</td>
+                        <td class="px-4 py-3 whitespace-nowrap">${item.Nyeri_Dada}</td>
+                        <td class="px-4 py-3 whitespace-nowrap">${item.Sesak_Napas}</td>
+                        <td class="px-4 py-3 whitespace-nowrap">${item.Kelelahan}</td>
+                        <td class="px-4 py-3 whitespace-nowrap">${item.Denyut_Jantung}</td>
+                        <td class="px-4 py-3 whitespace-nowrap">${item.Penyakit_Jantung}</td>
+                        <td class="px-4 py-3 whitespace-nowrap">${item.Prediksi}</td>
+                        <td class="px-4 py-3 whitespace-nowrap">
+                            <span class="px-2 py-1 text-xs font-semibold rounded-full ${statusClass}">${status}</span>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+
+                // Destroy existing DataTable if initialized
+                if ($.fn.DataTable.isDataTable('#resultsTable')) {
+                    $('#resultsTable').DataTable().destroy();
+                }
+
+                // Initialize DataTable
+                $('#resultsTable').DataTable({
+                    responsive: true,
+                    pageLength: 100,
+                    lengthMenu: [5, 10, 25, 50, 100],
+                    dom: '<"flex justify-between items-center mb-4"lf>rt<"flex justify-between items-center mt-4"ip>',
+                    searching: true
+                });
+
+                updateSummaryCards(mergedData);
+                updateBreakdownTable(mergedData);
+                updateConfusionMatrix(mergedData);
+
+            } catch (error) {
+                console.error('Error fetching or parsing CSV:', error);
             }
-
-            // Initialize DataTable
-            $('#resultsTable').DataTable({
-                responsive: true,
-                pageLength: 100,
-                lengthMenu: [5, 10, 25, 50, 100],
-                dom: '<"flex justify-between items-center mb-4"lf>rt<"flex justify-between items-center mt-4"ip>',
-                searching: true
-            });
         }
 
-        // Update summary cards
-        function updateSummaryCards(stats) {
-            document.getElementById('totalPredictions').textContent = stats.total;
-            document.getElementById('correctPredictions').textContent = stats.correct;
-            document.getElementById('modelAccuracy').textContent = `${stats.accuracy}%`;
+        // Function to update summary cards
+        function updateSummaryCards(data) {
+            const totalPredictions = data.length;
+            const correctPredictions = data.filter(item => item.Penyakit_Jantung === item.Prediksi).length;
+            const accuracy = (correctPredictions / totalPredictions * 100).toFixed(2);
+
+            document.getElementById('totalPredictions').textContent = totalPredictions;
+            document.getElementById('correctPredictions').textContent = correctPredictions;
+            document.getElementById('modelAccuracy').textContent = `${accuracy}%`;
         }
 
-        // Update breakdown table
-        function updateBreakdownTable(breakdown) {
+        // Function to update breakdown table
+        function updateBreakdownTable(data) {
             const breakdownBody = document.getElementById('breakdownBody');
             breakdownBody.innerHTML = '';
 
-            breakdown.forEach(item => {
+            const penyakitJantungValues = [...new Set(data.map(item => item.Penyakit_Jantung))];
+
+            penyakitJantungValues.forEach(penyakit => {
+                const classData = data.filter(item => item.Penyakit_Jantung === penyakit);
+                const correctCount = classData.filter(item => item.Penyakit_Jantung === item.Prediksi).length;
+                const incorrectCount = classData.length - correctCount;
+
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td class="px-4 py-2 whitespace-nowrap">${item.class}</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-green-600">${item.correct}</td>
-                    <td class="px-4 py-2 whitespace-nowrap text-red-600">${item.incorrect}</td>
+                    <td class="px-4 py-2 whitespace-nowrap">${penyakit}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-green-600">${correctCount}</td>
+                    <td class="px-4 py-2 whitespace-nowrap text-red-600">${incorrectCount}</td>
                 `;
                 breakdownBody.appendChild(row);
             });
         }
 
-        // Update confusion matrix
-        function updateConfusionMatrix(matrix) {
+        // Function to update confusion matrix
+        function updateConfusionMatrix(data) {
             const confusionMatrixBody = document.getElementById('confusionMatrixBody');
             confusionMatrixBody.innerHTML = '';
 
-            for (const [actual, predictions] of Object.entries(matrix)) {
+            const penyakitJantungValues = [...new Set(data.map(item => item.Penyakit_Jantung))];
+
+            const matrix = {};
+            penyakitJantungValues.forEach(actual => {
+                matrix[actual] = {};
+                penyakitJantungValues.forEach(predicted => {
+                    matrix[actual][predicted] = data.filter(item => item.Penyakit_Jantung === actual && item.Prediksi === predicted).length;
+                });
+            });
+
+            penyakitJantungValues.forEach(actual => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td class="px-4 py-2 whitespace-nowrap font-medium">${actual}</td>
-                    <td class="px-4 py-2 whitespace-nowrap">${predictions['Tidak']}</td>
-                    <td class="px-4 py-2 whitespace-nowrap">${predictions['Ya']}</td>
+                    ${penyakitJantungValues.map(predicted => `<td class="px-4 py-2 whitespace-nowrap">${matrix[actual][predicted]}</td>`).join('')}
                 `;
                 confusionMatrixBody.appendChild(row);
-            }
+            });
         }
 
-        // Export to Excel
+        // Function to export to Excel
         function exportToExcel(data) {
             const ws = XLSX.utils.json_to_sheet(data.map(item => ({
-                Usia: item.usia,
-                'Jenis Kelamin': item.jenis_kelamin,
-                Sistolik: item.sistolik,
-                Diastolik: item.diastolik,
-                Kolesterol: formatKolesterol(item.kolesterol),
-                'Gula Darah': formatGulaDarah(item.gula_darah),
-                'Nyeri Dada': item.nyeri_dada,
-                'Sesak Napas': item.sesak_napas,
-                Kelelahan: item.kelelahan,
-                'Denyut Jantung': item.denyut_jantung,
-                Aktual: item.aktual,
-                Prediksi: item.prediksi,
-                Status: item.status
+                Usia: item.Usia,
+                'Jenis Kelamin': item.Jenis_Kelamin,
+                Sistolik: item.Sistolik,
+                Diastolik: item.Diastolik,
+                Kolesterol: item.Kolesterol,
+                'Gula Darah': item.Gula_Darah,
+                'Nyeri Dada': item.Nyeri_Dada,
+                'Sesak Napas': item.Sesak_Napas,
+                Kelelahan: item.Kelelahan,
+                'Denyut Jantung': item.Denyut_Jantung,
+                Aktual: item.Penyakit_Jantung,
+                Prediksi: item.Prediksi,
+                Status: item.Penyakit_Jantung === item.Prediksi ? 'Correct' : 'Incorrect'
             })));
 
             const wb = XLSX.utils.book_new();
@@ -363,48 +415,14 @@
             XLSX.writeFile(wb, 'hasil_prediksi_manual.xlsx');
         }
 
-        // Fetch all data for export
-        async function fetchAllData() {
-            try {
-                const response = await fetch('/api/results?page=1&per_page=1000'); // Adjust per_page as needed
-                const data = await response.json();
-                return data.data;
-            } catch (error) {
-                console.error('Error fetching data for export:', error);
-                return [];
-            }
-        }
-
-        // Initialize the dashboard
+        // Function to initialize the dashboard
         document.addEventListener('DOMContentLoaded', () => {
             // Toggle sidebar
             document.getElementById('toggleSidebar').addEventListener('click', () => {
                 document.querySelector('.sidebar').classList.toggle('collapsed');
             });
 
-            // Fetch data from API
-            fetch('/api/results?page=1')
-                .then(response => response.json())
-                .then(data => {
-                    // Update UI
-                    populateTable(data.data);
-                    updateSummaryCards({
-                        total: data.total,
-                        correct: data.correct,
-                        accuracy: data.accuracy
-                    });
-                    updateBreakdownTable(data.breakdown);
-                    updateConfusionMatrix(data.confusionMatrix);
-
-                    // Export button
-                    document.getElementById('exportBtn').addEventListener('click', async () => {
-                        const allData = await fetchAllData();
-                        exportToExcel(allData);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                });
+            populateTable();
         });
     </script>
 </body>

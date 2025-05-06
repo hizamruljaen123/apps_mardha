@@ -317,11 +317,101 @@
     </div>
 
     <script>
-        // Fetch data from API
-        async function fetchData() {
-            const response = await fetch('/api/predictions');
-            const data = await response.json();
-            return data;
+        // Parse CSV data
+        async function parseCSVData() {
+            // Load both CSV files
+            const [testDataResponse, predDataResponse] = await Promise.all([
+                fetch('/static/test_data_original.csv'),
+                fetch('/static/hasil_prediksi.csv')
+            ]);
+            
+            const testDataText = await testDataResponse.text();
+            const predDataText = await predDataResponse.text();
+            
+            // Parse CSV to JSON
+            const testData = Papa.parse(testDataText, {header: true}).data;
+            const predData = Papa.parse(predDataText, {header: true}).data;
+            
+            // Combine data
+            const combinedData = testData.map((testItem, index) => {
+                const predItem = predData[index];
+                return {
+                    Usia: testItem.Usia,
+                    Jenis_Kelamin: testItem.Jenis_Kelamin,
+                    Sistolik: testItem.Sistolik,
+                    Diastolik: testItem.Diastolik,
+                    Kolesterol: testItem.Kolesterol,
+                    Gula_Darah: testItem.Gula_Darah,
+                    Nyeri_Dada: testItem.Nyeri_Dada,
+                    Sesak_Napas: testItem.Sesak_Napas,
+                    Kelelahan: testItem.Kelelahan,
+                    Denyut_Jantung: testItem.Denyut_Jantung,
+                    Aktual: testItem.Penyakit_Jantung,
+                    Prediksi: predItem.Prediksi
+                };
+            });
+            
+            // Calculate stats
+            const total = combinedData.length;
+            const correct = combinedData.filter(item => item.Aktual === item.Prediksi).length;
+            const accuracy = (correct / total * 100) || 0;
+            
+            // Binary classification (Disease vs No Disease)
+            combinedData.forEach(item => {
+                item.Aktual_Binary = item.Aktual === 'Tidak Ada' ? 'Tidak Ada' : 'Ya';
+                item.Prediksi_Binary = item.Prediksi === 'Tidak Ada' ? 'Tidak Ada' : 'Ya';
+            });
+            
+            // Confusion matrix
+            const confusionMatrix = {
+                'Tidak Ada': {'Tidak Ada': 0, 'Ya': 0},
+                'Ya': {'Tidak Ada': 0, 'Ya': 0}
+            };
+            
+            combinedData.forEach(item => {
+                const actual = item.Aktual_Binary;
+                const predicted = item.Prediksi_Binary;
+                confusionMatrix[actual][predicted] += 1;
+            });
+            
+            // Class accuracy
+            const classAccuracy = [];
+            for (const cls of ['Tidak Ada', 'Ya']) {
+                const totalCls = combinedData.filter(item => item.Aktual_Binary === cls).length;
+                const correctCls = confusionMatrix[cls][cls];
+                const clsAccuracy = (correctCls / totalCls * 100) || 0;
+                const performance = clsAccuracy >= 80 ? 'Excellent' :
+                                  clsAccuracy >= 60 ? 'Good' :
+                                  clsAccuracy >= 40 ? 'Fair' : 'Poor';
+                classAccuracy.push({
+                    class: cls,
+                    correct: correctCls,
+                    total: totalCls,
+                    accuracy: clsAccuracy,
+                    performance: performance
+                });
+            }
+            
+            // Precision, recall, F1
+            const tp = confusionMatrix['Ya']['Ya'];
+            const fp = confusionMatrix['Tidak Ada']['Ya'];
+            const fn = confusionMatrix['Ya']['Tidak Ada'];
+            
+            const precision = (tp / (tp + fp) * 100) || 0;
+            const recall = (tp / (tp + fn) * 100) || 0;
+            const f1Score = (2 * precision * recall / (precision + recall)) || 0;
+            
+            return {
+                total: total,
+                correct: correct,
+                accuracy: accuracy,
+                confusionMatrix: confusionMatrix,
+                classAccuracy: classAccuracy,
+                precision: precision,
+                recall: recall,
+                f1Score: f1Score,
+                data: combinedData
+            };
         }
     
         // Update summary cards
@@ -500,8 +590,18 @@
                 document.querySelector('.sidebar').classList.toggle('collapsed');
             });
             
-            // Fetch and display data
-            const stats = await fetchData();
+            // Load PapaParse library
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js';
+            document.head.appendChild(script);
+            
+            // Wait for PapaParse to load
+            await new Promise(resolve => {
+                script.onload = resolve;
+            });
+            
+            // Parse and display data
+            const stats = await parseCSVData();
             updateSummaryCards(stats);
             updateConfusionMatrix(stats.confusionMatrix);
             updateClassAccuracyTable(stats.classAccuracy);

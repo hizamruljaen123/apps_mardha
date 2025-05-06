@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.27.1.min.js"></script>
     <style>
         .sidebar {
             transition: all 0.3s;
@@ -208,18 +209,18 @@
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="id">ID</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="usia">Usia</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="jenis_kelamin">Jenis Kelamin</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="sistolik">Sistolik</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="diastolik">Diastolik</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="kolesterol">Kolesterol</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="gula_darah">Gula Darah</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="nyeri_dada">Nyeri Dada</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="sesak_napas">Sesak Napas</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="kelelahan">Kelelahan</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="denyut_jantung">Denyut Jantung</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="penyakit_jantung">Penyakit Jantung</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="Nama">Nama</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="Usia">Usia</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="Jenis_Kelamin">Jenis Kelamin</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="Sistolik">Sistolik</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="Diastolik">Diastolik</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="Kolesterol">Kolesterol</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="Gula_Darah">Gula Darah</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="Nyeri_Dada">Nyeri Dada</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="Sesak_Napas">Sesak Napas</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="Kelelahan">Kelelahan</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="Denyut_Jantung">Denyut Jantung</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="Penyakit_Jantung">Penyakit Jantung</th>
                                 </tr>
                             </thead>
                             <tbody id="dataTableBody" class="bg-white divide-y divide-gray-200">
@@ -264,6 +265,7 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script>
         // Chart instance
         let diseaseChart;
@@ -276,20 +278,28 @@
             direction: 'asc'
         };
 
-        // Fetch data from API
+        // Load data from CSV
         async function fetchData(page = 1) {
             try {
                 const response = await fetch(`/api/training_data?page=${page}`);
-                const result = await response.json();
-                trainingData = result.data;
-                allDiseases = result.stats.disease_stats.map(stat => stat.disease);
-                updateStats(result.stats);
+                const jsonData = await response.json();
+
+                trainingData = jsonData.data;
+                const totalRecords = jsonData.total;
+                const diseaseStats = jsonData.stats.disease_stats;
+
+                allDiseases = diseaseStats.map(stat => stat.disease);
+
+                updateStats({
+                    total_records: totalRecords,
+                    disease_stats: diseaseStats
+                });
                 updateDiseaseFilter();
                 sortData(currentSort.column, currentSort.direction);
                 renderDataTable(trainingData, page);
-                return result;
+
             } catch (error) {
-                console.error('Error fetching data:', error);
+                console.error('Error loading data:', error);
                 alert('Failed to load training data.');
             }
         }
@@ -399,14 +409,20 @@
 
         // Format prediction with appropriate styling
         function formatPrediction(prediction) {
-            const colorMap = {
-                'ACS': 'bg-green-100 text-green-600',
-                'Gagal Jantung': 'bg-red-100 text-red-600',
-                'PJB Sianotik': 'bg-blue-100 text-blue-600',
-                'Demam Reumatik': 'bg-yellow-100 text-yellow-600',
-                'Tidak Ada': 'bg-gray-100 text-gray-600'
-            };
-            const className = colorMap[prediction] || 'bg-gray-100 text-gray-600';
+            let className = 'bg-gray-100 text-gray-600'; // Default class
+            
+            if (prediction === 'ACS') {
+                className = 'bg-green-100 text-green-600';
+            } else if (prediction === 'Gagal Jantung') {
+                className = 'bg-red-100 text-red-600';
+            } else if (prediction === 'PJB Sianotik') {
+                className = 'bg-blue-100 text-blue-600';
+            } else if (prediction === 'Demam Reumatik') {
+                className = 'bg-yellow-100 text-yellow-600';
+            } else if (prediction === 'Tidak Ada') {
+                className = 'bg-gray-100 text-gray-600';
+            }
+            
             return `<span class="${className} px-2 py-1 rounded-md text-sm">${prediction}</span>`;
         }
 
@@ -449,18 +465,18 @@
                 const row = document.createElement('tr');
                 row.className = 'hover:bg-gray-50';
                 row.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${record.id}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.usia}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.jenis_kelamin}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.sistolik}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.diastolik}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.kolesterol}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.gula_darah}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.nyeri_dada}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.sesak_napas}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.kelelahan}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.denyut_jantung}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">${formatPrediction(record.penyakit_jantung)}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${record.Nama}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.Usia}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.Jenis_Kelamin}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.Sistolik}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.Diastolik}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.Kolesterol}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.Gula_Darah}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.Nyeri_Dada}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.Sesak_Napas}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.Kelelahan}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.Denyut_Jantung}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">${record.Penyakit_Jantung}</td>
                 `;
                 tbody.appendChild(row);
             });
@@ -528,26 +544,26 @@
             const diseaseFilter = document.getElementById('diseaseFilter').value;
             
             return trainingData.filter(record => {
-                const matchesSearch = 
+                const matchesSearch =
                     String(record.id).includes(searchTerm) ||
                     String(record.usia).includes(searchTerm) ||
                     record.jenis_kelamin.toLowerCase().includes(searchTerm) ||
                     String(record.sistolik).includes(searchTerm) ||
                     String(record.diastolik).includes(searchTerm) ||
-                    record.kolesterol.toLowerCase().includes(searchTerm) ||
-                    record.gula_darah.toLowerCase().includes(searchTerm) ||
-                    record.nyeri_dada.toLowerCase().includes(searchTerm) ||
-                    record.sesak_napas.toLowerCase().includes(searchTerm) ||
-                    record.kelelahan.toLowerCase().includes(searchTerm) ||
+                    String(record.kolesterol).toLowerCase().includes(searchTerm) ||
+                    String(record.gula_darah).toLowerCase().includes(searchTerm) ||
+                    String(record.nyeri_dada).toLowerCase().includes(searchTerm) ||
+                    String(record.sesak_napas).toLowerCase().includes(searchTerm) ||
+                    String(record.kelelahan).toLowerCase().includes(searchTerm) ||
                     String(record.denyut_jantung).includes(searchTerm) ||
-                    record.penyakit_jantung.toLowerCase().includes(searchTerm);
-                
+                    String(record.penyakit_jantung).toLowerCase().includes(searchTerm);
+
                 if (!matchesSearch) return false;
-                
+
                 if (diseaseFilter !== 'all' && record.penyakit_jantung !== diseaseFilter) {
                     return false;
                 }
-                
+
                 return true;
             });
         }
@@ -615,53 +631,53 @@
                     const column = header.dataset.column;
                     const direction = currentSort.column === column && currentSort.direction === 'asc' ? 'desc' : 'asc';
                     sortData(column, direction);
-                    renderDataTable(trainingData);
+                    renderDataTable(trainingData, 1);
                 });
             });
-            
+
             document.getElementById('searchData').addEventListener('input', () => {
                 const filteredData = filterData();
-                renderDataTable(filteredData);
+                renderDataTable(filteredData, 1);
             });
-            
+
             document.getElementById('diseaseFilter').addEventListener('change', () => {
                 const filteredData = filterData();
-                renderDataTable(filteredData);
+                renderDataTable(filteredData, 1);
             });
-            
+
             document.getElementById('resetFilters').addEventListener('click', () => {
                 document.getElementById('searchData').value = '';
                 document.getElementById('diseaseFilter').value = 'all';
                 const filteredData = filterData();
-                renderDataTable(filteredData);
+                renderDataTable(filteredData, 1);
             });
-            
+
             document.getElementById('prevPage').addEventListener('click', () => {
                 const currentPage = parseInt(document.querySelector('#pageNumbers button[class*="bg-blue-50"]')?.textContent || '1');
                 if (currentPage > 1) {
                     fetchData(currentPage - 1);
                 }
             });
-            
+
             document.getElementById('nextPage').addEventListener('click', () => {
                 const currentPage = parseInt(document.querySelector('#pageNumbers button[class*="bg-blue-50"]')?.textContent || '1');
                 fetchData(currentPage + 1);
             });
-            
+
             document.getElementById('prevPageMobile').addEventListener('click', () => {
                 const currentPage = parseInt(document.querySelector('#pageNumbers button[class*="bg-blue-50"]')?.textContent || '1');
                 if (currentPage > 1) {
                     fetchData(currentPage - 1);
                 }
             });
-            
+
             document.getElementById('nextPageMobile').addEventListener('click', () => {
                 const currentPage = parseInt(document.querySelector('#pageNumbers button[class*="bg-blue-50"]')?.textContent || '1');
                 fetchData(currentPage + 1);
             });
-            
+
             document.getElementById('exportBtn').addEventListener('click', exportToCSV);
-            
+
             document.getElementById('fileUpload').addEventListener('change', handleFileUpload);
         });
     </script>

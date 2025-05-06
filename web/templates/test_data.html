@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.27.1.min.js"></script>
     <style>
         .sidebar {
             transition: all 0.3s;
@@ -55,16 +56,6 @@
             height: 100%;
             cursor: pointer;
         }
-        .prediction-acs {
-            background-color: #f0fdf4;
-            color: #16a34a;
-            font-weight: 500;
-        }
-        .prediction-no-acs {
-            background-color: #fff1f2;
-            color: #dc2626;
-            font-weight: 500;
-        }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -91,7 +82,7 @@
             </div>
             <nav class="flex-1 overflow-y-auto py-4">
                 <div class="px-4 space-y-1">
-                    <a href="/" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md bg-blue-900 text-white">
+                    <a href="/" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
                         <i class="fas fa-tachometer-alt"></i>
                         <span class="sidebar-text">Dashboard</span>
                     </a>
@@ -99,7 +90,7 @@
                         <i class="fas fa-database"></i>
                         <span class="sidebar-text">Training Data</span>
                     </a>
-                    <a href="/test_data" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                    <a href="/test_data" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md bg-blue-900 text-white">
                         <i class="fas fa-vial"></i>
                         <span class="sidebar-text">Test Data</span>
                     </a>
@@ -119,7 +110,7 @@
                         <i class="fas fa-poll"></i>
                         <span class="sidebar-text">Results</span>
                     </a>
-                    <a href="#" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                    <a href="#" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg[/blue-700 hover:text-white">
                         <i class="fas fa-cog"></i>
                         <span class="sidebar-text">Settings</span>
                     </a>
@@ -140,13 +131,16 @@
                 <div class="flex justify-between items-center mb-6">
                     <h1 class="text-2xl font-bold text-gray-800">Test Data Management</h1>
                     <div class="flex items-center space-x-4">
+                        <!-- File upload disabled for test data page -->
+                        <!--
                         <div class="file-upload">
                             <button class="flex items-center space-x-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
                                 <i class="fas fa-upload"></i>
-                                <span>Upload Test Dataset</span>
+                                <span>Upload Dataset</span>
                             </button>
                             <input type="file" id="fileUpload" class="file-upload-input" accept=".csv">
                         </div>
+                        -->
                         <button id="exportBtn" class="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
                             <i class="fas fa-file-csv"></i>
                             <span>Export as CSV</span>
@@ -163,10 +157,11 @@
                                 <p id="totalRecords" class="text-2xl font-bold text-gray-800">0</p>
                             </div>
                             <div class="p-3 rounded-full bg-blue-100 text-blue-600">
-                                <i class="fas fa-vial"></i>
+                                <i class="fas fa-database"></i>
                             </div>
                         </div>
                     </div>
+                    <!-- Other stat cards will be added dynamically -->
                 </div>
 
                 <!-- Distribution Chart -->
@@ -178,6 +173,7 @@
                         </div>
                         <div class="flex flex-col justify-center">
                             <div class="space-y-2">
+                                <!-- Percentages will be added dynamically -->
                             </div>
                         </div>
                     </div>
@@ -187,7 +183,7 @@
                 <div class="bg-white p-4 rounded-lg shadow mb-6">
                     <div class="flex flex-col md:flex-row md:items-center gap-4">
                         <div class="flex-1">
-                            <label for="searchData" class="sr-only">Search test data</label>
+                            <label for="searchData" class="sr-only">Search data</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fas fa-search text-gray-400"></i>
@@ -200,6 +196,7 @@
                                 <label for="diseaseFilter" class="sr-only">Filter by disease</label>
                                 <select id="diseaseFilter" class="appearance-none bg-white border border-gray-300 rounded-md pl-3 pr-8 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                                     <option value="all">All Cases</option>
+                                    <!-- Options will be added dynamically -->
                                 </select>
                             </div>
                             <button id="resetFilters" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
@@ -215,21 +212,22 @@
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="id">ID</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="usia">Usia</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="jenis_kelamin">Jenis Kelamin</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="sistolik">Sistolik</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="diastolik">Diastolik</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="kolesterol">Kolesterol</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="gula_darah">Gula Darah</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="nyeri_dada">Nyeri Dada</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="sesak_napas">Sesak Napas</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="kelelahan">Kelelahan</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="denyut_jantung">Denyut Jantung</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="penyakit_jantung">Penyakit Jantung</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="Nama">Nama</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="Usia">Usia</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="Jenis_Kelamin">Jenis Kelamin</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="Sistolik">Sistolik</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="Diastolik">Diastolik</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="Kolesterol">Kolesterol</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="Gula_Darah">Gula Darah</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="Nyeri_Dada">Nyeri Dada</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="Sesak_Napas">Sesak Napas</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="Kelelahan">Kelelahan</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="Denyut_Jantung">Denyut Jantung</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sortable" data-column="Penyakit_Jantung">Penyakit Jantung</th>
                                 </tr>
                             </thead>
                             <tbody id="dataTableBody" class="bg-white divide-y divide-gray-200">
+                                <!-- Data will be inserted here by JavaScript -->
                             </tbody>
                         </table>
                     </div>
@@ -255,6 +253,7 @@
                                         <i class="fas fa-chevron-left"></i>
                                     </button>
                                     <div id="pageNumbers" class="flex">
+                                        <!-- Page numbers will be inserted here -->
                                     </div>
                                     <button id="nextPage" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                                         <span class="sr-only">Next</span>
@@ -269,37 +268,65 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script>
+        // Chart instance
         let diseaseChart;
-        let testData = [];
+        let trainingData = [];
         let allDiseases = [];
-        let currentSort = { column: 'id', direction: 'asc' };
 
+        // Current sort state
+        let currentSort = {
+            column: 'id',
+            direction: 'asc'
+        };
+
+        // Load data from CSV
         async function fetchData(page = 1) {
             try {
                 const response = await fetch(`/api/test_data?page=${page}`);
-                const result = await response.json();
-                testData = result.data;
-                allDiseases = result.stats.disease_stats.map(stat => stat.disease);
-                updateStats(result.stats);
+                const jsonData = await response.json();
+
+                trainingData = jsonData.data;
+                const totalRecords = jsonData.total;
+                const diseaseStats = jsonData.stats.disease_stats;
+
+                allDiseases = diseaseStats.map(stat => stat.disease);
+
+                updateStats({
+                    total_records: totalRecords,
+                    disease_stats: diseaseStats
+                });
                 updateDiseaseFilter();
                 sortData(currentSort.column, currentSort.direction);
-                renderDataTable(testData, page);
-                return result;
+                renderDataTable(trainingData, page);
+
             } catch (error) {
-                console.error('Error fetching data:', error);
-                alert('Failed to load test data.');
+                console.error('Error loading data:', error);
+                alert('Failed to load training data.');
             }
         }
 
+        // Update statistics and UI
         function updateStats(stats) {
             document.getElementById('totalRecords').textContent = stats.total_records;
+
+            // Update dynamic disease stats
             const statsContainer = document.querySelector('.grid.grid-cols-1.md\\:grid-cols-3');
             while (statsContainer.children.length > 1) {
                 statsContainer.removeChild(statsContainer.children[1]);
             }
+
             stats.disease_stats.forEach((stat, index) => {
-                const colorClasses = ['bg-green-100 text-green-600', 'bg-red-100 text-red-600', 'bg-blue-100 text-blue-600', 'bg-yellow-100 text-yellow-600', 'bg-purple-100 text-purple-600'];
+                const colorClasses = [
+                    'bg-green-100 text-green-600',
+                    'bg-red-100 text-red-600',
+                    'bg-blue-100 text-blue-600',
+                    'bg-yellow-100 text-yellow-600',
+                    'bg-purple-100 text-purple-600'
+                ];
+                const colorClass = colorClasses[index % colorClasses.length];
+
                 const statCard = document.createElement('div');
                 statCard.className = 'bg-white p-4 rounded-lg shadow';
                 statCard.innerHTML = `
@@ -308,24 +335,35 @@
                             <p class="text-sm font-medium text-gray-500">${stat.disease}</p>
                             <p class="text-2xl font-bold text-gray-800">${stat.count}</p>
                         </div>
-                        <div class="p-3 rounded-full ${colorClasses[index % colorClasses.length]}">
+                        <div class="p-3 rounded-full ${colorClass}">
                             <i class="fas fa-heartbeat"></i>
                         </div>
                     </div>
                 `;
                 statsContainer.appendChild(statCard);
             });
+
+            // Update chart and percentages
             updateChart(stats.disease_stats);
         }
 
+        // Update disease filter dropdown
         function updateDiseaseFilter() {
             const diseaseFilter = document.getElementById('diseaseFilter');
-            diseaseFilter.innerHTML = `<option value="all">All Cases</option>` + allDiseases.map(disease => `<option value="${disease}">${disease}</option>`).join('');
+            diseaseFilter.innerHTML = `
+                <option value="all">All Cases</option>
+                ${allDiseases.map(disease => `<option value="${disease}">${disease}</option>`).join('')}
+            `;
         }
 
+        // Update the disease distribution chart
         function updateChart(diseaseStats) {
             const ctx = document.getElementById('diseaseChart').getContext('2d');
-            if (diseaseChart) diseaseChart.destroy();
+
+            if (diseaseChart) {
+                diseaseChart.destroy();
+            }
+
             const colors = ['#16a34a', '#dc2626', '#2563eb', '#eab308', '#9333ea', '#f97316'];
             diseaseChart = new Chart(ctx, {
                 type: 'pie',
@@ -341,7 +379,9 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { position: 'bottom' },
+                        legend: {
+                            position: 'bottom'
+                        },
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
@@ -356,181 +396,292 @@
                     }
                 }
             });
+
+            // Update percentage display
             const percentContainer = document.querySelector('.flex.flex-col.justify-center .space-y-2');
-            percentContainer.innerHTML = diseaseStats.map((stat, index) => `
-                <div class="flex items-center">
-                    <div class="w-4 h-4 rounded-full mr-2" style="background-color: ${colors[index % colors.length]};"></div>
-                    <span class="text-sm text-gray-600">${stat.disease}: <span class="font-medium">${stat.percent}%</span></span>
-                </div>
-            `).join('');
+            percentContainer.innerHTML = diseaseStats.map((stat, index) => {
+                const color = colors[index % colors.length];
+                return `
+                    <div class="flex items-center">
+                        <div class="w-4 h-4 rounded-full mr-2" style="background-color: ${color};"></div>
+                        <span class="text-sm text-gray-600">${stat.disease}: <span class="font-medium">${stat.percent}%</span></span>
+                    </div>
+                `;
+            }).join('');
         }
 
+        // Format prediction with appropriate styling
         function formatPrediction(prediction) {
-            const colorMap = {
-                'ACS': 'bg-green-100 text-green-600',
-                'Gagal Jantung': 'bg-red-100 text-red-600',
-                'PJB Sianotik': 'bg-blue-100 text-blue-600',
-                'Demam Reumatik': 'bg-yellow-100 text-yellow-600',
-                'Tidak Ada': 'bg-gray-100 text-gray-600'
-            };
-            const className = colorMap[prediction] || 'bg-gray-100 text-gray-600';
+            let className = 'bg-gray-100 text-gray-600'; // Default class
+
+            if (prediction === 'ACS') {
+                className = 'bg-green-100 text-green-600';
+            } else if (prediction === 'Gagal Jantung') {
+                className = 'bg-red-100 text-red-600';
+            } else if (prediction === 'PJB Sianotik') {
+                className = 'bg-blue-100 text-blue-600';
+            } else if (prediction === 'Demam Reumatik') {
+                className = 'bg-yellow-100 text-yellow-600';
+            } else if (prediction === 'Tidak Ada') {
+                className = 'bg-gray-100 text-gray-600';
+            }
+
             return `<span class="${className} px-2 py-1 rounded-md text-sm">${prediction}</span>`;
         }
 
+        // Sort data by column
         function sortData(column, direction) {
-            testData.sort((a, b) => {
+            trainingData.sort((a, b) => {
                 const numericColumns = ['id', 'usia', 'sistolik', 'diastolik', 'denyut_jantung'];
                 if (numericColumns.includes(column)) {
                     return direction === 'asc' ? a[column] - b[column] : b[column] - a[column];
                 }
+
                 const valA = String(a[column]).toLowerCase();
                 const valB = String(b[column]).toLowerCase();
-                return valA < valB ? (direction === 'asc' ? -1 : 1) : valA > valB ? (direction === 'asc' ? 1 : -1) : 0;
+
+                if (valA < valB) return direction === 'asc' ? -1 : 1;
+                if (valA > valB) return direction === 'asc' ? 1 : -1;
+                return 0;
             });
+
             document.querySelectorAll('.sortable').forEach(header => {
                 header.classList.remove('sort-asc', 'sort-desc');
-                if (header.dataset.column === column) header.classList.add(direction === 'asc' ? 'sort-asc' : 'sort-desc');
+                if (header.dataset.column === column) {
+                    header.classList.add(direction === 'asc' ? 'sort-asc' : 'sort-desc');
+                }
             });
+
             currentSort = { column, direction };
         }
 
+        // Render the data table
         function renderDataTable(data, page = 1, pageSize = 10) {
             const startIndex = (page - 1) * pageSize;
             const endIndex = startIndex + pageSize;
             const paginatedData = data.slice(startIndex, endIndex);
+
             const tbody = document.getElementById('dataTableBody');
-            tbody.innerHTML = paginatedData.map(record => `
-                <tr class="hover:bg-gray-50">
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${record.id}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.usia}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.jenis_kelamin}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.sistolik}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.diastolik}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.kolesterol}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.gula_darah}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.nyeri_dada}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.sesak_napas}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.kelelahan}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.denyut_jantung}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">${formatPrediction(record.penyakit_jantung)}</td>
-                </tr>
-            `).join('');
+            tbody.innerHTML = '';
+
+            paginatedData.forEach(record => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-50';
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${record.Nama}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.Usia}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.Jenis_Kelamin}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.Sistolik}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.Diastolik}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.Kolesterol}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.Gula_Darah}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.Nyeri_Dada}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.Sesak_Napas}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.Kelelahan}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${record.Denyut_Jantung}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">${record.Penyakit_Jantung}</td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            // Update pagination info
             const totalRecords = data.length;
             const startRecord = startIndex + 1;
             const endRecord = Math.min(endIndex, totalRecords);
+
             document.getElementById('paginationInfo').innerHTML = `
                 Showing <span class="font-medium">${startRecord}</span> to <span class="font-medium">${endRecord}</span> of <span class="font-medium">${totalRecords}</span> records
             `;
+
             const totalPages = Math.ceil(totalRecords / pageSize);
             const pageNumbersContainer = document.getElementById('pageNumbers');
             pageNumbersContainer.innerHTML = '';
+
             if (page > 2) {
-                pageNumbersContainer.innerHTML += `<button class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50" onclick="fetchData(1)">1</button>`;
-                if (page > 3) pageNumbersContainer.innerHTML += `<span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>`;
+                const firstPage = document.createElement('button');
+                firstPage.className = 'relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50';
+                firstPage.textContent = '1';
+                firstPage.addEventListener('click', () => fetchData(1));
+                pageNumbersContainer.appendChild(firstPage);
+
+                if (page > 3) {
+                    const ellipsis = document.createElement('span');
+                    ellipsis.className = 'relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700';
+                    ellipsis.textContent = '...';
+                    pageNumbersContainer.appendChild(ellipsis);
+                }
             }
+
             for (let i = Math.max(1, page - 1); i <= Math.min(totalPages, page + 1); i++) {
-                pageNumbersContainer.innerHTML += `<button class="relative inline-flex items-center px-4 py-2 border text-sm font-medium ${i === page ? 'z-10 bg-blue-50 border-blue-500 text-blue-600' : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'}" onclick="fetchData(${i})">${i}</button>`;
+                const pageButton = document.createElement('button');
+                pageButton.className = `relative inline-flex items-center px-4 py-2 border text-sm font-medium ${i === page ? 'z-10 bg-blue-50 border-blue-500 text-blue-600' : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'}`;
+                pageButton.textContent = i;
+                pageButton.addEventListener('click', () => fetchData(i));
+                pageNumbersContainer.appendChild(pageButton);
             }
+
             if (page < totalPages - 1) {
-                if (page < totalPages - 2) pageNumbersContainer.innerHTML += `<span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>`;
-                pageNumbersContainer.innerHTML += `<button class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50" onclick="fetchData(${totalPages})">${totalPages}</button>`;
+                if (page < totalPages - 2) {
+                    const ellipsis = document.createElement('span');
+                    ellipsis.className = 'relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700';
+                    ellipsis.textContent = '...';
+                    pageNumbersContainer.appendChild(ellipsis);
+                }
+
+                const lastPage = document.createElement('button');
+                lastPage.className = 'relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50';
+                lastPage.textContent = totalPages;
+                lastPage.addEventListener('click', () => fetchData(totalPages));
+                pageNumbersContainer.appendChild(lastPage);
             }
+
             document.getElementById('prevPage').disabled = page === 1;
             document.getElementById('nextPage').disabled = page === totalPages;
             document.getElementById('prevPageMobile').disabled = page === 1;
             document.getElementById('nextPageMobile').disabled = page === totalPages;
         }
 
+        // Filter data based on search and filters
         function filterData() {
             const searchTerm = document.getElementById('searchData').value.toLowerCase();
             const diseaseFilter = document.getElementById('diseaseFilter').value;
-            return testData.filter(record => {
-                const matchesSearch = Object.values(record).some(val => String(val).toLowerCase().includes(searchTerm));
-                return matchesSearch && (diseaseFilter === 'all' || record.penyakit_jantung === diseaseFilter);
+
+            return trainingData.filter(record => {
+                const matchesSearch =
+                    String(record.id).includes(searchTerm) ||
+                    String(record.usia).includes(searchTerm) ||
+                    record.jenis_kelamin.toLowerCase().includes(searchTerm) ||
+                    String(record.sistolik).includes(searchTerm) ||
+                    String(record.diastolik).includes(searchTerm) ||
+                    String(record.kolesterol).toLowerCase().includes(searchTerm) ||
+                    String(record.gula_darah).toLowerCase().includes(searchTerm) ||
+                    String(record.nyeri_dada).toLowerCase().includes(searchTerm) ||
+                    String(record.sesak_napas).toLowerCase().includes(searchTerm) ||
+                    String(record.kelelahan).toLowerCase().includes(searchTerm) ||
+                    String(record.denyut_jantung).includes(searchTerm) ||
+                    String(record.penyakit_jantung).toLowerCase().includes(searchTerm);
+
+                if (!matchesSearch) return false;
+
+                if (diseaseFilter !== 'all' && record.penyakit_jantung !== diseaseFilter) {
+                    return false;
+                }
+
+                return true;
             });
         }
 
+        // Export data to CSV
         function exportToCSV() {
             const filteredData = filterData();
+
             let csvContent = "ID,Usia,Jenis Kelamin,Sistolik,Diastolik,Kolesterol,Gula Darah,Nyeri Dada,Sesak Napas,Kelelahan,Denyut Jantung,Penyakit Jantung\n";
+
             filteredData.forEach(record => {
                 csvContent += `${record.id},${record.usia},"${record.jenis_kelamin}",${record.sistolik},${record.diastolik},"${record.kolesterol}","${record.gula_darah}","${record.nyeri_dada}","${record.sesak_napas}","${record.kelelahan}",${record.denyut_jantung},"${record.penyakit_jantung}"\n`;
             });
+
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'test_data.csv';
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'test_data.csv');
             link.style.visibility = 'hidden';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         }
 
-        function handleFileUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const formData = new FormData();
-            formData.append('file', file);
-            fetch('/upload_test_data', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(result => {
-                if (result.status === 'success') {
-                    fetchData(1);
-                    alert(`Successfully uploaded test data from ${file.name}`);
-                } else {
-                    alert('Error uploading file: ' + result.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error uploading file:', error);
-                alert('Failed to upload file.');
-            });
-            event.target.value = '';
-        }
+        // Handle file upload (disabled for test data page)
+        // function handleFileUpload(event) {
+        //     const file = event.target.files[0];
+        //     if (!file) return;
 
+        //     const formData = new FormData();
+        //     formData.append('file', file);
+
+        //     fetch('/upload_training_data', {
+        //         method: 'POST',
+        //         body: formData
+        //     })
+        //     .then(response => response.json())
+        //     .then(result => {
+        //         if (result.status === 'success') {
+        //             fetchData(1);
+        //             alert(`Successfully uploaded training data from ${file.name}`);
+        //         } else {
+        //             alert('Error uploading file: ' + result.message);
+        //         }
+        //     })
+        //     .catch(error => {
+        //         console.error('Error uploading file:', error);
+        //         alert('Failed to upload file.');
+        //     });
+
+        //     event.target.value = '';
+        // }
+
+        // Initialize the dashboard
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('toggleSidebar').addEventListener('click', () => {
                 document.querySelector('.sidebar').classList.toggle('collapsed');
             });
+
             fetchData();
+
             document.querySelectorAll('.sortable').forEach(header => {
                 header.addEventListener('click', () => {
                     const column = header.dataset.column;
                     const direction = currentSort.column === column && currentSort.direction === 'asc' ? 'desc' : 'asc';
                     sortData(column, direction);
-                    renderDataTable(testData);
+                    renderDataTable(trainingData, 1);
                 });
             });
-            document.getElementById('searchData').addEventListener('input', () => renderDataTable(filterData()));
-            document.getElementById('diseaseFilter').addEventListener('change', () => renderDataTable(filterData()));
+
+            document.getElementById('searchData').addEventListener('input', () => {
+                const filteredData = filterData();
+                renderDataTable(filteredData, 1);
+            });
+
+            document.getElementById('diseaseFilter').addEventListener('change', () => {
+                const filteredData = filterData();
+                renderDataTable(filteredData, 1);
+            });
+
             document.getElementById('resetFilters').addEventListener('click', () => {
                 document.getElementById('searchData').value = '';
                 document.getElementById('diseaseFilter').value = 'all';
-                renderDataTable(filterData());
+                const filteredData = filterData();
+                renderDataTable(filteredData, 1);
             });
+
             document.getElementById('prevPage').addEventListener('click', () => {
                 const currentPage = parseInt(document.querySelector('#pageNumbers button[class*="bg-blue-50"]')?.textContent || '1');
-                if (currentPage > 1) fetchData(currentPage - 1);
+                if (currentPage > 1) {
+                    fetchData(currentPage - 1);
+                }
             });
+
             document.getElementById('nextPage').addEventListener('click', () => {
                 const currentPage = parseInt(document.querySelector('#pageNumbers button[class*="bg-blue-50"]')?.textContent || '1');
-                const totalPages = Math.ceil(testData.length / 10);
-                if (currentPage < totalPages) fetchData(currentPage + 1);
+                fetchData(currentPage + 1);
             });
+
             document.getElementById('prevPageMobile').addEventListener('click', () => {
                 const currentPage = parseInt(document.querySelector('#pageNumbers button[class*="bg-blue-50"]')?.textContent || '1');
-                if (currentPage > 1) fetchData(currentPage - 1);
+                if (currentPage > 1) {
+                    fetchData(currentPage - 1);
+                }
             });
+
             document.getElementById('nextPageMobile').addEventListener('click', () => {
                 const currentPage = parseInt(document.querySelector('#pageNumbers button[class*="bg-blue-50"]')?.textContent || '1');
-                const totalPages = Math.ceil(testData.length / 10);
-                if (currentPage < totalPages) fetchData(currentPage + 1);
+                fetchData(currentPage + 1);
             });
+
             document.getElementById('exportBtn').addEventListener('click', exportToCSV);
-            document.getElementById('fileUpload').addEventListener('change', handleFileUpload);
+
+            // document.getElementById('fileUpload').addEventListener('change', handleFileUpload); // Disabled
         });
     </script>
 </body>

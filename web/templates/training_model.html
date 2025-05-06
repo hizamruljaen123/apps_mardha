@@ -617,8 +617,9 @@
             .then(response => response.json())
             .then(data => {
                 if (data.status === 'success') {
-                    addLogEntry('Model training completed successfully!');
-                    showModelSummary(data.metrics, data.tree_structure);
+                   addLogEntry('Model training completed successfully!');
+                   console.log("Training Response:", data);
+                   showModelSummary(data);
                 } else {
                     addLogEntry('Training failed: ' + data.message);
                     alert('Training failed: ' + data.message);
@@ -646,83 +647,87 @@
         }
     
         // Show model summary
-        function showModelSummary(metrics, treeStructure) {
-            document.getElementById('summaryDepth').textContent = metrics.depth;
-            document.getElementById('summaryNodes').textContent = metrics.nodes;
-            document.getElementById('summaryLeaves').textContent = metrics.leaves;
-            document.getElementById('summaryTime').textContent = 'N/A'; // Bisa diperbarui dengan waktu dari backend
-    
-            // Generate feature importance (placeholder, perlu logika backend)
+        function showModelSummary(response) {
+            // Update metrics
+            document.getElementById('summaryDepth').textContent = response.metrics.depth;
+            document.getElementById('summaryNodes').textContent = response.metrics.nodes;
+            document.getElementById('summaryLeaves').textContent = response.metrics.leaves;
+            document.getElementById('summaryTime').textContent = 'N/A';
+
+            // Update feature importance
             const featureImportanceContainer = document.getElementById('featureImportance');
             featureImportanceContainer.innerHTML = '';
-            defaultDataset.features.forEach(feature => {
-                const importance = Math.random() * 100; // Ganti dengan data dari backend jika ada
+            for (const [feature, importance] of Object.entries(response.feature_importance)) {
                 const div = document.createElement('div');
                 div.className = 'space-y-1';
                 div.innerHTML = `
                     <div class="flex justify-between text-xs">
                         <span>${feature}</span>
-                        <span>${importance.toFixed(1)}%</span>
+                        <span>${(importance * 100).toFixed(1)}%</span>
                     </div>
                     <div class="feature-importance-bar">
-                        <div class="feature-importance-fill" style="width: ${importance}%"></div>
+                        <div class="feature-importance-fill" style="width: ${importance * 100}%"></div>
                     </div>
                 `;
                 featureImportanceContainer.appendChild(div);
-            });
-    
+            }
+
             // Generate tree preview
             const treePreviewContainer = document.getElementById('treePreview');
             treePreviewContainer.innerHTML = '';
-            treePreviewContainer.appendChild(renderTreeNode(treeStructure));
-    
+            treePreviewContainer.appendChild(renderTreeNode(response.tree_structure));
+
             // Show summary section
             document.getElementById('modelSummary').classList.remove('hidden');
         }
     
         // Render tree node recursively
         function renderTreeNode(node, depth = 0) {
-            const nodeElement = document.createElement('div');
+            if (!node) {
+                console.error('Invalid node received:', node);
+                return document.createElement('div');
+            }
             
-            if (node.value === 'Leaf') {
-                nodeElement.className = 'tree-node leaf p-1 text-center'; // Adjusted styling
+            const nodeElement = document.createElement('div');
+            const isLeaf = node.value === 'Leaf';
+            
+            if (isLeaf) {
+                nodeElement.className = 'tree-node leaf p-1 text-center';
                 nodeElement.innerHTML = `
                     <div class="text-xs font-semibold">${node.name}</div>
-                    <!-- Samples might not be available from API, removed -->
                 `;
             } else {
-                nodeElement.className = 'tree-node branch p-1 text-center'; // Adjusted styling
+                nodeElement.className = 'tree-node branch p-1 text-center';
                 nodeElement.innerHTML = `
                     <div class="text-xs font-semibold">${node.name}</div>
-                     <!-- Samples might not be available from API, removed -->
+                    <div class="text-xs">${node.value}</div>
                 `;
                 
                 const childrenContainer = document.createElement('div');
                 childrenContainer.className = 'tree-children';
                 
-                node.children.forEach(child => {
-                    if (child) {
-                        const childContainer = document.createElement('div');
-                        childContainer.className = 'tree-child';
-                        
-                        const line = document.createElement('div');
-                        line.className = 'tree-line';
-                        childContainer.appendChild(line);
-                        
-                        childContainer.appendChild(renderTreeNode(child, depth + 1));
-                        childrenContainer.appendChild(childContainer);
-                    }
-                });
+                if (node.children && Array.isArray(node.children)) {
+                    node.children.forEach(child => {
+                        if (child) {
+                            const childContainer = document.createElement('div');
+                            childContainer.className = 'tree-child';
+                            
+                            const line = document.createElement('div');
+                            line.className = 'tree-line';
+                            childContainer.appendChild(line);
+                            
+                            childContainer.appendChild(renderTreeNode(child, depth + 1));
+                            childrenContainer.appendChild(childContainer);
+                        }
+                    });
+                }
                 
                 nodeElement.appendChild(childrenContainer);
             }
             
             if (depth === 0) {
-                // Apply root styling if depth is 0
-                if (depth === 0) {
-                     nodeElement.classList.remove('branch'); // Remove branch style if it was added
-                     nodeElement.classList.add('root');
-                }
+                nodeElement.classList.remove('branch', 'leaf');
+                nodeElement.classList.add('root');
             }
             
             return nodeElement;

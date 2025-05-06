@@ -1,0 +1,91 @@
+Nama,Usia,Jenis_Kelamin,Sistolik,Diastolik,Kolesterol,Gula_Darah,Nyeri_Dada,Sesak_Napas,Kelelahan,Denyut_Jantung,Penyakit_Jantung
+Pasien 2,50,,148,106,242,141,,,,99,Kardiomiopati
+Pasien 4,43,,123,93,233,107,,,,92,Aritmia jantung
+Pasien 9,70,,120,109,272,101,,,,81,Gagal jantung
+Pasien 14,61,,122,97,208,114,,,,61,Kardiomiopati
+Pasien 15,34,,126,96,250,139,,,,94,Endokarditis
+Pasien 21,69,,145,79,173,150,,,,63,Penyakit katup jantung
+Pasien 22,30,,168,85,247,110,,,,98,Angina pektoris
+Pasien 24,32,,154,101,172,131,,,,73,Diseksi aorta
+Pasien 35,39,,144,91,226,100,,,,98,Diseksi aorta
+Pasien 40,64,,164,78,242,158,,,,69,Penyakit jantung koroner
+Pasien 41,41,,165,109,200,92,,,,67,Aritmia jantung
+Pasien 44,55,,140,83,186,151,,,,66,Gagal jantung
+Pasien 45,30,,170,90,247,106,,,,70,Serangan jantung (infark miokard)
+Pasien 48,70,,133,98,184,150,,,,100,Diseksi aorta
+Pasien 49,57,,150,85,182,129,,,,69,Angina pektoris
+Pasien 50,60,,126,105,265,103,,,,91,Kardiomiopati
+Pasien 51,53,,119,70,175,151,,,,76,Miokarditis
+Pasien 53,33,,157,79,249,138,,,,60,Kardiomiopati
+Pasien 54,32,,145,86,258,103,,,,89,Blok jantung
+Pasien 55,35,,168,93,272,113,,,,78,Endokarditis
+Pasien 59,58,,143,71,210,122,,,,63,Penyakit katup jantung
+Pasien 65,63,,116,95,261,141,,,,63,Penyakit jantung koroner
+Pasien 71,50,,128,70,223,124,,,,70,Angina pektoris
+Pasien 72,38,,155,97,263,113,,,,78,Endokarditis
+Pasien 81,64,,139,108,252,142,,,,75,Hipertensi pulmonal
+Pasien 82,46,,137,103,250,152,,,,69,Aritmia jantung
+Pasien 88,35,,112,70,188,102,,,,92,Tidak Ada
+Pasien 89,53,,143,86,193,128,,,,63,Fibrilasi atrium
+Pasien 92,51,,163,92,215,153,,,,73,Miokarditis
+Pasien 95,51,,161,110,261,108,,,,85,Diseksi aorta
+Pasien 100,30,,120,101,269,122,,,,74,Kardiomiopati
+Pasien 103,63,,129,90,268,132,,,,69,Aritmia jantung
+Pasien 104,33,,164,90,200,128,,,,94,Gagal jantung
+Pasien 106,52,,127,84,267,127,,,,63,Aritmia jantung
+Pasien 107,64,,170,93,206,111,,,,92,Hipertensi pulmonal
+Pasien 111,46,,155,76,273,138,,,,90,Angina pektoris
+Pasien 122,58,,145,83,170,111,,,,100,Penyakit jantung koroner
+Pasien 124,35,,163,95,238,147,,,,100,Angina pektoris
+Pasien 129,50,,147,108,189,151,,,,85,Hipertensi pulmonal
+Pasien 131,52,,119,89,206,104,,,,96,Tidak Ada
+Pasien 132,38,,170,103,201,91,,,,88,Tidak Ada
+Pasien 134,60,,142,95,252,93,,,,80,Aritmia jantung
+Pasien 135,36,,130,98,278,106,,,,78,Hipertensi pulmonal
+Pasien 146,38,,136,76,226,142,,,,60,Serangan jantung (infark miokard)
+Pasien 150,40,,150,84,199,140,,,,74,Blok jantung
+Pasien 152,69,,167,83,253,142,,,,81,Penyakit jantung bawaan
+Pasien 154,38,,165,78,205,118,,,,82,Kardiomiopati
+Pasien 157,70,,112,84,197,95,,,,71,Miokarditis
+Pasien 161,55,,139,96,250,111,,,,90,Aritmia jantung
+Pasien 162,55,,155,97,271,146,,,,80,Fibrilasi atrium
+Pasien 167,39,,119,96,195,131,,,,63,Penyakit jantung bawaan
+Pasien 170,61,,164,70,238,98,,,,68,Tidak Ada
+Pasien 175,59,,153,93,268,153,,,,85,Penyakit jantung bawaan
+Pasien 188,69,,114,100,182,101,,,,86,Angina pektoris
+Pasien 189,41,,160,91,208,102,,,,75,Miokarditis
+Pasien 190,33,,131,73,248,158,,,,76,Penyakit katup jantung
+Pasien 191,51,,123,98,175,90,,,,68,Perikarditis
+Pasien 192,64,,128,80,184,122,,,,62,Gagal jantung
+Pasien 200,39,,157,88,248,116,,,,86,Serangan jantung (infark miokard)
+Pasien 202,48,,113,98,196,117,,,,91,Aritmia jantung
+Pasien 206,43,,124,75,210,103,,,,85,Penyakit jantung bawaan
+Pasien 208,40,,124,91,188,133,,,,95,Perikarditis
+Pasien 213,53,,136,85,247,96,,,,84,Blok jantung
+Pasien 215,58,,159,96,279,107,,,,61,Penyakit katup jantung
+Pasien 217,42,,162,108,170,111,,,,85,Penyakit katup jantung
+Pasien 218,30,,121,110,275,100,,,,93,Fibrilasi atrium
+Pasien 221,68,,121,110,266,115,,,,91,Gagal jantung
+Pasien 228,51,,132,98,238,139,,,,98,Gagal jantung
+Pasien 236,50,,128,103,255,114,,,,88,Fibrilasi atrium
+Pasien 241,31,,148,86,186,107,,,,78,Gagal jantung
+Pasien 242,38,,113,97,181,156,,,,97,Serangan jantung (infark miokard)
+Pasien 244,60,,126,82,219,140,,,,63,Miokarditis
+Pasien 252,36,,148,78,250,154,,,,65,Serangan jantung (infark miokard)
+Pasien 253,40,,144,101,216,148,,,,82,Serangan jantung (infark miokard)
+Pasien 258,59,,121,109,222,101,,,,77,Tidak Ada
+Pasien 259,68,,128,83,181,153,,,,91,Aritmia jantung
+Pasien 262,30,,120,76,170,137,,,,61,Penyakit katup jantung
+Pasien 264,35,,115,86,205,115,,,,95,Penyakit jantung koroner
+Pasien 265,60,,154,78,209,106,,,,97,Miokarditis
+Pasien 271,53,,121,79,274,148,,,,67,Serangan jantung (infark miokard)
+Pasien 274,37,,137,100,259,153,,,,83,Kardiomiopati
+Pasien 276,44,,121,79,221,112,,,,62,Serangan jantung (infark miokard)
+Pasien 277,48,,170,70,253,133,,,,61,Penyakit jantung bawaan
+Pasien 280,43,,169,73,215,136,,,,98,Hipertensi pulmonal
+Pasien 288,67,,119,93,211,122,,,,99,Penyakit jantung bawaan
+Pasien 291,69,,142,95,251,138,,,,98,Fibrilasi atrium
+Pasien 292,49,,141,75,244,140,,,,73,Penyakit jantung koroner
+Pasien 295,47,,167,78,244,95,,,,65,Kardiomiopati
+Pasien 299,51,,123,84,200,142,,,,83,Miokarditis
+Pasien 300,64,,156,82,252,127,,,,62,Penyakit jantung koroner

@@ -162,7 +162,7 @@
                             <thead class="bg-gray-50">
                                 <tr>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rule #</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Conditions</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rule</th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prediction</th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Confidence</th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Coverage</th>
@@ -215,21 +215,34 @@
         let totalRules = 0;
         let predictionClasses = [];
 
-        // Fetch rules from API
+        // Fetch rules from rules.json
         async function fetchRules(page = 1) {
             try {
-                const response = await fetch(`/api/rules?page=${page}`);
+                const response = await fetch('/static/rules.json');
                 if (!response.ok) throw new Error('Failed to fetch rules');
                 const data = await response.json();
-                rulesData = data.data;
-                totalRules = data.total;
-                predictionClasses = Object.keys(data.stats.prediction_counts);
-                updateStats(data.stats);
+                rulesData = data;
+                totalRules = data.length;
+                
+                // Extract prediction classes from the rules data
+                predictionClasses = [...new Set(data.map(rule => rule.machine_rule.prediction))];
+
+                // Calculate prediction counts and average conditions
+                const predictionCounts = {};
+                let totalConditions = 0;
+                data.forEach(rule => {
+                    const prediction = rule.machine_rule.prediction;
+                    predictionCounts[prediction] = (predictionCounts[prediction] || 0) + 1;
+                    totalConditions += rule.machine_rule.conditions.length;
+                });
+                const avgConditions = totalRules > 0 ? (totalConditions / totalRules).toFixed(1) : 0;
+
+                updateStats({total_rules: totalRules, prediction_counts: predictionCounts, avg_conditions: avgConditions}); // Update stats based on the fetched rules
                 updatePredictionFilter();
                 renderRulesTable(rulesData, page);
             } catch (error) {
                 console.error('Error:', error);
-                alert('Failed to load rules. Please try again.');
+                alert('Failed to load rules from rules.json. Please ensure the file exists and is accessible.');
             }
         }
 
@@ -257,21 +270,23 @@
                 'bg-yellow-100 text-yellow-600',
                 'bg-purple-100 text-purple-600'
             ];
-            Object.entries(stats.prediction_counts).forEach(([pred, count], i) => {
-                container.innerHTML += `
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500">${pred} Rules</p>
-                                <p class="text-2xl font-bold text-gray-800">${count}</p>
-                            </div>
-                            <div class="p-3 rounded-full ${colors[i % colors.length]}">
-                                <i class="fas fa-heartbeat"></i>
+            if (stats.prediction_counts) {
+                Object.entries(stats.prediction_counts).forEach(([pred, count], i) => {
+                    container.innerHTML += `
+                        <div class="bg-white p-4 rounded-lg shadow">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-500">${pred} Rules</p>
+                                    <p class="text-2xl font-bold text-gray-800">${count}</p>
+                                </div>
+                                <div class="p-3 rounded-full ${colors[i % colors.length]}">
+                                    <i class="fas fa-heartbeat"></i>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                `;
-            });
+                    `;
+                });
+            }
             container.innerHTML += `
                 <div class="bg-white p-4 rounded-lg shadow">
                     <div class="flex items-center justify-between">
@@ -294,11 +309,6 @@
             predictionClasses.forEach(cls => {
                 select.innerHTML += `<option value="${cls}">${cls}</option>`;
             });
-        }
-
-        // Format conditions
-        function formatConditions(conditions) {
-            return conditions.map(cond => `<span class="rule-condition">${cond}</span>`).join(' <span class="text-gray-400">AND</span> ');
         }
 
         // Format confidence
@@ -332,9 +342,8 @@
                 const row = document.createElement('tr');
                 row.className = 'hover:bg-gray-50';
                 row.innerHTML = `
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${rule.id}</td>
-                    <td class="px-6 py-4 text-sm text-gray-500">${formatConditions(rule.conditions)}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">${formatPrediction(rule.prediction)}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${rulesData.indexOf(rule) + 1}</td>
+                    <td class="px-6 py-4 text-sm text-gray-500">${rule.display_rule}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm">${formatConfidence(rule.confidence)}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${formatCoverage(rule.coverage)}</td>
                 `;
@@ -377,9 +386,9 @@
             const confidenceFilter = document.getElementById('confidenceFilter').value;
 
             return rulesData.filter(rule => {
-                const matchesSearch = rule.conditions.some(cond => cond.toLowerCase().includes(searchTerm)) || rule.prediction.toLowerCase().includes(searchTerm);
+                const matchesSearch = rule.display_rule.toLowerCase().includes(searchTerm) || rule.machine_rule.prediction.toLowerCase().includes(searchTerm);
                 if (!matchesSearch) return false;
-                if (predictionFilter !== 'all' && rule.prediction !== predictionFilter) return false;
+                if (predictionFilter !== 'all' && rule.machine_rule.prediction !== predictionFilter) return false;
                 const confidencePercentage = rule.confidence * 100;
                 if (confidenceFilter === 'high' && confidencePercentage < 90) return false;
                 if (confidenceFilter === 'medium' && (confidencePercentage < 70 || confidencePercentage >= 90)) return false;
@@ -387,16 +396,14 @@
                 return true;
             });
         }
-
         // Export to CSV
         function exportToCSV() {
             const filteredRules = filterRules();
-            let csv = 'Rule ID,Conditions,Prediction,Confidence,Coverage,Samples\n';
+            let csv = 'Rule ID,Display Rule,Confidence,Coverage\n';
             filteredRules.forEach(rule => {
-                const conditions = rule.conditions.join(' AND ');
-                csv += `${rule.id},"${conditions}",${rule.prediction},${Math.round(rule.confidence * 100)}%,${Math.round(rule.coverage * 100)}%,${rule.samples}\n`;
+                csv += `${rulesData.indexOf(rule) + 1},"${rule.display_rule}",${Math.round(rule.confidence * 100)}%,${Math.round(rule.coverage * 100)}%\n`;
             });
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;

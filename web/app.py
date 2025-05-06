@@ -9,7 +9,9 @@ import os
 
 app = Flask(__name__)
 
-df = pd.read_excel('data_latih.xlsx')
+extracted_rules = []
+
+df = pd.read_csv('data_latih_2.csv', sep=';')
 
 df[['Sistolik', 'Diastolik']] = df['Tekanan_Darah'].str.split('/', expand=True).astype(int)
 df = df.drop('Tekanan_Darah', axis=1)
@@ -267,31 +269,64 @@ def predict_single_tree(node, sample):
     else:
         return predict_single_tree(node.left, sample)
 
-def predict(sample, use_boosting=False):
-    global boosted_trees, boosted_alphas, is_boosted, tree
+import os
+import json
 
-    current_model_is_boosted = is_boosted
+def predict(sample, use_rules=True):
+    global extracted_rules
 
-    if use_boosting and current_model_is_boosted and boosted_trees and boosted_alphas:
-        weighted_votes = {}
+    if use_rules:
+        for rule in extracted_rules:
+            conditions_met = True
+            for condition in rule['machine_rule']['conditions']:
+                parts = condition.split()
+                feature = parts[0]
+                operator = parts[1]
+                value = float(parts[2])
 
-        for b_tree, alpha in zip(boosted_trees, boosted_alphas):
-            pred = predict_single_tree(b_tree, sample)
+                if feature not in sample.index:
+                    conditions_met = False
+                    break
 
-            if pred is not None:
-                 weighted_votes[pred] = weighted_votes.get(pred, 0) + alpha
+                sample_value = sample[feature]
 
-        if not weighted_votes:
-             return None
+                if operator == '<=':
+                    if not (sample_value <= value):
+                        conditions_met = False
+                        break
+                elif operator == '>':
+                    if not (sample_value > value):
+                        conditions_met = False
+                        break
 
-        return max(weighted_votes, key=weighted_votes.get)
-
-    elif not use_boosting and tree:
-         return predict_single_tree(tree, sample)
-    elif use_boosting and not current_model_is_boosted and tree:
-         return predict_single_tree(tree, sample)
+            if conditions_met:
+                return rule['machine_rule']['prediction']
+        return "N/A"
     else:
-         return None
+        global boosted_trees, boosted_alphas, is_boosted, tree
+
+        current_model_is_boosted = is_boosted
+
+        if use_boosting and current_model_is_boosted and boosted_trees and boosted_alphas:
+            weighted_votes = {}
+
+            for b_tree, alpha in zip(boosted_trees, boosted_alphas):
+                pred = predict_single_tree(b_tree, sample)
+
+                if pred is not None:
+                     weighted_votes[pred] = weighted_votes.get(pred, 0) + alpha
+
+            if not weighted_votes:
+                 return None
+
+            return max(weighted_votes, key=weighted_votes.get)
+
+        elif not use_boosting and tree:
+             return predict_single_tree(tree, sample)
+        elif use_boosting and not current_model_is_boosted and tree:
+             return predict_single_tree(tree, sample)
+        else:
+             return None
 
 @app.route('/')
 def dashboard():
@@ -303,7 +338,7 @@ def training_data_page():
 
 @app.route('/test_data')
 def test_data_page():
-    return render_template('testing_data.html', page='test_data')
+    return render_template('test_data.html', page='test_data')
 
 @app.route('/training')
 def training_page():
@@ -411,6 +446,79 @@ def get_predictions():
 
     return jsonify(response)
 
+@app.route('/api/test_data')
+def get_test_data():
+    page = int(request.args.get('page', 1))
+    per_page = 10
+    start = (page - 1) * per_page
+    end = start + per_page
+
+    df_test = pd.read_csv('static/test_data_original.csv')
+
+    # Convert DataFrame to list of dictionaries
+    test_list = df_test.to_dict('records')
+
+    # Explicitly handle NaN/None values in the list of dictionaries
+    cleaned_test_list = []
+    for record in test_list:
+        cleaned_record = {}
+        for key, value in record.items():
+            # Replace pandas NaN and Python None with empty string
+            if pd.isna(value) or value is None:
+                cleaned_record[key] = ''
+            else:
+                cleaned_record[key] = value
+        cleaned_test_list.append(cleaned_record)
+
+    total_records = len(cleaned_test_list)
+    disease_counts = {}
+    for record in cleaned_test_list:
+        disease = record.get('Penyakit_Jantung', 'Unknown') # Use .get with default for safety
+        disease_counts[disease] = disease_counts.get(disease, 0) + 1
+
+    disease_stats = [
+        {
+            'disease': disease,
+            'count': count,
+            'percent': round((count / total_records * 100) if total_records > 0 else 0, 2)
+        }
+        for disease, count in disease_counts.items()
+    ]
+
+    # The frontend expects specific keys, ensure they are present even if empty
+    formatted_data = []
+    for idx, record in enumerate(cleaned_test_list):
+         formatted_record = {
+            'id': idx + 1,
+            'Nama': record.get('Nama', ''),
+            'Usia': record.get('Usia', ''),
+            'Jenis_Kelamin': record.get('Jenis_Kelamin', ''),
+            'Sistolik': record.get('Sistolik', ''),
+            'Diastolik': record.get('Diastolik', ''),
+            'Kolesterol': record.get('Kolesterol', ''),
+            'Gula_Darah': record.get('Gula_Darah', ''),
+            'Nyeri_Dada': record.get('Nyeri_Dada', ''),
+            'Sesak_Napas': record.get('Sesak_Napas', ''),
+            'Kelelahan': record.get('Kelelahan', ''),
+            'Denyut_Jantung': record.get('Denyut_Jantung', ''),
+            'Penyakit_Jantung': record.get('Penyakit_Jantung', '')
+         }
+         formatted_data.append(formatted_record)
+
+
+    paginated_data = formatted_data[start:end]
+
+    return jsonify({
+        'data': paginated_data,
+        'total': len(cleaned_test_list),
+        'stats': {
+            'total_records': total_records,
+            'disease_stats': disease_stats
+        },
+        'page': page,
+        'per_page': per_page
+    })
+
 @app.route('/api/training_data')
 def get_training_data():
     page = int(request.args.get('page', 1))
@@ -418,7 +526,23 @@ def get_training_data():
     start = (page - 1) * per_page
     end = start + per_page
 
-    train_list = train_data.to_dict('records')
+    df = pd.read_csv('data_latih_2.csv', sep=';')
+
+    df[['Sistolik', 'Diastolik']] = df['Tekanan_Darah'].str.split('/', expand=True).astype(int)
+    df = df.drop('Tekanan_Darah', axis=1)
+    df['Jenis_Kelamin'] = df['Jenis_Kelamin'].map({'L': 0, 'P': 1})
+    df['Nyeri_Dada'] = df['Nyeri_Dada'].map({'Tidak': 0, 'Ya': 1})
+    df['Sesak_Napas'] = df['Sesak_Napas'].map({'Tidak': 0, 'Ya': 1})
+    df['Kelelahan'] = df['Kelelahan'].map({'Tidak': 0, 'Ya': 1})
+
+    train_list = df.to_dict('records')
+
+    # Map categorical features to numerical values
+    for record in train_list:
+        record['Jenis_Kelamin'] = 0 if record['Jenis_Kelamin'] == 'L' or record['Jenis_Kelamin'] == 'Laki-laki' else 1
+        record['Nyeri_Dada'] = 1 if record['Nyeri_Dada'] == 'Ya' else 0
+        record['Sesak_Napas'] = 1 if record['Sesak_Napas'] == 'Ya' else 0
+        record['Kelelahan'] = 1 if record['Kelelahan'] == 'Ya' else 0
 
     total_records = len(train_list)
     disease_counts = {}
@@ -438,18 +562,19 @@ def get_training_data():
     formatted_data = [
         {
             'id': idx + 1,
-            'nama': record.get('Nama', f'Pasien {idx + 1}'),
-            'usia': record['Usia'],
-            'jenis_kelamin': 'Laki-laki' if record['Jenis_Kelamin'] == 0 else 'Perempuan',
-            'sistolik': record['Sistolik'],
-            'diastolik': record['Diastolik'],
-            'kolesterol': 'Tinggi' if record['Kolesterol'] > 200 else 'Normal',
-            'gula_darah': 'Tinggi' if record['Gula_Darah'] > 120 else 'Normal',
-            'nyeri_dada': 'Ya' if record['Nyeri_Dada'] == 1 else 'Tidak',
-            'sesak_napas': 'Ya' if record['Sesak_Napas'] == 1 else 'Tidak',
-            'kelelahan': 'Ya' if record['Kelelahan'] == 1 else 'Tidak',
-            'denyut_jantung': record['Denyut_Jantung'],
-            'penyakit_jantung': record['Penyakit_Jantung']
+            'Nama': record.get('Nama', f'Pasien {idx + 1}'),
+            'Usia': record['Usia'],
+            'Jenis_Kelamin': 'Laki-laki' if record['Jenis_Kelamin'] == 0 else 'Perempuan',
+            'Sistolik': record['Sistolik'],
+            'Diastolik': record['Diastolik'],
+            'Tekanan_Darah': f"{record['Sistolik']}/{record['Diastolik']}",
+            'Kolesterol': record['Kolesterol'],
+            'Gula_Darah': record['Gula_Darah'],
+            'Nyeri_Dada': 'Ya' if record['Nyeri_Dada'] == 1 else 'Tidak',
+            'Sesak_Napas': 'Ya' if record['Sesak_Napas'] == 1 else 'Tidak',
+            'Kelelahan': 'Ya' if record['Kelelahan'] == 1 else 'Tidak',
+            'Denyut_Jantung': record['Denyut_Jantung'],
+            'Penyakit_Jantung': record['Penyakit_Jantung']
         }
         for idx, record in enumerate(train_list)
     ]
@@ -458,7 +583,7 @@ def get_training_data():
 
     return jsonify({
         'data': paginated_data,
-        'total': total_records,
+        'total': len(train_list),
         'stats': {
             'total_records': total_records,
             'disease_stats': disease_stats
@@ -466,6 +591,7 @@ def get_training_data():
         'page': page,
         'per_page': per_page
     })
+
 @app.route('/api/results')
 def get_results():
     page = int(request.args.get('page', 1))
@@ -589,42 +715,30 @@ def get_tree_visualization():
 
 @app.route('/api/rules')
 def get_rules():
-    rules = []
-    def extract_rules(node, rule_conditions=[], path_data=train_data):
-        if node.value is not None:
-            subset = path_data
-            if not subset.empty:
-                correct = len(subset[subset[target] == node.value])
-                total = len(subset)
-                confidence = correct / total if total > 0 else 0
-                coverage = total / len(train_data)
-            else:
-                confidence = 0
-                coverage = 0
-            rules.append({
-                'id': len(rules) + 1,
-                'conditions': rule_conditions,
-                'prediction': node.value,
-                'confidence': round(confidence, 2),
-                'coverage': round(coverage, 2),
-                'samples': total
-            })
-            return
-        if node.feature and node.threshold:
-            left_data = path_data[path_data[node.feature] <= node.threshold]
-            right_data = path_data[path_data[node.feature] > node.threshold]
-            extract_rules(node.left, rule_conditions + [f"{node.feature} <= {node.threshold}"], left_data)
-            extract_rules(node.right, rule_conditions + [f"{node.feature} > {node.threshold}"], right_data)
+    try:
+        with open('static/rules.json', 'r') as f:
+            rules = json.load(f)
+    except FileNotFoundError:
+        return jsonify({'data': [], 'total': 0, 'stats': {'total_rules': 0, 'prediction_counts': {}, 'avg_conditions': 0}, 'page': 1, 'per_page': 10}), 404
+    except json.JSONDecodeError:
+        return jsonify({'error': 'Error decoding rules.json'}), 500
 
-    extract_rules(tree)
+    page = int(request.args.get('page', 1))
+    per_page = 10
+    start = (page - 1) * per_page
+    end = start + per_page
+    paginated_rules = rules[start:end]
 
     total_rules = len(rules)
     prediction_counts = {}
     total_conditions = 0
     for rule in rules:
-        pred = rule['prediction']
-        prediction_counts[pred] = prediction_counts.get(pred, 0) + 1
-        total_conditions += len(rule['conditions'])
+        if 'machine_rule' in rule and 'prediction' in rule['machine_rule']:
+            pred = rule['machine_rule']['prediction']
+            prediction_counts[pred] = prediction_counts.get(pred, 0) + 1
+        if 'machine_rule' in rule and 'conditions' in rule['machine_rule']:
+             total_conditions += len(rule['machine_rule']['conditions'])
+
     avg_conditions = round(total_conditions / total_rules, 1) if total_rules > 0 else 0
 
     stats = {
@@ -633,15 +747,9 @@ def get_rules():
         'avg_conditions': avg_conditions
     }
 
-    page = int(request.args.get('page', 1))
-    per_page = 10
-    start = (page - 1) * per_page
-    end = start + per_page
-    paginated_rules = rules[start:end]
-
     return jsonify({
         'data': paginated_rules,
-        'total': len(rules),
+        'total': total_rules,
         'stats': stats,
         'page': page,
         'per_page': per_page
@@ -653,7 +761,13 @@ def upload_training_data():
     if file and file.filename.endswith('.csv'):
         global train_data
         try:
-            train_data = pd.read_csv(file)
+            train_data = pd.read_csv(file, sep=';')
+            train_data[['Sistolik', 'Diastolik']] = train_data['Tekanan_Darah'].str.split('/', expand=True).astype(int)
+            train_data = train_data.drop('Tekanan_Darah', axis=1)
+            train_data['Jenis_Kelamin'] = train_data['Jenis_Kelamin'].map({'L': 0, 'P': 1})
+            train_data['Nyeri_Dada'] = train_data['Nyeri_Dada'].map({'Tidak': 0, 'Ya': 1})
+            train_data['Sesak_Napas'] = train_data['Sesak_Napas'].map({'Tidak': 0, 'Ya': 1})
+            train_data['Kelelahan'] = train_data['Kelelahan'].map({'Tidak': 0, 'Ya': 1})
             if 'Nama' not in train_data.columns:
                 train_data['Nama'] = [f'Pasien {i+1}' for i in range(len(train_data))]
         except Exception as e:
@@ -721,6 +835,22 @@ def train_model():
     test_data = df.drop(train_data.index)
     print(f"Data split: {len(train_data)} training samples, {len(test_data)} testing samples (Ratio: {train_test_split_ratio*100:.0f}%)")
 
+    # Save original test data to CSV
+    os.makedirs('static', exist_ok=True)
+    test_data.to_csv('static/test_data_original.csv', index=False)
+
+    # Map 'Jenis_Kelamin' in test_data
+    test_data['Jenis_Kelamin'] = test_data['Jenis_Kelamin'].map({'L': 0, 'P': 1, 'Laki-laki': 0, 'Perempuan': 1}).fillna(test_data['Jenis_Kelamin'])
+
+    # Predict target variable for test data
+    test_data['Prediksi'] = test_data.apply(lambda row: predict(row, use_rules=True), axis=1)
+
+    # Fill NaN predictions with "N/A"
+    test_data['Prediksi'] = test_data['Prediksi'].fillna("N/A")
+
+    # Save test data with predictions to CSV
+    test_data.to_csv('static/hasil_prediksi.csv', index=False)
+
     # --- 2. Validate Training Data and Features ---
     if train_data.empty:
         return jsonify({'status': 'error', 'message': 'Training data is empty after split'}), 400
@@ -730,7 +860,10 @@ def train_model():
     current_features = [col for col in train_data.columns if col != target]
     if not current_features:
          return jsonify({'status': 'error', 'message': 'No features found in training data (excluding target)'}), 400
-    features = current_features # Update global features based on current train_data
+    # Create dummy variables for categorical features, excluding 'Nama'
+    categorical_features = [col for col in current_features if not pd.api.types.is_numeric_dtype(train_data[col]) and col != 'Nama']
+    train_data = pd.get_dummies(train_data, columns=categorical_features, drop_first=True)
+    features = [col for col in train_data.columns if col != target and col != 'Nama']  # Update global features based on current train_data, excluding 'Nama'
 
     # --- 3. Train Model (Boosting or Single Tree) ---
     boosted_trees = []
@@ -803,6 +936,14 @@ def train_model():
         boosted_trees = []
         boosted_alphas = []
         print("Single tree training complete.")
+
+    global extracted_rules
+    extracted_rules = extract_rules(tree, path_data=train_data)
+
+    # Save extracted rules to /static/rules.json
+    os.makedirs('static', exist_ok=True)
+    with open('static/rules.json', 'w') as f:
+        json.dump(extracted_rules, f, indent=4)
 
 
     if tree is None and not is_boosted:
@@ -885,7 +1026,7 @@ def train_model():
             'Denyut_Jantung': row['Denyut_Jantung'],
             'Aktual': row[target],
             'Prediksi': pred if pred is not None else "N/A"
-        }
+         }
         results.append(result_dict)
     print("Prediction generation complete.")
 
@@ -901,60 +1042,6 @@ def train_model():
         'feature_importance': feature_importance
     })
 
-@app.route('/api/test_data')
-def get_test_data():
-    page = int(request.args.get('page', 1))
-    per_page = 10
-    start = (page - 1) * per_page
-    end = start + per_page
-
-    test_list = test_data.to_dict('records')
-
-    total_records = len(test_list)
-    disease_counts = {}
-    for record in test_list:
-        disease = record['Penyakit_Jantung']
-        disease_counts[disease] = disease_counts.get(disease, 0) + 1
-
-    disease_stats = [
-        {
-            'disease': disease,
-            'count': count,
-            'percent': round((count / total_records * 100) if total_records > 0 else 0, 2)
-        }
-        for disease, count in disease_counts.items()
-    ]
-
-    formatted_data = [
-        {
-            'id': idx + 1,
-            'usia': record['Usia'],
-            'jenis_kelamin': 'Laki-laki' if record['Jenis_Kelamin'] == 0 else 'Perempuan',
-            'sistolik': record['Sistolik'],
-            'diastolik': record['Diastolik'],
-            'kolesterol': 'Tinggi' if record['Kolesterol'] > 200 else 'Normal',
-            'gula_darah': 'Tinggi' if record['Gula_Darah'] > 120 else 'Normal',
-            'nyeri_dada': 'Ya' if record['Nyeri_Dada'] == 1 else 'Tidak',
-            'sesak_napas': 'Ya' if record['Sesak_Napas'] == 1 else 'Tidak',
-            'kelelahan': 'Ya' if record['Kelelahan'] == 1 else 'Tidak',
-            'denyut_jantung': record['Denyut_Jantung'],
-            'penyakit_jantung': record['Penyakit_Jantung']
-        }
-        for idx, record in enumerate(test_list)
-    ]
-
-    paginated_data = formatted_data[start:end]
-
-    return jsonify({
-        'data': paginated_data,
-        'total': total_records,
-        'stats': {
-            'total_records': total_records,
-            'disease_stats': disease_stats
-        },
-        'page': page,
-        'per_page': per_page
-    })
 @app.route('/download_results')
 def download_results():
     results_df = pd.DataFrame(results)
@@ -965,25 +1052,48 @@ def download_results():
 
 @app.route('/download_rules')
 def download_rules():
-    rules = []
-    def extract_rules(node, rule_conditions=[]):
-        if node.value is not None:
-            rules.append({
-                'Rule': " AND ".join(rule_conditions),
-                'Prediction': node.value,
-                'Confidence': 0.9,
-                'Coverage': 0.3
-            })
-            return
-        if node.feature and node.threshold:
-            extract_rules(node.left, rule_conditions + [f"{node.feature} <= {node.threshold}"])
-            extract_rules(node.right, rule_conditions + [f"{node.feature} > {node.threshold}"])
-    extract_rules(tree)
-    rules_df = pd.DataFrame(rules)
+    rules_df = pd.DataFrame(extracted_rules)
     output = BytesIO()
     rules_df.to_csv(output, index=False)
     output.seek(0)
     return send_file(output, download_name='decision_rules.csv', as_attachment=True)
+
+def extract_rules(node, rule_conditions=[], path_data=train_data):
+    rules = []
+    if node.value is not None:
+        subset = path_data
+        if not subset.empty:
+            correct = len(subset[subset[target] == node.value])
+            total = len(subset)
+            confidence = correct / total if total > 0 else 0
+            coverage = total / len(train_data)
+        else:
+            confidence = 0
+            coverage = 0
+
+        machine_rule = {
+            'conditions': rule_conditions,
+            'prediction': node.value
+        }
+
+        display_rule = "JIKA " + " DAN ".join(
+            [cond.replace(" <= ", " LEBIH KECIL SAMA DENGAN ").replace(" > ", " LEBIH BESAR DARI ") for cond in rule_conditions]
+        ) + f" MAKA PREDICT {node.value}"
+
+        rules.append({
+            'display_rule': display_rule,
+            'machine_rule': machine_rule,
+            'confidence': round(confidence, 2),
+            'coverage': round(coverage, 2)
+        })
+        return rules
+
+    if node.feature and node.threshold is not None:
+        condition = f"{node.feature} <= {node.threshold}"
+        left_rules = extract_rules(node.left, rule_conditions + [condition], path_data[path_data[node.feature] <= node.threshold])
+        right_rules = extract_rules(node.right, rule_conditions + [condition.replace('<=', '>') ], path_data[path_data[node.feature] > node.threshold])
+        return left_rules + right_rules
+    return rules
 
 import requests # type: ignore
 

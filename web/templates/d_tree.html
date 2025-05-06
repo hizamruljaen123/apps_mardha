@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tree Visualization</title>
+    <title>Decision Rules</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         .sidebar {
             transition: all 0.3s;
@@ -29,80 +27,6 @@
         }
         .sidebar.collapsed + .main-content {
             margin-left: 70px;
-        }
-        #tree-container {
-            width: 100%;
-            height: 600px;
-            border: 1px solid #e5e7eb;
-            border-radius: 0.5rem;
-            overflow: hidden;
-            background-color: #f9fafb;
-        }
-        .node circle {
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .node circle:hover {
-            stroke-width: 3px;
-        }
-        .node text {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-size: 12px;
-        }
-        .link {
-            fill: none;
-            stroke: #9ca3af;
-            stroke-width: 2px;
-        }
-        .decision-node {
-            fill: #3b82f6;
-            stroke: #1d4ed8;
-        }
-        .leaf-node {
-            fill: #10b981;
-            stroke: #047857;
-        }
-        .tooltip {
-            position: absolute;
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 4px;
-            font-size: 14px;
-            pointer-events: none;
-            z-index: 100;
-            max-width: 300px;
-        }
-        .zoom-controls {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: white;
-            border-radius: 4px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            z-index: 10;
-        }
-        .zoom-btn {
-            display: block;
-            width: 36px;
-            height: 36px;
-            text-align: center;
-            line-height: 36px;
-            cursor: pointer;
-            border-bottom: 1px solid #e5e7eb;
-        }
-        .zoom-btn:last-child {
-            border-bottom: none;
-        }
-        .zoom-btn:hover {
-            background-color: #f3f4f6;
-        }
-        .node-details {
-            background-color: white;
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            padding: 1rem;
-            margin-top: 1rem;
         }
     </style>
 </head>
@@ -130,7 +54,7 @@
             </div>
             <nav class="flex-1 overflow-y-auto py-4">
                 <div class="px-4 space-y-1">
-                    <a href="/" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md bg-blue-900 text-white">
+                    <a href="/" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
                         <i class="fas fa-tachometer-alt"></i>
                         <span class="sidebar-text">Dashboard</span>
                     </a>
@@ -150,7 +74,7 @@
                         <i class="fas fa-project-diagram"></i>
                         <span class="sidebar-text">Tree Visualization</span>
                     </a>
-                    <a href="/rules_visualization" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                    <a href="/rules_visualization" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md bg-blue-900 text-white">
                         <i class="fas fa-list-check"></i>
                         <span class="sidebar-text">Rules Visualization</span>
                     </a>
@@ -177,370 +101,79 @@
             <div class="p-6">
                 <!-- Header -->
                 <div class="flex justify-between items-center mb-6">
-                    <h1 class="text-2xl font-bold text-gray-800">Decision Tree Visualization</h1>
-                    <div class="flex items-center space-x-4">
-                        <button id="exportBtn" class="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
-                            <i class="fas fa-download"></i>
-                            <span>Export as Image</span>
-                        </button>
-                    </div>
+                    <h1 class="text-2xl font-bold text-gray-800">Decision Rules</h1>
                 </div>
 
-                <!-- Tree Controls -->
-                <div class="bg-white p-4 rounded-lg shadow mb-6">
-                    <div class="flex flex-wrap items-center gap-4">
-                        <div>
-                            <label for="depthFilter" class="block text-sm font-medium text-gray-700 mb-1">Max Depth</label>
-                            <select id="depthFilter" class="appearance-none bg-white border border-gray-300 rounded-md pl-3 pr-8 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                <option value="all">Show All</option>
-                                <option value="3">Level 3</option>
-                                <option value="5">Level 5</option>
-                                <option value="7">Level 7</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="nodeSizeFilter" class="block text-sm font-medium text-gray-700 mb-1">Node Size By</label>
-                            <select id="nodeSizeFilter" class="appearance-none bg-white border border-gray-300 rounded-md pl-3 pr-8 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                <option value="samples">Sample Count</option>
-                                <option value="impurity">Impurity</option>
-                                <option value="fixed">Fixed Size</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="colorScheme" class="block text-sm font-medium text-gray-700 mb-1">Color Scheme</label>
-                            <select id="colorScheme" class="appearance-none bg-white border border-gray-300 rounded-md pl-3 pr-8 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                <option value="blue">Blue</option>
-                                <option value="green">Green</option>
-                                <option value="red">Red</option>
-                                <option value="purple">Purple</option>
-                            </select>
-                        </div>
-                        <button id="resetViewBtn" class="self-end flex items-center space-x-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md text-sm font-medium transition-colors">
-                            <i class="fas fa-sync-alt"></i>
-                            <span>Reset View</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Tree Visualization -->
-                <div class="relative">
-                    <div id="tree-container"></div>
-                    <div class="zoom-controls">
-                        <div class="zoom-btn" id="zoomIn"><i class="fas fa-search-plus"></i></div>
-                        <div class="zoom-btn" id="zoomOut"><i class="fas fa-search-minus"></i></i></div>
-                        <div class="zoom-btn" id="zoomReset"><i class="fas fa-expand"></i></div>
-                    </div>
-                </div>
-
-                <!-- Node Details Panel -->
-                <div id="nodeDetails" class="node-details hidden">
-                    <h3 class="font-medium text-lg text-gray-800 mb-2">Node Details</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div>
-                            <p class="text-sm font-medium text-gray-500">Node Type</p>
-                            <p id="nodeType" class="text-gray-800">-</p>
-                        </div>
-                        <div>
-                            <p class="text-sm font-medium text-gray-500">Samples</p>
-                            <p id="nodeSamples" class="text-gray-800">-</p>
-                        </div>
-                        <div>
-                            <p class="text-sm font-medium text-gray-500">Value</p>
-                            <p id="nodeValue" class="text-gray-800">-</p>
-                        </div>
-                        <div class="md:col-span-3">
-                            <p class="text-sm font-medium text-gray-500">Description</p>
-                            <p id="nodeDescription" class="text-gray-800">-</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tree Statistics -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500">Tree Depth</p>
-                                <p id="treeDepth" class="text-2xl font-bold text-gray-800">0</p>
-                            </div>
-                            <div class="p-3 rounded-full bg-blue-100 text-blue-600">
-                                <i class="fas fa-layer-group"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500">Total Nodes</p>
-                                <p id="totalNodes" class="text-2xl font-bold text-gray-800">0</p>
-                            </div>
-                            <div class="p-3 rounded-full bg-green-100 text-green-600">
-                                <i class="fas fa-circle-nodes"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500">Leaf Nodes</p>
-                                <p id="leafNodes" class="text-2xl font-bold text-gray-800">0</p>
-                            </div>
-                            <div class="p-3 rounded-full bg-purple-100 text-purple-600">
-                                <i class="fas fa-leaf"></i>
-                            </div>
-                        </div>
-                    </div>
+                <!-- Rules Visualization -->
+                <div class="bg-white shadow rounded-lg overflow-hidden">
+                    <ul id="rulesList" class="w-full p-4 text-sm text-gray-800"></ul>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="tooltip" id="nodeTooltip"></div>
-
     <script>
-        // Variabel untuk menyimpan data pohon
-        let treeData = null;
-    
-        // Fungsi untuk mengambil data dari API
-        async function fetchTreeData() {
+        async function fetchRulesData() {
             try {
-                const response = await fetch('/api/tree_visualization');
+                const response = await fetch('/api/rules');
                 if (!response.ok) {
-                    throw new Error('Failed to fetch tree data');
+                    throw new Error('Failed to fetch rules data');
                 }
-                treeData = await response.json();
-                initTreeVisualization();
+                const jsonData = await response.json();
+                const rules = jsonData.data; // Assuming the rules are in the 'data' key
+
+                const rulesHTML = formatRules(rules);
+                document.getElementById('rulesList').innerHTML = rulesHTML;
+
             } catch (error) {
-                console.error('Error fetching tree data:', error);
-                alert('Failed to load tree visualization. Please train the model first.');
+                console.error('Error fetching rules data:', error);
+                document.getElementById('rulesList').textContent = 'Failed to load rules data.';
+                alert('Failed to load rules data.');
             }
         }
-    
-        // Fungsi untuk menghitung statistik pohon
-        function calculateTreeStats(data) {
-            let maxDepth = 0;
-            let totalNodes = 0;
-            let leafNodes = 0;
-            
-            function traverse(node, depth) {
-                totalNodes++;
-                maxDepth = Math.max(maxDepth, depth);
-                
-                if (node.value === "Leaf") {
-                    leafNodes++;
-                }
-                
-                if (node.children) {
-                    node.children.forEach(child => {
-                        if (child) { // Pastikan child tidak null
-                            traverse(child, depth + 1);
-                        }
-                    });
-                }
-            }
-            
-            traverse(data, 1);
-            
-            return {
-                depth: maxDepth,
-                totalNodes,
-                leafNodes
-            };
+
+        function formatRules(rules) {
+            let output = "<ul class='rules-list'>";
+            output += "<li>Warna</li>";
+
+            rules.forEach(rule => {
+                output += "<ul class='indent-1'>";
+                const conditions = rule.machine_rule.conditions;
+                const prediction = rule.machine_rule.prediction;
+
+                conditions.forEach((condition, index) => {
+                    const isLastCondition = index === conditions.length - 1;
+                    const branch = isLastCondition ? "└── " : "├── ";
+                    output += `<li>${branch}${condition}</li>`;
+                });
+                output += `<li>└── ${prediction}</li>`;
+                output += "</ul>";
+            });
+
+            output += "</ul>";
+            return output;
         }
-    
-        // Fungsi untuk menginisialisasi visualisasi pohon
-        function initTreeVisualization() {
-            const container = document.getElementById('tree-container');
-            const width = container.clientWidth;
-            const height = container.clientHeight;
-            
-            // Hitung statistik pohon
-            const stats = calculateTreeStats(treeData);
-            document.getElementById('treeDepth').textContent = stats.depth;
-            document.getElementById('totalNodes').textContent = stats.totalNodes;
-            document.getElementById('leafNodes').textContent = stats.leafNodes;
-            
-            // Buat SVG
-            const svg = d3.select('#tree-container')
-                .append('svg')
-                .attr('width', width)
-                .attr('height', height)
-                .call(d3.zoom()
-                    .scaleExtent([0.1, 5])
-                    .on('zoom', (event) => {
-                        g.attr('transform', event.transform);
-                    }))
-                .on('dblclick.zoom', null);
-            
-            const g = svg.append('g');
-            
-            // Buat tooltip
-            const tooltip = d3.select('#nodeTooltip');
-            
-            // Buat layout pohon
-            const cluster = d3.tree()
-                .size([width - 100, height - 100])
-                .separation((a, b) => a.parent === b.parent ? 1 : 1.5);
-            
-            // Konversi data ke hierarki
-            const root = d3.hierarchy(treeData, d => d.children ? d.children.filter(child => child !== null) : []);
-            const treeDataHierarchy = cluster(root);
-            
-            // Tambahkan link
-            g.selectAll('.link')
-                .data(treeDataHierarchy.links())
-                .enter()
-                .append('path')
-                .attr('class', 'link')
-                .attr('d', d3.linkVertical()
-                    .x(d => d.x)
-                    .y(d => d.y));
-            
-            // Tambahkan node
-            const node = g.selectAll('.node')
-                .data(treeDataHierarchy.descendants())
-                .enter()
-                .append('g')
-                .attr('class', 'node')
-                .attr('transform', d => `translate(${d.x},${d.y})`);
-            
-            // Tambahkan lingkaran ke node
-            node.append('circle')
-                .attr('r', d => {
-                    // Skala ukuran node berdasarkan jumlah sampel
-                    const baseSize = 10;
-                    const scaleFactor = 0.2;
-                    return baseSize + (d.data.samples * scaleFactor);
-                })
-                .attr('class', d => d.data.value === 'Leaf' ? 'leaf-node' : 'decision-node')
-                .on('mouseover', function(event, d) {
-                    // Tampilkan tooltip
-                    tooltip.transition()
-                        .duration(200)
-                        .style('opacity', 1);
-                    
-                    let tooltipContent = `<strong>${d.data.name}</strong><br>`;
-                    tooltipContent += `Samples: ${d.data.samples}<br>`;
-                    
-                    if (d.data.value === 'Leaf') {
-                        tooltipContent += `Class: ${d.data.class}<br>`;
-                        tooltipContent += `Impurity: ${d.data.impurity.toFixed(3)}`;
-                    } else {
-                        tooltipContent += `Decision Node<br>`;
-                        tooltipContent += `Impurity: ${d.data.impurity.toFixed(3)}`;
-                    }
-                    
-                    tooltip.html(tooltipContent)
-                        .style('left', (event.pageX + 10) + 'px')
-                        .style('top', (event.pageY + 10) + 'px');
-                    
-                    // Sorot node
-                    d3.select(this)
-                        .attr('stroke-width', 3)
-                        .attr('stroke', '#000');
-                })
-                .on('mouseout', function() {
-                    // Sembunyikan tooltip
-                    tooltip.transition()
-                        .duration(500)
-                        .style('opacity', 0);
-                    
-                    // Hapus sorotan
-                    d3.select(this)
-                        .attr('stroke-width', 1.5);
-                })
-                .on('click', function(event, d) {
-                    // Tampilkan panel detail node
-                    const detailsPanel = document.getElementById('nodeDetails');
-                    detailsPanel.classList.remove('hidden');
-                    
-                    document.getElementById('nodeType').textContent = d.data.value === 'Leaf' ? 'Leaf Node' : 'Decision Node';
-                    document.getElementById('nodeSamples').textContent = d.data.samples;
-                    
-                    if (d.data.value === 'Leaf') {
-                        document.getElementById('nodeValue').textContent = d.data.class;
-                        document.getElementById('nodeDescription').textContent = `This leaf node predicts ${d.data.class} with ${d.data.samples} samples.`;
-                    } else {
-                        document.getElementById('nodeValue').textContent = '-';
-                        document.getElementById('nodeDescription').textContent = `This decision node splits on ${d.data.name} with ${d.data.samples} samples.`;
-                    }
-                });
-            
-            // Tambahkan teks ke node
-            node.append('text')
-                .attr('dy', '.31em')
-                .attr('text-anchor', 'middle')
-                .attr('fill', '#fff')
-                .text(d => {
-                    // Persingkat teks jika terlalu panjang
-                    const maxLength = 15;
-                    if (d.data.name.length > maxLength) {
-                        return d.data.name.substring(0, maxLength) + '...';
-                    }
-                    return d.data.name;
-                });
-            
-            // Posisikan pohon di tengah
-            const initialScale = 0.8;
-            const initialX = (width - (width * initialScale)) / 2;
-            const initialY = (height - (height * initialScale)) / 2;
-            
-            g.attr('transform', `translate(${initialX}, ${initialY}) scale(${initialScale})`);
-            
-            // Kontrol zoom
-            document.getElementById('zoomIn').addEventListener('click', () => {
-                svg.transition().call(svg.zoom.scaleBy, 1.2);
-            });
-            
-            document.getElementById('zoomOut').addEventListener('click', () => {
-                svg.transition().call(svg.zoom.scaleBy, 0.8);
-            });
-            
-            document.getElementById('zoomReset').addEventListener('click', () => {
-                svg.transition().call(svg.zoom.transform, d3.zoomIdentity.translate(initialX, initialY).scale(initialScale));
-            });
-            
-            document.getElementById('resetViewBtn').addEventListener('click', () => {
-                svg.transition().call(svg.zoom.transform, d3.zoomIdentity.translate(initialX, initialY).scale(initialScale));
-            });
-            
-            // Ekspor sebagai gambar
-            document.getElementById('exportBtn').addEventListener('click', () => {
-                html2canvas(container).then(canvas => {
-                    const link = document.createElement('a');
-                    link.download = 'decision-tree.png';
-                    link.href = canvas.toDataURL('image/png');
-                    link.click();
-                });
-            });
-        }
-    
+
         // Inisialisasi dashboard
         document.addEventListener('DOMContentLoaded', () => {
             // Toggle sidebar
             document.getElementById('toggleSidebar').addEventListener('click', () => {
                 document.querySelector('.sidebar').classList.toggle('collapsed');
             });
-            
-            // Ambil data pohon dari API
-            fetchTreeData();
-            
-            // Filter controls (placeholder untuk implementasi lebih lanjut)
-            document.getElementById('depthFilter').addEventListener('change', (e) => {
-                console.log('Filter by depth:', e.target.value);
-                // Tambahkan logika untuk memfilter pohon berdasarkan kedalaman
-            });
-            
-            document.getElementById('nodeSizeFilter').addEventListener('change', (e) => {
-                console.log('Node size by:', e.target.value);
-                // Tambahkan logika untuk mengubah ukuran node
-            });
-            
-            document.getElementById('colorScheme').addEventListener('change', (e) => {
-                console.log('Color scheme:', e.target.value);
-                // Tambahkan logika untuk mengubah skema warna
-            });
+
+            // Ambil data aturan dari API
+            fetchRulesData();
         });
     </script>
+    <style>
+        .rules-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .indent-1 {
+            padding-left: 20px;
+        }
+    </style>
 </body>
 </html>
