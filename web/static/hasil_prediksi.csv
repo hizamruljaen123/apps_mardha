@@ -1,91 +1,91 @@
-Nama,Usia,Jenis_Kelamin,Sistolik,Diastolik,Kolesterol,Gula_Darah,Nyeri_Dada,Sesak_Napas,Kelelahan,Denyut_Jantung,Penyakit_Jantung,Prediksi
-Pasien 2,50,,148,106,242,141,,,,99,Kardiomiopati,Penyakit jantung bawaan
-Pasien 4,43,,123,93,233,107,,,,92,Aritmia jantung,Penyakit jantung bawaan
-Pasien 9,70,,120,109,272,101,,,,81,Gagal jantung,Penyakit jantung bawaan
-Pasien 14,61,,122,97,208,114,,,,61,Kardiomiopati,Penyakit jantung bawaan
-Pasien 15,34,,126,96,250,139,,,,94,Endokarditis,Penyakit jantung bawaan
-Pasien 21,69,,145,79,173,150,,,,63,Penyakit katup jantung,Penyakit jantung bawaan
-Pasien 22,30,,168,85,247,110,,,,98,Angina pektoris,Penyakit jantung bawaan
-Pasien 24,32,,154,101,172,131,,,,73,Diseksi aorta,Penyakit jantung bawaan
-Pasien 35,39,,144,91,226,100,,,,98,Diseksi aorta,Penyakit jantung bawaan
-Pasien 40,64,,164,78,242,158,,,,69,Penyakit jantung koroner,Penyakit jantung bawaan
-Pasien 41,41,,165,109,200,92,,,,67,Aritmia jantung,Penyakit jantung bawaan
-Pasien 44,55,,140,83,186,151,,,,66,Gagal jantung,Penyakit jantung bawaan
-Pasien 45,30,,170,90,247,106,,,,70,Serangan jantung (infark miokard),Penyakit jantung bawaan
-Pasien 48,70,,133,98,184,150,,,,100,Diseksi aorta,Penyakit jantung bawaan
-Pasien 49,57,,150,85,182,129,,,,69,Angina pektoris,Penyakit jantung bawaan
-Pasien 50,60,,126,105,265,103,,,,91,Kardiomiopati,Penyakit jantung bawaan
-Pasien 51,53,,119,70,175,151,,,,76,Miokarditis,Penyakit jantung bawaan
-Pasien 53,33,,157,79,249,138,,,,60,Kardiomiopati,Penyakit jantung bawaan
-Pasien 54,32,,145,86,258,103,,,,89,Blok jantung,Penyakit jantung bawaan
-Pasien 55,35,,168,93,272,113,,,,78,Endokarditis,Penyakit jantung bawaan
-Pasien 59,58,,143,71,210,122,,,,63,Penyakit katup jantung,Penyakit jantung bawaan
-Pasien 65,63,,116,95,261,141,,,,63,Penyakit jantung koroner,Penyakit jantung bawaan
-Pasien 71,50,,128,70,223,124,,,,70,Angina pektoris,Penyakit jantung bawaan
-Pasien 72,38,,155,97,263,113,,,,78,Endokarditis,Penyakit jantung bawaan
-Pasien 81,64,,139,108,252,142,,,,75,Hipertensi pulmonal,Penyakit jantung bawaan
-Pasien 82,46,,137,103,250,152,,,,69,Aritmia jantung,Penyakit jantung bawaan
-Pasien 88,35,,112,70,188,102,,,,92,Tidak Ada,Penyakit jantung bawaan
-Pasien 89,53,,143,86,193,128,,,,63,Fibrilasi atrium,Penyakit jantung bawaan
-Pasien 92,51,,163,92,215,153,,,,73,Miokarditis,Penyakit jantung bawaan
-Pasien 95,51,,161,110,261,108,,,,85,Diseksi aorta,Penyakit jantung bawaan
-Pasien 100,30,,120,101,269,122,,,,74,Kardiomiopati,Penyakit jantung bawaan
-Pasien 103,63,,129,90,268,132,,,,69,Aritmia jantung,Penyakit jantung bawaan
-Pasien 104,33,,164,90,200,128,,,,94,Gagal jantung,Penyakit jantung bawaan
-Pasien 106,52,,127,84,267,127,,,,63,Aritmia jantung,Penyakit jantung bawaan
-Pasien 107,64,,170,93,206,111,,,,92,Hipertensi pulmonal,Penyakit jantung bawaan
-Pasien 111,46,,155,76,273,138,,,,90,Angina pektoris,Penyakit jantung bawaan
-Pasien 122,58,,145,83,170,111,,,,100,Penyakit jantung koroner,Penyakit jantung bawaan
-Pasien 124,35,,163,95,238,147,,,,100,Angina pektoris,Penyakit jantung bawaan
-Pasien 129,50,,147,108,189,151,,,,85,Hipertensi pulmonal,Penyakit jantung bawaan
-Pasien 131,52,,119,89,206,104,,,,96,Tidak Ada,Penyakit jantung bawaan
-Pasien 132,38,,170,103,201,91,,,,88,Tidak Ada,Penyakit jantung bawaan
-Pasien 134,60,,142,95,252,93,,,,80,Aritmia jantung,Penyakit jantung bawaan
-Pasien 135,36,,130,98,278,106,,,,78,Hipertensi pulmonal,Penyakit jantung bawaan
-Pasien 146,38,,136,76,226,142,,,,60,Serangan jantung (infark miokard),Penyakit jantung bawaan
-Pasien 150,40,,150,84,199,140,,,,74,Blok jantung,Penyakit jantung bawaan
-Pasien 152,69,,167,83,253,142,,,,81,Penyakit jantung bawaan,Penyakit jantung bawaan
-Pasien 154,38,,165,78,205,118,,,,82,Kardiomiopati,Penyakit jantung bawaan
-Pasien 157,70,,112,84,197,95,,,,71,Miokarditis,Penyakit jantung bawaan
-Pasien 161,55,,139,96,250,111,,,,90,Aritmia jantung,Penyakit jantung bawaan
-Pasien 162,55,,155,97,271,146,,,,80,Fibrilasi atrium,Penyakit jantung bawaan
-Pasien 167,39,,119,96,195,131,,,,63,Penyakit jantung bawaan,Penyakit jantung bawaan
-Pasien 170,61,,164,70,238,98,,,,68,Tidak Ada,Penyakit jantung bawaan
-Pasien 175,59,,153,93,268,153,,,,85,Penyakit jantung bawaan,Penyakit jantung bawaan
-Pasien 188,69,,114,100,182,101,,,,86,Angina pektoris,Penyakit jantung bawaan
-Pasien 189,41,,160,91,208,102,,,,75,Miokarditis,Penyakit jantung bawaan
-Pasien 190,33,,131,73,248,158,,,,76,Penyakit katup jantung,Penyakit jantung bawaan
-Pasien 191,51,,123,98,175,90,,,,68,Perikarditis,Penyakit jantung bawaan
-Pasien 192,64,,128,80,184,122,,,,62,Gagal jantung,Penyakit jantung bawaan
-Pasien 200,39,,157,88,248,116,,,,86,Serangan jantung (infark miokard),Penyakit jantung bawaan
-Pasien 202,48,,113,98,196,117,,,,91,Aritmia jantung,Penyakit jantung bawaan
-Pasien 206,43,,124,75,210,103,,,,85,Penyakit jantung bawaan,Penyakit jantung bawaan
-Pasien 208,40,,124,91,188,133,,,,95,Perikarditis,Penyakit jantung bawaan
-Pasien 213,53,,136,85,247,96,,,,84,Blok jantung,Penyakit jantung bawaan
-Pasien 215,58,,159,96,279,107,,,,61,Penyakit katup jantung,Penyakit jantung bawaan
-Pasien 217,42,,162,108,170,111,,,,85,Penyakit katup jantung,Penyakit jantung bawaan
-Pasien 218,30,,121,110,275,100,,,,93,Fibrilasi atrium,Penyakit jantung bawaan
-Pasien 221,68,,121,110,266,115,,,,91,Gagal jantung,Penyakit jantung bawaan
-Pasien 228,51,,132,98,238,139,,,,98,Gagal jantung,Penyakit jantung bawaan
-Pasien 236,50,,128,103,255,114,,,,88,Fibrilasi atrium,Penyakit jantung bawaan
-Pasien 241,31,,148,86,186,107,,,,78,Gagal jantung,Penyakit jantung bawaan
-Pasien 242,38,,113,97,181,156,,,,97,Serangan jantung (infark miokard),Penyakit jantung bawaan
-Pasien 244,60,,126,82,219,140,,,,63,Miokarditis,Penyakit jantung bawaan
-Pasien 252,36,,148,78,250,154,,,,65,Serangan jantung (infark miokard),Penyakit jantung bawaan
-Pasien 253,40,,144,101,216,148,,,,82,Serangan jantung (infark miokard),Penyakit jantung bawaan
-Pasien 258,59,,121,109,222,101,,,,77,Tidak Ada,Penyakit jantung bawaan
-Pasien 259,68,,128,83,181,153,,,,91,Aritmia jantung,Penyakit jantung bawaan
-Pasien 262,30,,120,76,170,137,,,,61,Penyakit katup jantung,Penyakit jantung bawaan
-Pasien 264,35,,115,86,205,115,,,,95,Penyakit jantung koroner,Penyakit jantung bawaan
-Pasien 265,60,,154,78,209,106,,,,97,Miokarditis,Penyakit jantung bawaan
-Pasien 271,53,,121,79,274,148,,,,67,Serangan jantung (infark miokard),Penyakit jantung bawaan
-Pasien 274,37,,137,100,259,153,,,,83,Kardiomiopati,Penyakit jantung bawaan
-Pasien 276,44,,121,79,221,112,,,,62,Serangan jantung (infark miokard),Penyakit jantung bawaan
-Pasien 277,48,,170,70,253,133,,,,61,Penyakit jantung bawaan,Penyakit jantung bawaan
-Pasien 280,43,,169,73,215,136,,,,98,Hipertensi pulmonal,Penyakit jantung bawaan
-Pasien 288,67,,119,93,211,122,,,,99,Penyakit jantung bawaan,Penyakit jantung bawaan
-Pasien 291,69,,142,95,251,138,,,,98,Fibrilasi atrium,Penyakit jantung bawaan
-Pasien 292,49,,141,75,244,140,,,,73,Penyakit jantung koroner,Penyakit jantung bawaan
-Pasien 295,47,,167,78,244,95,,,,65,Kardiomiopati,Penyakit jantung bawaan
-Pasien 299,51,,123,84,200,142,,,,83,Miokarditis,Penyakit jantung bawaan
-Pasien 300,64,,156,82,252,127,,,,62,Penyakit jantung koroner,Penyakit jantung bawaan
+Nama,Usia,Jenis_Kelamin,Sistolik,Diastolik,Kategori_Tekanan_Darah,Kolesterol,Gula_Darah,Nyeri_Dada,Sesak_Napas,Kelelahan,Denyut_Jantung,Penyakit_Jantung,Prediksi
+Siti Aminah,61,,136,72,Pra-hipertensi,220,135,0,0,0,97,Tidak Ada,Tidak Ada
+Retno Wulandari,55,,155,113,Hipertensi Derajat 1,271,150,0,1,1,89,Penyakit jantung koroner,Gagal jantung
+Ani Lestari,45,,126,85,Pra-hipertensi,185,129,0,0,0,73,Tidak Ada,Tidak Ada
+Asep Saepudin,50,,122,80,Pra-hipertensi,199,97,1,1,0,114,Penyakit jantung koroner,Demam reumatik (Dampak)
+Lina Marlina,49,,143,96,Hipertensi Derajat 1,203,125,0,0,0,112,Penyakit jantung koroner,Demam reumatik (Dampak)
+Endang Sulastri,56,,160,91,Hipertensi Derajat 1,205,120,0,0,1,111,Penyakit jantung koroner,Gagal jantung
+Sugeng Riyadi,64,,135,91,Pra-hipertensi,256,149,0,0,0,81,Penyakit jantung koroner,Tidak Ada
+Ahmad Fauzi,57,,159,91,Hipertensi Derajat 1,232,165,1,0,0,85,Penyakit jantung koroner,Demam reumatik (Dampak)
+Lely Suryani,67,,141,91,Hipertensi Derajat 1,245,138,0,0,0,113,Penyakit jantung koroner,Demam reumatik (Dampak)
+Qomaruddin,58,,162,90,Hipertensi Derajat 1,255,137,0,0,0,57,Penyakit jantung koroner,Demam reumatik (Dampak)
+Ratih Kumala,51,,138,83,Pra-hipertensi,213,148,0,0,0,116,Penyakit jantung koroner,Tidak Ada
+Udin Samsudin,50,,130,83,Pra-hipertensi,189,94,1,0,0,79,Jantung bawaan biru (Riwayat),Demam reumatik (Dampak)
+Vera Febrianti,49,,130,77,Pra-hipertensi,170,101,1,1,0,74,Demam reumatik (Dampak),Demam reumatik (Dampak)
+Zainal Arifin,53,,139,83,Pra-hipertensi,200,149,1,1,0,51,Demam reumatik (Dampak),Demam reumatik (Dampak)
+Zuhariah,68,,110,71,Normal,211,127,0,0,0,110,Penyakit jantung koroner,Penyakit jantung koroner
+Agus Salim,42,,135,83,Pra-hipertensi,212,123,0,1,0,98,Jantung bawaan biru (Riwayat),Gagal jantung
+Siti Fatimah,56,,117,85,Pra-hipertensi,170,147,0,0,0,55,Penyakit jantung koroner,Tidak Ada
+Retno Susanti,43,,189,118,Hipertensi Derajat 3,264,122,1,0,1,56,Penyakit jantung koroner,Penyakit jantung koroner
+Joko Santoso,57,,114,90,Hipertensi Derajat 1,202,157,0,0,0,112,Penyakit jantung koroner,Demam reumatik (Dampak)
+Eko Wibowo,62,,153,90,Hipertensi Derajat 1,259,175,0,0,0,105,Penyakit jantung koroner,Demam reumatik (Dampak)
+Bambang Nugroho,40,,118,83,Pra-hipertensi,173,123,1,0,0,61,Demam reumatik (Dampak),Demam reumatik (Dampak)
+Dadang Iskandar,67,,158,97,Hipertensi Derajat 1,206,112,0,0,0,99,Penyakit jantung koroner,Demam reumatik (Dampak)
+Sugeng Handoyo,51,,119,87,Pra-hipertensi,177,142,0,1,1,100,Gagal jantung,Gagal jantung
+Rina Wulandari,44,,133,78,Pra-hipertensi,175,113,0,0,0,69,Tidak Ada,Tidak Ada
+Cecep Suryana,56,,166,86,Pra-hipertensi,240,113,0,1,1,86,Gagal jantung,Gagal jantung
+Gina Lestari,64,,125,99,Pra-hipertensi,191,150,0,1,0,99,Penyakit jantung koroner,Gagal jantung
+Pipit Karlina,69,,151,90,Hipertensi Derajat 1,207,149,0,0,1,117,Penyakit jantung koroner,Penyakit jantung koroner
+Qodir Jaelani,40,,137,73,Pra-hipertensi,218,124,0,1,0,114,Jantung bawaan biru (Riwayat),Gagal jantung
+Tuti Susilawati,61,,135,71,Pra-hipertensi,200,111,0,0,1,64,Gagal jantung,Tidak Ada
+Wawan Darmawan,67,,138,97,Pra-hipertensi,257,119,0,0,1,92,Penyakit jantung koroner,Tidak Ada
+Siti Jubaedah,58,,139,91,Pra-hipertensi,252,108,0,0,0,55,Penyakit jantung koroner,Tidak Ada
+Joko Waluyo,65,,132,114,Pra-hipertensi,258,106,0,1,0,62,Gagal jantung,Gagal jantung
+Eko Nugroho,50,,136,89,Pra-hipertensi,184,107,0,0,0,91,Tidak Ada,Tidak Ada
+Rudi Hermawan,60,,112,83,Pra-hipertensi,189,121,0,1,1,104,Jantung bawaan biru (Riwayat),Gagal jantung
+Ani Sumiati,47,,160,89,Pra-hipertensi,235,150,0,0,0,73,Demam reumatik (Dampak),Tidak Ada
+Nurlela,56,,124,97,Pra-hipertensi,242,95,0,0,0,96,Tidak Ada,Tidak Ada
+Ahmad Hidayat,61,,181,98,Hipertensi Derajat 1,236,153,0,0,0,88,Gagal jantung,Gagal jantung
+Ujang Sumardi,55,,183,109,Hipertensi Derajat 2,232,129,1,1,1,82,Gagal jantung,Gagal jantung
+Fifie Handayani,45,,117,71,Normal,212,91,0,0,1,105,Demam reumatik (Dampak),Demam reumatik (Dampak)
+Gina Susanti,51,,125,80,Pra-hipertensi,254,104,0,0,0,51,Demam reumatik (Dampak),Tidak Ada
+Iwan Gunawan,44,,146,105,Hipertensi Derajat 1,219,144,1,0,0,81,Jantung bawaan biru (Riwayat),Demam reumatik (Dampak)
+Kusmiati,50,,181,101,Hipertensi Derajat 2,241,132,0,0,1,88,Gagal jantung,Gagal jantung
+Neneng Fatimah,49,,141,101,Hipertensi Derajat 1,246,122,0,0,1,91,Gagal jantung,Gagal jantung
+Zainal Abidin,46,,138,80,Pra-hipertensi,231,127,0,0,1,57,Gagal jantung,Tidak Ada
+Budi Kusuma,59,,151,83,Pra-hipertensi,224,146,0,1,1,89,Gagal jantung,Gagal jantung
+Joko Nugroho,61,,121,72,Pra-hipertensi,193,110,0,0,1,52,Jantung bawaan biru (Riwayat),Tidak Ada
+Sri Budiarti,55,,118,84,Pra-hipertensi,186,103,0,0,0,116,Demam reumatik (Dampak),Tidak Ada
+Bambang Wijaya,59,,136,89,Pra-hipertensi,201,146,0,0,0,85,Jantung bawaan biru (Riwayat),Tidak Ada
+Asep Mulyana,51,,134,79,Pra-hipertensi,184,122,0,0,0,86,Tidak Ada,Tidak Ada
+Lina Novianti,44,,129,83,Pra-hipertensi,241,122,1,0,1,60,Demam reumatik (Dampak),Penyakit jantung koroner
+Wahyu Kurniawan,47,,112,88,Pra-hipertensi,190,131,1,1,0,78,Demam reumatik (Dampak),Demam reumatik (Dampak)
+Rina Agustin,42,,143,81,Pra-hipertensi,238,94,0,0,1,92,Gagal jantung,Tidak Ada
+Maman Hidayat,62,,133,88,Pra-hipertensi,260,142,0,1,0,53,Demam reumatik (Dampak),Demam reumatik (Dampak)
+Ratih Wulandari,63,,123,90,Pra-hipertensi,200,148,0,0,0,96,Jantung bawaan biru (Riwayat),Tidak Ada
+Sobirin Santoso,45,,145,93,Hipertensi Derajat 1,259,143,1,1,0,52,Demam reumatik (Dampak),Demam reumatik (Dampak)
+Tuti Sumiati,58,,132,89,Pra-hipertensi,208,143,0,0,0,87,Jantung bawaan biru (Riwayat),Tidak Ada
+Udin Tajudin,51,,124,78,Pra-hipertensi,174,95,1,0,1,94,Demam reumatik (Dampak),Penyakit jantung koroner
+Vera Puspitasari,44,,138,82,Pra-hipertensi,234,141,0,0,1,111,Demam reumatik (Dampak),Tidak Ada
+Retno Wati,42,,144,88,Pra-hipertensi,206,135,0,1,1,66,Gagal jantung,Gagal jantung
+Eko Setiawan,64,,124,79,Pra-hipertensi,198,141,0,1,0,111,Jantung bawaan biru (Riwayat),Gagal jantung
+Bambang Hermawan,46,,148,87,Pra-hipertensi,241,130,0,0,0,88,Tidak Ada,Tidak Ada
+Taufik Akbar,69,,120,80,Pra-hipertensi,239,127,1,0,1,76,Gagal jantung,Jantung bawaan biru (Riwayat)
+Ira Rahmawati,48,,131,72,Pra-hipertensi,209,114,0,1,0,76,Gagal jantung,Gagal jantung
+Yulianti,67,,130,74,Pra-hipertensi,207,150,0,1,1,67,Gagal jantung,Gagal jantung
+Endang Wulandari,59,,152,102,Hipertensi Derajat 1,268,178,0,1,1,58,Gagal jantung,Gagal jantung
+Sugeng Winarno,63,,110,74,Normal,175,150,0,0,0,68,Tidak Ada,Penyakit jantung koroner
+Kartika Sari,51,,133,98,Pra-hipertensi,237,138,0,0,1,57,Gagal jantung,Tidak Ada
+Cecep Rahmat,53,,129,78,Pra-hipertensi,205,116,0,0,0,55,Jantung bawaan biru (Riwayat),Tidak Ada
+Qomarudin,46,,168,109,Hipertensi Derajat 2,225,139,0,1,0,105,Gagal jantung,Demam reumatik (Dampak)
+Vera Agustina,52,,145,106,Hipertensi Derajat 1,217,177,0,0,0,85,Gagal jantung,Demam reumatik (Dampak)
+Wawan Rachman,61,,163,88,Pra-hipertensi,212,128,0,0,0,71,Jantung bawaan biru (Riwayat),Tidak Ada
+Zainal Fanani,55,,112,70,Normal,192,91,1,0,0,81,Jantung bawaan biru (Riwayat),Tidak Ada
+Sri Utami,44,,156,91,Hipertensi Derajat 1,239,150,0,0,0,98,Jantung bawaan biru (Riwayat),Demam reumatik (Dampak)
+Rudi Santoso,65,,173,119,Hipertensi Derajat 2,261,125,1,0,0,60,Gagal jantung,Demam reumatik (Dampak)
+Nurul Fauziah,53,,133,80,Pra-hipertensi,203,114,0,0,0,92,Jantung bawaan biru (Riwayat),Tidak Ada
+Asep Lukman,68,,158,94,Hipertensi Derajat 1,257,118,1,0,0,61,Jantung bawaan biru (Riwayat),Penyakit jantung koroner
+Ira Diana,64,,184,103,Hipertensi Derajat 2,200,164,0,0,0,76,Jantung bawaan biru (Riwayat),Gagal jantung
+Yuli Fatimah,57,,169,118,Hipertensi Derajat 2,238,115,1,0,0,51,Jantung bawaan biru (Riwayat),Demam reumatik (Dampak)
+Wahyu Adi,62,,142,89,Pra-hipertensi,257,99,0,1,0,89,Tidak Ada,Gagal jantung
+Ujang Maman,52,,159,100,Hipertensi Derajat 1,262,168,1,1,0,65,Tidak Ada,Demam reumatik (Dampak)
+Nina Suryani,55,,131,79,Pra-hipertensi,204,146,0,1,1,120,Jantung bawaan biru (Riwayat),Gagal jantung
+Fifie Mariana,41,,126,79,Pra-hipertensi,196,98,1,0,0,120,Tidak Ada,Penyakit jantung koroner
+Cecep Wahyu,59,,167,104,Hipertensi Derajat 2,258,127,0,0,0,83,Jantung bawaan biru (Riwayat),Demam reumatik (Dampak)
+Lely Ningsih,58,,165,110,Hipertensi Derajat 2,274,148,0,0,0,72,Tidak Ada,Demam reumatik (Dampak)
+Tuti Susanti,53,,118,74,Normal,193,97,0,0,1,106,Tidak Ada,Demam reumatik (Dampak)
+Wawan Sutiawan,56,,173,99,Hipertensi Derajat 1,225,129,0,0,0,72,Jantung bawaan biru (Riwayat),Demam reumatik (Dampak)
+Yati Nurhayati,64,,136,85,Pra-hipertensi,250,137,1,1,0,62,Jantung bawaan biru (Riwayat),Demam reumatik (Dampak)
+Agus Fathurrahman,62,,126,83,Pra-hipertensi,193,109,0,0,0,117,Jantung bawaan biru (Riwayat),Tidak Ada
+Joko Susanto,40,,135,87,Pra-hipertensi,217,127,0,0,1,94,Penyakit jantung koroner,Tidak Ada
+Eko Wahyudi,59,,180,105,Hipertensi Derajat 2,205,169,0,0,0,105,Tidak Ada,Demam reumatik (Dampak)

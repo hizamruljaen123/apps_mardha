@@ -272,37 +272,104 @@ def predict_single_tree(node, sample):
 import os
 import json
 
-def predict(sample, use_rules=True):
+def predict(sample, use_rules=True, use_boosting=False):
     global extracted_rules
 
     if use_rules:
+        best_full_match_prediction = None
+        best_partial_match_prediction = "N/A"  # Default if no rule matches at all
+        max_conditions_partially_met = -1    # Max conditions met for rules *with conditions*
+        
+        default_rule_prediction = "N/A"      # For rules with no conditions
+
+        if not extracted_rules: # Handle case of no rules
+            return "N/A"
+
+        rules_with_conditions = []
+        # First pass to identify default rules and collect rules with conditions
         for rule in extracted_rules:
-            conditions_met = True
-            for condition in rule['machine_rule']['conditions']:
-                parts = condition.split()
-                feature = parts[0]
-                operator = parts[1]
-                value = float(parts[2])
+            if 'machine_rule' not in rule or 'conditions' not in rule['machine_rule'] or 'prediction' not in rule['machine_rule']:
+                # print(f"Skipping malformed rule: {rule}")
+                continue
 
-                if feature not in sample.index:
-                    conditions_met = False
-                    break
+            conditions = rule['machine_rule']['conditions']
+            prediction = rule['machine_rule']['prediction']
 
-                sample_value = sample[feature]
+            if not conditions:  # This is a default rule
+                if default_rule_prediction == "N/A": # Take the first one encountered
+                    default_rule_prediction = prediction
+                continue
+            
+            rules_with_conditions.append(rule)
 
-                if operator == '<=':
-                    if not (sample_value <= value):
-                        conditions_met = False
-                        break
-                elif operator == '>':
-                    if not (sample_value > value):
-                        conditions_met = False
-                        break
+        # Second pass: Process rules with conditions
+        for rule in rules_with_conditions:
+            # At this point, rule structure is assumed to be valid and conditions list is non-empty
+            conditions = rule['machine_rule']['conditions']
+            prediction = rule['machine_rule']['prediction']
+            
+            num_conditions_in_rule = len(conditions) # Should be > 0
+            current_conditions_met_count = 0
+            all_conditions_met_for_this_rule = True # Assume true until a condition fails
 
-            if conditions_met:
-                return rule['machine_rule']['prediction']
-        return "N/A"
-    else:
+            for condition_str in conditions:
+                try:
+                    parts = condition_str.split()
+                    if len(parts) < 3: # Basic validation for condition string
+                        all_conditions_met_for_this_rule = False
+                        continue # Move to next condition
+
+                    feature = parts[0]
+                    operator = parts[1]
+                    value_from_rule = float(parts[2])
+
+                    if feature not in sample.index:
+                        all_conditions_met_for_this_rule = False
+                        # This condition is not met, don't increment count for it.
+                        # Continue to the next condition in this rule to check if others might match.
+                        continue
+
+                    sample_value = sample[feature]
+                    
+                    condition_holds = False
+                    if operator == '<=':
+                        if sample_value <= value_from_rule:
+                            condition_holds = True
+                    elif operator == '>':
+                        if sample_value > value_from_rule:
+                            condition_holds = True
+                    # Potentially add other operators like '==' if your rule system supports them
+                    
+                    if condition_holds:
+                        current_conditions_met_count += 1
+                    else:
+                        all_conditions_met_for_this_rule = False
+                
+                except (IndexError, ValueError) as e:
+                    # Malformed condition string or sample value issue for this specific condition
+                    # print(f"Warning: Error processing condition '{condition_str}'. Error: {e}")
+                    all_conditions_met_for_this_rule = False
+                    # Continue to the next condition in this rule
+                    continue
+            
+            if all_conditions_met_for_this_rule and num_conditions_in_rule > 0:
+                best_full_match_prediction = prediction
+                break # Found a full match among rules with conditions, prioritize this
+
+            # If not a full match, check for best partial match from rules with conditions
+            if current_conditions_met_count > max_conditions_partially_met:
+                max_conditions_partially_met = current_conditions_met_count
+                best_partial_match_prediction = prediction
+        
+        # Determine final prediction based on findings
+        if best_full_match_prediction is not None:
+            return best_full_match_prediction
+        elif max_conditions_partially_met > 0: # A partial match from a rule with conditions was found
+            return best_partial_match_prediction
+        else: # No full or partial match from rules with conditions, try default rule
+            return default_rule_prediction # This will be "N/A" if no default rule was found or no rules at all
+
+    else: # This is the tree-based prediction (single or boosted)
         global boosted_trees, boosted_alphas, is_boosted, tree
 
         current_model_is_boosted = is_boosted
@@ -361,7 +428,7 @@ def get_all_predictions():
     global df, tree, target
     results = []
     for idx, row in df.iterrows():
-        pred = predict(tree, row)
+        pred = predict(row, use_rules=True, use_boosting=is_boosted) # Use global is_boosted
         result_dict = {
             'Usia': row['Usia'],
             'Jenis_Kelamin': 'Laki-laki' if row['Jenis_Kelamin'] == 0 else 'Perempuan',
@@ -562,7 +629,7 @@ def get_training_data():
     formatted_data = [
         {
             'id': idx + 1,
-            'Nama': record.get('Nama', f'Pasien {idx + 1}'),
+            'Nama': record['Nama'],
             'Usia': record['Usia'],
             'Jenis_Kelamin': 'Laki-laki' if record['Jenis_Kelamin'] == 0 else 'Perempuan',
             'Sistolik': record['Sistolik'],
@@ -839,18 +906,6 @@ def train_model():
     os.makedirs('static', exist_ok=True)
     test_data.to_csv('static/test_data_original.csv', index=False)
 
-    # Map 'Jenis_Kelamin' in test_data
-    test_data['Jenis_Kelamin'] = test_data['Jenis_Kelamin'].map({'L': 0, 'P': 1, 'Laki-laki': 0, 'Perempuan': 1}).fillna(test_data['Jenis_Kelamin'])
-
-    # Predict target variable for test data
-    test_data['Prediksi'] = test_data.apply(lambda row: predict(row, use_rules=True), axis=1)
-
-    # Fill NaN predictions with "N/A"
-    test_data['Prediksi'] = test_data['Prediksi'].fillna("N/A")
-
-    # Save test data with predictions to CSV
-    test_data.to_csv('static/hasil_prediksi.csv', index=False)
-
     # --- 2. Validate Training Data and Features ---
     if train_data.empty:
         return jsonify({'status': 'error', 'message': 'Training data is empty after split'}), 400
@@ -944,12 +999,47 @@ def train_model():
     os.makedirs('static', exist_ok=True)
     with open('static/rules.json', 'w') as f:
         json.dump(extracted_rules, f, indent=4)
-
-
-    if tree is None and not is_boosted:
-         return jsonify({'status': 'error', 'message': 'Model training failed: Could not build tree.'}), 500
-    elif is_boosted and not boosted_trees:
-         return jsonify({'status': 'error', 'message': 'Model training failed: Could not build boosted ensemble.'}), 500
+    
+        # --- Generate hasil_prediksi.csv using the latest rules and properly dummified test_data ---
+        # test_data is from the original split (line 835), non-dummified.
+        # categorical_features is from line 864.
+        # features (global) is from line 866 (columns of dummified train_data).
+        
+        df_for_csv_output = test_data.copy()
+    
+        # Dummify a temporary version of test_data for rule prediction
+        temp_test_dummified_for_rules = pd.get_dummies(df_for_csv_output, columns=categorical_features, drop_first=True, dtype=int)
+    
+        # Align columns with the features used for training the tree (from dummified train_data)
+        # These are the features that rules will be based on.
+        for feature_col in features:
+            if feature_col not in temp_test_dummified_for_rules.columns:
+                temp_test_dummified_for_rules[feature_col] = 0
+        # Ensure only relevant columns (those in `features` plus any others needed by `predict` if not in `features`) are passed,
+        # or ensure `predict` handles rows robustly. The current `predict` checks `feature in sample.index`.
+        # Reindexing to `features` might be too strict if `predict` can handle a superset of columns.
+        # For now, adding missing `features` columns is the key step.
+    
+        # Make predictions using rules
+        rule_predictions_for_csv = temp_test_dummified_for_rules.apply(
+            lambda row: predict(row, use_rules=True), axis=1
+        ).values
+    
+        df_for_csv_output['Prediksi'] = rule_predictions_for_csv
+        df_for_csv_output['Prediksi'] = df_for_csv_output['Prediksi'].fillna("N/A")
+        
+        # Ensure 'Jenis_Kelamin' is in 0/1 format for the CSV if it wasn't already
+        # This was done to df initially, so test_data should have it as 0/1.
+        # If 'Jenis_Kelamin' in df_for_csv_output.columns and df_for_csv_output['Jenis_Kelamin'].dtype == 'object':
+        #    df_for_csv_output['Jenis_Kelamin'] = df_for_csv_output['Jenis_Kelamin'].map({'L': 0, 'P': 1, 'Laki-laki': 0, 'Perempuan': 1}).fillna(df_for_csv_output['Jenis_Kelamin'])
+    
+        df_for_csv_output.to_csv('static/hasil_prediksi.csv', index=False)
+        # --- End of hasil_prediksi.csv generation ---
+    
+        if tree is None and not is_boosted:
+            return jsonify({'status': 'error', 'message': 'Model training failed: Could not build tree.'}), 500
+        elif is_boosted and not boosted_trees:
+            return jsonify({'status': 'error', 'message': 'Model training failed: Could not build boosted ensemble.'}), 500
 
     display_tree = tree
     tree_metrics = {'depth': 0, 'nodes': 0, 'leaves': 0}
