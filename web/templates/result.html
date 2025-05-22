@@ -232,9 +232,9 @@
                                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nyeri Dada</th>
                                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sesak Napas</th>
                                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kelelahan</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Denyut Jantung</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aktual</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Denyut Jantung</th>                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aktual</th>
                                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prediksi</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Confidence</th>
                                     <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                                 </tr>
                             </thead>
@@ -269,6 +269,18 @@
                     })
                     .catch(error => reject(error));
             });
+        }        // Format confidence value with color based on confidence level
+        function formatConfidence(confidence) {
+            const confidenceValue = parseFloat(confidence);
+            let confidenceClass = "text-red-600";  // Low confidence
+            
+            if (confidenceValue >= 0.9) {
+                confidenceClass = "text-green-600"; // High confidence
+            } else if (confidenceValue >= 0.7) {
+                confidenceClass = "text-yellow-600"; // Medium confidence
+            }
+            
+            return `<span class="${confidenceClass} font-semibold">${(confidenceValue * 100).toFixed(1)}%</span>`;
         }
 
         // Function to populate the table with merged data
@@ -300,10 +312,12 @@
                         <td class="px-4 py-3 whitespace-nowrap">${formatGulaDarah(item.Gula_Darah)}</td>
                         <td class="px-4 py-3 whitespace-nowrap">${item.Nyeri_Dada}</td>
                         <td class="px-4 py-3 whitespace-nowrap">${item.Sesak_Napas}</td>
-                        <td class="px-4 py-3 whitespace-nowrap">${item.Kelelahan}</td>
-                        <td class="px-4 py-3 whitespace-nowrap">${item.Denyut_Jantung}</td>
+                        <td class="px-4 py-3 whitespace-nowrap">${item.Kelelahan}</td>                        <td class="px-4 py-3 whitespace-nowrap">${item.Denyut_Jantung}</td>
                         <td class="px-4 py-3 whitespace-nowrap">${item.Penyakit_Jantung}</td>
                         <td class="px-4 py-3 whitespace-nowrap">${item.Prediksi}</td>
+                        <td class="px-4 py-3 whitespace-nowrap">
+                            ${formatConfidence(item.Confidence || 0)}
+                        </td>
                         <td class="px-4 py-3 whitespace-nowrap">
                             <span class="px-2 py-1 text-xs font-semibold rounded-full ${statusClass}">${status}</span>
                         </td>

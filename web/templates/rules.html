@@ -332,20 +332,25 @@
             };
             const className = colorMap[prediction] || 'bg-gray-100 text-gray-600';
             return `<span class="${className} px-2 py-1 rounded-md text-sm">${prediction}</span>`;
-        }
-
-        // Render rules table
+        }        // Render rules table
         function renderRulesTable(rules, page = 1, pageSize = 10) {
             const tbody = document.getElementById('rulesTableBody');
             tbody.innerHTML = '';
             rules.forEach(rule => {
                 const row = document.createElement('tr');
                 row.className = 'hover:bg-gray-50';
+                
+                // Add class distribution info if available
+                const distributionText = rule.class_distribution 
+                    ? `<span class="text-xs text-gray-500">${rule.class_distribution}</span>` 
+                    : '<span class="text-xs text-gray-400">Not available</span>';
+                
                 row.innerHTML = `
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${rulesData.indexOf(rule) + 1}</td>
                     <td class="px-6 py-4 text-sm text-gray-500">${rule.display_rule}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm">${formatConfidence(rule.confidence)}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${formatCoverage(rule.coverage)}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">${distributionText}</td>
                 `;
                 tbody.appendChild(row);
             });

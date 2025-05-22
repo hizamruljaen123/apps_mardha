@@ -5,671 +5,1268 @@
             "conditions": [
                 "Gula_Darah <= 90.5"
             ],
-            "prediction": "Demam reumatik (Dampak)"
+            "prediction": "Demam reumatik (Dampak)",
+            "class_distribution": "Demam reumatik (Dampak): 3 (100.0%)"
         },
         "confidence": 1.0,
-        "coverage": 0.01
+        "coverage": 0.01,
+        "class_distribution": "Demam reumatik (Dampak): 3 (100.0%)"
     },
     {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 70.5 MAKA PREDICT Tidak Ada",
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 70.5 MAKA PREDICT Tidak Ada",
         "machine_rule": {
             "conditions": [
                 "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
                 "Diastolik <= 70.5"
             ],
-            "prediction": "Tidak Ada"
+            "prediction": "Tidak Ada",
+            "class_distribution": "Tidak Ada: 1 (100.0%)"
         },
         "confidence": 1.0,
-        "coverage": 0.0
+        "coverage": 0.0,
+        "class_distribution": "Tidak Ada: 1 (100.0%)"
     },
     {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH KECIL SAMA DENGAN 0.5 DAN Denyut_Jantung LEBIH KECIL SAMA DENGAN 119.5 DAN Usia LEBIH KECIL SAMA DENGAN 67.5 DAN Kelelahan LEBIH KECIL SAMA DENGAN 0.5 DAN Nyeri_Dada LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Normal LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Hipertensi Derajat 2 LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Pra-hipertensi LEBIH KECIL SAMA DENGAN 0.5 MAKA PREDICT Demam reumatik (Dampak)",
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 170.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 168.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 117.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 275.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 272.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 267.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 261.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 167.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 166.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 164.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 111.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 258.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 107.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 105.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 103.0 DAN Diastolik LEBIH KECIL SAMA DENGAN 101.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 175.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 162.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 161.0 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 172.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 100.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 168.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 155.0 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 152.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 257.5 DAN Gula_Darah LEBIH BESAR DARI 151.0 MAKA PREDICT Jantung bawaan biru (Riwayat)",
         "machine_rule": {
             "conditions": [
                 "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
                 "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas <= 0.5",
-                "Denyut_Jantung <= 119.5",
-                "Usia <= 67.5",
-                "Kelelahan <= 0.5",
-                "Nyeri_Dada <= 0.5",
-                "Kategori_Tekanan_Darah_Normal <= 0.5",
-                "Kategori_Tekanan_Darah_Hipertensi Derajat 2 <= 0.5",
-                "Kategori_Tekanan_Darah_Pra-hipertensi <= 0.5"
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik <= 170.0",
+                "Sistolik <= 168.5",
+                "Diastolik <= 117.5",
+                "Kolesterol <= 275.5",
+                "Kolesterol <= 272.0",
+                "Kolesterol <= 267.0",
+                "Kolesterol <= 261.5",
+                "Sistolik <= 167.5",
+                "Sistolik <= 166.5",
+                "Sistolik <= 164.5",
+                "Diastolik <= 111.5",
+                "Kolesterol <= 258.5",
+                "Diastolik <= 107.5",
+                "Diastolik <= 105.5",
+                "Diastolik <= 103.0",
+                "Diastolik <= 101.5",
+                "Gula_Darah <= 175.0",
+                "Sistolik <= 162.5",
+                "Sistolik <= 161.0",
+                "Gula_Darah <= 172.5",
+                "Diastolik <= 100.5",
+                "Gula_Darah <= 168.5",
+                "Gula_Darah <= 155.0",
+                "Gula_Darah <= 152.5",
+                "Kolesterol <= 257.5",
+                "Gula_Darah > 151.0"
             ],
-            "prediction": "Demam reumatik (Dampak)"
-        },
-        "confidence": 0.25,
-        "coverage": 0.06
-    },
-    {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH KECIL SAMA DENGAN 0.5 DAN Denyut_Jantung LEBIH KECIL SAMA DENGAN 119.5 DAN Usia LEBIH KECIL SAMA DENGAN 67.5 DAN Kelelahan LEBIH KECIL SAMA DENGAN 0.5 DAN Nyeri_Dada LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Normal LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Hipertensi Derajat 2 LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Pra-hipertensi LEBIH BESAR DARI 0.5 MAKA PREDICT Tidak Ada",
-        "machine_rule": {
-            "conditions": [
-                "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
-                "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas <= 0.5",
-                "Denyut_Jantung <= 119.5",
-                "Usia <= 67.5",
-                "Kelelahan <= 0.5",
-                "Nyeri_Dada <= 0.5",
-                "Kategori_Tekanan_Darah_Normal <= 0.5",
-                "Kategori_Tekanan_Darah_Hipertensi Derajat 2 <= 0.5",
-                "Kategori_Tekanan_Darah_Pra-hipertensi > 0.5"
-            ],
-            "prediction": "Tidak Ada"
-        },
-        "confidence": 0.4,
-        "coverage": 0.23
-    },
-    {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH KECIL SAMA DENGAN 0.5 DAN Denyut_Jantung LEBIH KECIL SAMA DENGAN 119.5 DAN Usia LEBIH KECIL SAMA DENGAN 67.5 DAN Kelelahan LEBIH KECIL SAMA DENGAN 0.5 DAN Nyeri_Dada LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Normal LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Hipertensi Derajat 2 LEBIH BESAR DARI 0.5 MAKA PREDICT Penyakit jantung koroner",
-        "machine_rule": {
-            "conditions": [
-                "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
-                "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas <= 0.5",
-                "Denyut_Jantung <= 119.5",
-                "Usia <= 67.5",
-                "Kelelahan <= 0.5",
-                "Nyeri_Dada <= 0.5",
-                "Kategori_Tekanan_Darah_Normal <= 0.5",
-                "Kategori_Tekanan_Darah_Hipertensi Derajat 2 > 0.5"
-            ],
-            "prediction": "Penyakit jantung koroner"
-        },
-        "confidence": 0.67,
-        "coverage": 0.01
-    },
-    {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH KECIL SAMA DENGAN 0.5 DAN Denyut_Jantung LEBIH KECIL SAMA DENGAN 119.5 DAN Usia LEBIH KECIL SAMA DENGAN 67.5 DAN Kelelahan LEBIH KECIL SAMA DENGAN 0.5 DAN Nyeri_Dada LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Normal LEBIH BESAR DARI 0.5 MAKA PREDICT Penyakit jantung koroner",
-        "machine_rule": {
-            "conditions": [
-                "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
-                "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas <= 0.5",
-                "Denyut_Jantung <= 119.5",
-                "Usia <= 67.5",
-                "Kelelahan <= 0.5",
-                "Nyeri_Dada <= 0.5",
-                "Kategori_Tekanan_Darah_Normal > 0.5"
-            ],
-            "prediction": "Penyakit jantung koroner"
+            "prediction": "Jantung bawaan biru (Riwayat)",
+            "class_distribution": "Jantung bawaan biru (Riwayat): 1 (100.0%)"
         },
         "confidence": 1.0,
-        "coverage": 0.01
+        "coverage": 0.0,
+        "class_distribution": "Jantung bawaan biru (Riwayat): 1 (100.0%)"
     },
     {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH KECIL SAMA DENGAN 0.5 DAN Denyut_Jantung LEBIH KECIL SAMA DENGAN 119.5 DAN Usia LEBIH KECIL SAMA DENGAN 67.5 DAN Kelelahan LEBIH KECIL SAMA DENGAN 0.5 DAN Nyeri_Dada LEBIH BESAR DARI 0.5 DAN Kategori_Tekanan_Darah_Normal LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Hipertensi Derajat 2 LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Pra-hipertensi LEBIH KECIL SAMA DENGAN 0.5 MAKA PREDICT Demam reumatik (Dampak)",
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 170.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 168.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 117.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 275.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 272.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 267.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 261.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 167.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 166.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 164.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 111.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 258.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 107.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 105.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 103.0 DAN Diastolik LEBIH KECIL SAMA DENGAN 101.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 175.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 162.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 161.0 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 172.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 100.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 168.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 155.0 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 152.5 DAN Kolesterol LEBIH BESAR DARI 257.5 MAKA PREDICT Jantung bawaan biru (Riwayat)",
         "machine_rule": {
             "conditions": [
                 "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
                 "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas <= 0.5",
-                "Denyut_Jantung <= 119.5",
-                "Usia <= 67.5",
-                "Kelelahan <= 0.5",
-                "Nyeri_Dada > 0.5",
-                "Kategori_Tekanan_Darah_Normal <= 0.5",
-                "Kategori_Tekanan_Darah_Hipertensi Derajat 2 <= 0.5",
-                "Kategori_Tekanan_Darah_Pra-hipertensi <= 0.5"
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik <= 170.0",
+                "Sistolik <= 168.5",
+                "Diastolik <= 117.5",
+                "Kolesterol <= 275.5",
+                "Kolesterol <= 272.0",
+                "Kolesterol <= 267.0",
+                "Kolesterol <= 261.5",
+                "Sistolik <= 167.5",
+                "Sistolik <= 166.5",
+                "Sistolik <= 164.5",
+                "Diastolik <= 111.5",
+                "Kolesterol <= 258.5",
+                "Diastolik <= 107.5",
+                "Diastolik <= 105.5",
+                "Diastolik <= 103.0",
+                "Diastolik <= 101.5",
+                "Gula_Darah <= 175.0",
+                "Sistolik <= 162.5",
+                "Sistolik <= 161.0",
+                "Gula_Darah <= 172.5",
+                "Diastolik <= 100.5",
+                "Gula_Darah <= 168.5",
+                "Gula_Darah <= 155.0",
+                "Gula_Darah <= 152.5",
+                "Kolesterol > 257.5"
             ],
-            "prediction": "Demam reumatik (Dampak)"
-        },
-        "confidence": 0.67,
-        "coverage": 0.01
-    },
-    {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH KECIL SAMA DENGAN 0.5 DAN Denyut_Jantung LEBIH KECIL SAMA DENGAN 119.5 DAN Usia LEBIH KECIL SAMA DENGAN 67.5 DAN Kelelahan LEBIH KECIL SAMA DENGAN 0.5 DAN Nyeri_Dada LEBIH BESAR DARI 0.5 DAN Kategori_Tekanan_Darah_Normal LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Hipertensi Derajat 2 LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Pra-hipertensi LEBIH BESAR DARI 0.5 MAKA PREDICT Demam reumatik (Dampak)",
-        "machine_rule": {
-            "conditions": [
-                "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
-                "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas <= 0.5",
-                "Denyut_Jantung <= 119.5",
-                "Usia <= 67.5",
-                "Kelelahan <= 0.5",
-                "Nyeri_Dada > 0.5",
-                "Kategori_Tekanan_Darah_Normal <= 0.5",
-                "Kategori_Tekanan_Darah_Hipertensi Derajat 2 <= 0.5",
-                "Kategori_Tekanan_Darah_Pra-hipertensi > 0.5"
-            ],
-            "prediction": "Demam reumatik (Dampak)"
-        },
-        "confidence": 0.4,
-        "coverage": 0.1
-    },
-    {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH KECIL SAMA DENGAN 0.5 DAN Denyut_Jantung LEBIH KECIL SAMA DENGAN 119.5 DAN Usia LEBIH KECIL SAMA DENGAN 67.5 DAN Kelelahan LEBIH KECIL SAMA DENGAN 0.5 DAN Nyeri_Dada LEBIH BESAR DARI 0.5 DAN Kategori_Tekanan_Darah_Normal LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Hipertensi Derajat 2 LEBIH BESAR DARI 0.5 MAKA PREDICT Demam reumatik (Dampak)",
-        "machine_rule": {
-            "conditions": [
-                "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
-                "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas <= 0.5",
-                "Denyut_Jantung <= 119.5",
-                "Usia <= 67.5",
-                "Kelelahan <= 0.5",
-                "Nyeri_Dada > 0.5",
-                "Kategori_Tekanan_Darah_Normal <= 0.5",
-                "Kategori_Tekanan_Darah_Hipertensi Derajat 2 > 0.5"
-            ],
-            "prediction": "Demam reumatik (Dampak)"
-        },
-        "confidence": 0.25,
-        "coverage": 0.02
-    },
-    {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH KECIL SAMA DENGAN 0.5 DAN Denyut_Jantung LEBIH KECIL SAMA DENGAN 119.5 DAN Usia LEBIH KECIL SAMA DENGAN 67.5 DAN Kelelahan LEBIH KECIL SAMA DENGAN 0.5 DAN Nyeri_Dada LEBIH BESAR DARI 0.5 DAN Kategori_Tekanan_Darah_Normal LEBIH BESAR DARI 0.5 MAKA PREDICT Jantung bawaan biru (Riwayat)",
-        "machine_rule": {
-            "conditions": [
-                "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
-                "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas <= 0.5",
-                "Denyut_Jantung <= 119.5",
-                "Usia <= 67.5",
-                "Kelelahan <= 0.5",
-                "Nyeri_Dada > 0.5",
-                "Kategori_Tekanan_Darah_Normal > 0.5"
-            ],
-            "prediction": "Jantung bawaan biru (Riwayat)"
-        },
-        "confidence": 0.5,
-        "coverage": 0.01
-    },
-    {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH KECIL SAMA DENGAN 0.5 DAN Denyut_Jantung LEBIH KECIL SAMA DENGAN 119.5 DAN Usia LEBIH KECIL SAMA DENGAN 67.5 DAN Kelelahan LEBIH BESAR DARI 0.5 DAN Kategori_Tekanan_Darah_Normal LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Hipertensi Derajat 2 LEBIH KECIL SAMA DENGAN 0.5 DAN Nyeri_Dada LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Pra-hipertensi LEBIH KECIL SAMA DENGAN 0.5 MAKA PREDICT Gagal jantung",
-        "machine_rule": {
-            "conditions": [
-                "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
-                "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas <= 0.5",
-                "Denyut_Jantung <= 119.5",
-                "Usia <= 67.5",
-                "Kelelahan > 0.5",
-                "Kategori_Tekanan_Darah_Normal <= 0.5",
-                "Kategori_Tekanan_Darah_Hipertensi Derajat 2 <= 0.5",
-                "Nyeri_Dada <= 0.5",
-                "Kategori_Tekanan_Darah_Pra-hipertensi <= 0.5"
-            ],
-            "prediction": "Gagal jantung"
-        },
-        "confidence": 0.56,
-        "coverage": 0.04
-    },
-    {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH KECIL SAMA DENGAN 0.5 DAN Denyut_Jantung LEBIH KECIL SAMA DENGAN 119.5 DAN Usia LEBIH KECIL SAMA DENGAN 67.5 DAN Kelelahan LEBIH BESAR DARI 0.5 DAN Kategori_Tekanan_Darah_Normal LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Hipertensi Derajat 2 LEBIH KECIL SAMA DENGAN 0.5 DAN Nyeri_Dada LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Pra-hipertensi LEBIH BESAR DARI 0.5 MAKA PREDICT Tidak Ada",
-        "machine_rule": {
-            "conditions": [
-                "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
-                "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas <= 0.5",
-                "Denyut_Jantung <= 119.5",
-                "Usia <= 67.5",
-                "Kelelahan > 0.5",
-                "Kategori_Tekanan_Darah_Normal <= 0.5",
-                "Kategori_Tekanan_Darah_Hipertensi Derajat 2 <= 0.5",
-                "Nyeri_Dada <= 0.5",
-                "Kategori_Tekanan_Darah_Pra-hipertensi > 0.5"
-            ],
-            "prediction": "Tidak Ada"
-        },
-        "confidence": 0.41,
-        "coverage": 0.1
-    },
-    {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH KECIL SAMA DENGAN 0.5 DAN Denyut_Jantung LEBIH KECIL SAMA DENGAN 119.5 DAN Usia LEBIH KECIL SAMA DENGAN 67.5 DAN Kelelahan LEBIH BESAR DARI 0.5 DAN Kategori_Tekanan_Darah_Normal LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Hipertensi Derajat 2 LEBIH KECIL SAMA DENGAN 0.5 DAN Nyeri_Dada LEBIH BESAR DARI 0.5 DAN Kategori_Tekanan_Darah_Pra-hipertensi LEBIH KECIL SAMA DENGAN 0.5 MAKA PREDICT Tidak Ada",
-        "machine_rule": {
-            "conditions": [
-                "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
-                "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas <= 0.5",
-                "Denyut_Jantung <= 119.5",
-                "Usia <= 67.5",
-                "Kelelahan > 0.5",
-                "Kategori_Tekanan_Darah_Normal <= 0.5",
-                "Kategori_Tekanan_Darah_Hipertensi Derajat 2 <= 0.5",
-                "Nyeri_Dada > 0.5",
-                "Kategori_Tekanan_Darah_Pra-hipertensi <= 0.5"
-            ],
-            "prediction": "Tidak Ada"
-        },
-        "confidence": 0.67,
-        "coverage": 0.01
-    },
-    {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH KECIL SAMA DENGAN 0.5 DAN Denyut_Jantung LEBIH KECIL SAMA DENGAN 119.5 DAN Usia LEBIH KECIL SAMA DENGAN 67.5 DAN Kelelahan LEBIH BESAR DARI 0.5 DAN Kategori_Tekanan_Darah_Normal LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Hipertensi Derajat 2 LEBIH KECIL SAMA DENGAN 0.5 DAN Nyeri_Dada LEBIH BESAR DARI 0.5 DAN Kategori_Tekanan_Darah_Pra-hipertensi LEBIH BESAR DARI 0.5 MAKA PREDICT Penyakit jantung koroner",
-        "machine_rule": {
-            "conditions": [
-                "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
-                "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas <= 0.5",
-                "Denyut_Jantung <= 119.5",
-                "Usia <= 67.5",
-                "Kelelahan > 0.5",
-                "Kategori_Tekanan_Darah_Normal <= 0.5",
-                "Kategori_Tekanan_Darah_Hipertensi Derajat 2 <= 0.5",
-                "Nyeri_Dada > 0.5",
-                "Kategori_Tekanan_Darah_Pra-hipertensi > 0.5"
-            ],
-            "prediction": "Penyakit jantung koroner"
-        },
-        "confidence": 0.43,
-        "coverage": 0.03
-    },
-    {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH KECIL SAMA DENGAN 0.5 DAN Denyut_Jantung LEBIH KECIL SAMA DENGAN 119.5 DAN Usia LEBIH KECIL SAMA DENGAN 67.5 DAN Kelelahan LEBIH BESAR DARI 0.5 DAN Kategori_Tekanan_Darah_Normal LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Hipertensi Derajat 2 LEBIH BESAR DARI 0.5 MAKA PREDICT Gagal jantung",
-        "machine_rule": {
-            "conditions": [
-                "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
-                "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas <= 0.5",
-                "Denyut_Jantung <= 119.5",
-                "Usia <= 67.5",
-                "Kelelahan > 0.5",
-                "Kategori_Tekanan_Darah_Normal <= 0.5",
-                "Kategori_Tekanan_Darah_Hipertensi Derajat 2 > 0.5"
-            ],
-            "prediction": "Gagal jantung"
+            "prediction": "Jantung bawaan biru (Riwayat)",
+            "class_distribution": "Jantung bawaan biru (Riwayat): 1 (100.0%)"
         },
         "confidence": 1.0,
-        "coverage": 0.0
+        "coverage": 0.0,
+        "class_distribution": "Jantung bawaan biru (Riwayat): 1 (100.0%)"
     },
     {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH KECIL SAMA DENGAN 0.5 DAN Denyut_Jantung LEBIH KECIL SAMA DENGAN 119.5 DAN Usia LEBIH KECIL SAMA DENGAN 67.5 DAN Kelelahan LEBIH BESAR DARI 0.5 DAN Kategori_Tekanan_Darah_Normal LEBIH BESAR DARI 0.5 MAKA PREDICT Demam reumatik (Dampak)",
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 170.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 168.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 117.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 275.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 272.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 267.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 261.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 167.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 166.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 164.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 111.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 258.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 107.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 105.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 103.0 DAN Diastolik LEBIH KECIL SAMA DENGAN 101.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 175.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 162.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 161.0 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 172.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 100.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 168.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 155.0 DAN Gula_Darah LEBIH BESAR DARI 152.5 MAKA PREDICT Gagal jantung",
         "machine_rule": {
             "conditions": [
                 "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
                 "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas <= 0.5",
-                "Denyut_Jantung <= 119.5",
-                "Usia <= 67.5",
-                "Kelelahan > 0.5",
-                "Kategori_Tekanan_Darah_Normal > 0.5"
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik <= 170.0",
+                "Sistolik <= 168.5",
+                "Diastolik <= 117.5",
+                "Kolesterol <= 275.5",
+                "Kolesterol <= 272.0",
+                "Kolesterol <= 267.0",
+                "Kolesterol <= 261.5",
+                "Sistolik <= 167.5",
+                "Sistolik <= 166.5",
+                "Sistolik <= 164.5",
+                "Diastolik <= 111.5",
+                "Kolesterol <= 258.5",
+                "Diastolik <= 107.5",
+                "Diastolik <= 105.5",
+                "Diastolik <= 103.0",
+                "Diastolik <= 101.5",
+                "Gula_Darah <= 175.0",
+                "Sistolik <= 162.5",
+                "Sistolik <= 161.0",
+                "Gula_Darah <= 172.5",
+                "Diastolik <= 100.5",
+                "Gula_Darah <= 168.5",
+                "Gula_Darah <= 155.0",
+                "Gula_Darah > 152.5"
             ],
-            "prediction": "Demam reumatik (Dampak)"
-        },
-        "confidence": 0.67,
-        "coverage": 0.01
-    },
-    {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH KECIL SAMA DENGAN 0.5 DAN Denyut_Jantung LEBIH KECIL SAMA DENGAN 119.5 DAN Usia LEBIH BESAR DARI 67.5 DAN Kategori_Tekanan_Darah_Pra-hipertensi LEBIH KECIL SAMA DENGAN 0.5 MAKA PREDICT Penyakit jantung koroner",
-        "machine_rule": {
-            "conditions": [
-                "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
-                "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas <= 0.5",
-                "Denyut_Jantung <= 119.5",
-                "Usia > 67.5",
-                "Kategori_Tekanan_Darah_Pra-hipertensi <= 0.5"
-            ],
-            "prediction": "Penyakit jantung koroner"
-        },
-        "confidence": 0.5,
-        "coverage": 0.01
-    },
-    {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH KECIL SAMA DENGAN 0.5 DAN Denyut_Jantung LEBIH KECIL SAMA DENGAN 119.5 DAN Usia LEBIH BESAR DARI 67.5 DAN Kategori_Tekanan_Darah_Pra-hipertensi LEBIH BESAR DARI 0.5 DAN Kelelahan LEBIH KECIL SAMA DENGAN 0.5 DAN Nyeri_Dada LEBIH KECIL SAMA DENGAN 0.5 MAKA PREDICT Jantung bawaan biru (Riwayat)",
-        "machine_rule": {
-            "conditions": [
-                "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
-                "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas <= 0.5",
-                "Denyut_Jantung <= 119.5",
-                "Usia > 67.5",
-                "Kategori_Tekanan_Darah_Pra-hipertensi > 0.5",
-                "Kelelahan <= 0.5",
-                "Nyeri_Dada <= 0.5"
-            ],
-            "prediction": "Jantung bawaan biru (Riwayat)"
-        },
-        "confidence": 0.5,
-        "coverage": 0.03
-    },
-    {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH KECIL SAMA DENGAN 0.5 DAN Denyut_Jantung LEBIH KECIL SAMA DENGAN 119.5 DAN Usia LEBIH BESAR DARI 67.5 DAN Kategori_Tekanan_Darah_Pra-hipertensi LEBIH BESAR DARI 0.5 DAN Kelelahan LEBIH KECIL SAMA DENGAN 0.5 DAN Nyeri_Dada LEBIH BESAR DARI 0.5 MAKA PREDICT Jantung bawaan biru (Riwayat)",
-        "machine_rule": {
-            "conditions": [
-                "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
-                "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas <= 0.5",
-                "Denyut_Jantung <= 119.5",
-                "Usia > 67.5",
-                "Kategori_Tekanan_Darah_Pra-hipertensi > 0.5",
-                "Kelelahan <= 0.5",
-                "Nyeri_Dada > 0.5"
-            ],
-            "prediction": "Jantung bawaan biru (Riwayat)"
-        },
-        "confidence": 0.67,
-        "coverage": 0.01
-    },
-    {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH KECIL SAMA DENGAN 0.5 DAN Denyut_Jantung LEBIH KECIL SAMA DENGAN 119.5 DAN Usia LEBIH BESAR DARI 67.5 DAN Kategori_Tekanan_Darah_Pra-hipertensi LEBIH BESAR DARI 0.5 DAN Kelelahan LEBIH BESAR DARI 0.5 MAKA PREDICT Jantung bawaan biru (Riwayat)",
-        "machine_rule": {
-            "conditions": [
-                "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
-                "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas <= 0.5",
-                "Denyut_Jantung <= 119.5",
-                "Usia > 67.5",
-                "Kategori_Tekanan_Darah_Pra-hipertensi > 0.5",
-                "Kelelahan > 0.5"
-            ],
-            "prediction": "Jantung bawaan biru (Riwayat)"
+            "prediction": "Gagal jantung",
+            "class_distribution": "Gagal jantung: 1 (100.0%)"
         },
         "confidence": 1.0,
-        "coverage": 0.01
+        "coverage": 0.0,
+        "class_distribution": "Gagal jantung: 1 (100.0%)"
     },
     {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH KECIL SAMA DENGAN 0.5 DAN Denyut_Jantung LEBIH BESAR DARI 119.5 MAKA PREDICT Penyakit jantung koroner",
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 170.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 168.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 117.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 275.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 272.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 267.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 261.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 167.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 166.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 164.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 111.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 258.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 107.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 105.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 103.0 DAN Diastolik LEBIH KECIL SAMA DENGAN 101.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 175.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 162.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 161.0 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 172.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 100.5 DAN Gula_Darah LEBIH BESAR DARI 168.5 DAN Usia LEBIH KECIL SAMA DENGAN 43.5 MAKA PREDICT Gagal jantung",
         "machine_rule": {
             "conditions": [
                 "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
                 "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas <= 0.5",
-                "Denyut_Jantung > 119.5"
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik <= 170.0",
+                "Sistolik <= 168.5",
+                "Diastolik <= 117.5",
+                "Kolesterol <= 275.5",
+                "Kolesterol <= 272.0",
+                "Kolesterol <= 267.0",
+                "Kolesterol <= 261.5",
+                "Sistolik <= 167.5",
+                "Sistolik <= 166.5",
+                "Sistolik <= 164.5",
+                "Diastolik <= 111.5",
+                "Kolesterol <= 258.5",
+                "Diastolik <= 107.5",
+                "Diastolik <= 105.5",
+                "Diastolik <= 103.0",
+                "Diastolik <= 101.5",
+                "Gula_Darah <= 175.0",
+                "Sistolik <= 162.5",
+                "Sistolik <= 161.0",
+                "Gula_Darah <= 172.5",
+                "Diastolik <= 100.5",
+                "Gula_Darah > 168.5",
+                "Usia <= 43.5"
             ],
-            "prediction": "Penyakit jantung koroner"
-        },
-        "confidence": 0.5,
-        "coverage": 0.01
-    },
-    {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH BESAR DARI 0.5 DAN Denyut_Jantung LEBIH KECIL SAMA DENGAN 56.5 MAKA PREDICT Demam reumatik (Dampak)",
-        "machine_rule": {
-            "conditions": [
-                "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
-                "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas > 0.5",
-                "Denyut_Jantung <= 56.5"
-            ],
-            "prediction": "Demam reumatik (Dampak)"
-        },
-        "confidence": 0.67,
-        "coverage": 0.01
-    },
-    {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH BESAR DARI 0.5 DAN Denyut_Jantung LEBIH BESAR DARI 56.5 DAN Usia LEBIH KECIL SAMA DENGAN 67.5 DAN Kategori_Tekanan_Darah_Hipertensi Derajat 2 LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Normal LEBIH KECIL SAMA DENGAN 0.5 DAN Nyeri_Dada LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Pra-hipertensi LEBIH KECIL SAMA DENGAN 0.5 MAKA PREDICT Gagal jantung",
-        "machine_rule": {
-            "conditions": [
-                "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
-                "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas > 0.5",
-                "Denyut_Jantung > 56.5",
-                "Usia <= 67.5",
-                "Kategori_Tekanan_Darah_Hipertensi Derajat 2 <= 0.5",
-                "Kategori_Tekanan_Darah_Normal <= 0.5",
-                "Nyeri_Dada <= 0.5",
-                "Kategori_Tekanan_Darah_Pra-hipertensi <= 0.5"
-            ],
-            "prediction": "Gagal jantung"
-        },
-        "confidence": 0.43,
-        "coverage": 0.03
-    },
-    {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH BESAR DARI 0.5 DAN Denyut_Jantung LEBIH BESAR DARI 56.5 DAN Usia LEBIH KECIL SAMA DENGAN 67.5 DAN Kategori_Tekanan_Darah_Hipertensi Derajat 2 LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Normal LEBIH KECIL SAMA DENGAN 0.5 DAN Nyeri_Dada LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Pra-hipertensi LEBIH BESAR DARI 0.5 DAN Kelelahan LEBIH KECIL SAMA DENGAN 0.5 MAKA PREDICT Gagal jantung",
-        "machine_rule": {
-            "conditions": [
-                "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
-                "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas > 0.5",
-                "Denyut_Jantung > 56.5",
-                "Usia <= 67.5",
-                "Kategori_Tekanan_Darah_Hipertensi Derajat 2 <= 0.5",
-                "Kategori_Tekanan_Darah_Normal <= 0.5",
-                "Nyeri_Dada <= 0.5",
-                "Kategori_Tekanan_Darah_Pra-hipertensi > 0.5",
-                "Kelelahan <= 0.5"
-            ],
-            "prediction": "Gagal jantung"
-        },
-        "confidence": 0.38,
-        "coverage": 0.04
-    },
-    {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH BESAR DARI 0.5 DAN Denyut_Jantung LEBIH BESAR DARI 56.5 DAN Usia LEBIH KECIL SAMA DENGAN 67.5 DAN Kategori_Tekanan_Darah_Hipertensi Derajat 2 LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Normal LEBIH KECIL SAMA DENGAN 0.5 DAN Nyeri_Dada LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Pra-hipertensi LEBIH BESAR DARI 0.5 DAN Kelelahan LEBIH BESAR DARI 0.5 MAKA PREDICT Gagal jantung",
-        "machine_rule": {
-            "conditions": [
-                "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
-                "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas > 0.5",
-                "Denyut_Jantung > 56.5",
-                "Usia <= 67.5",
-                "Kategori_Tekanan_Darah_Hipertensi Derajat 2 <= 0.5",
-                "Kategori_Tekanan_Darah_Normal <= 0.5",
-                "Nyeri_Dada <= 0.5",
-                "Kategori_Tekanan_Darah_Pra-hipertensi > 0.5",
-                "Kelelahan > 0.5"
-            ],
-            "prediction": "Gagal jantung"
-        },
-        "confidence": 0.43,
-        "coverage": 0.03
-    },
-    {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH BESAR DARI 0.5 DAN Denyut_Jantung LEBIH BESAR DARI 56.5 DAN Usia LEBIH KECIL SAMA DENGAN 67.5 DAN Kategori_Tekanan_Darah_Hipertensi Derajat 2 LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Normal LEBIH KECIL SAMA DENGAN 0.5 DAN Nyeri_Dada LEBIH BESAR DARI 0.5 DAN Kelelahan LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Pra-hipertensi LEBIH KECIL SAMA DENGAN 0.5 MAKA PREDICT Demam reumatik (Dampak)",
-        "machine_rule": {
-            "conditions": [
-                "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
-                "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas > 0.5",
-                "Denyut_Jantung > 56.5",
-                "Usia <= 67.5",
-                "Kategori_Tekanan_Darah_Hipertensi Derajat 2 <= 0.5",
-                "Kategori_Tekanan_Darah_Normal <= 0.5",
-                "Nyeri_Dada > 0.5",
-                "Kelelahan <= 0.5",
-                "Kategori_Tekanan_Darah_Pra-hipertensi <= 0.5"
-            ],
-            "prediction": "Demam reumatik (Dampak)"
-        },
-        "confidence": 0.5,
-        "coverage": 0.01
-    },
-    {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH BESAR DARI 0.5 DAN Denyut_Jantung LEBIH BESAR DARI 56.5 DAN Usia LEBIH KECIL SAMA DENGAN 67.5 DAN Kategori_Tekanan_Darah_Hipertensi Derajat 2 LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Normal LEBIH KECIL SAMA DENGAN 0.5 DAN Nyeri_Dada LEBIH BESAR DARI 0.5 DAN Kelelahan LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Pra-hipertensi LEBIH BESAR DARI 0.5 MAKA PREDICT Demam reumatik (Dampak)",
-        "machine_rule": {
-            "conditions": [
-                "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
-                "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas > 0.5",
-                "Denyut_Jantung > 56.5",
-                "Usia <= 67.5",
-                "Kategori_Tekanan_Darah_Hipertensi Derajat 2 <= 0.5",
-                "Kategori_Tekanan_Darah_Normal <= 0.5",
-                "Nyeri_Dada > 0.5",
-                "Kelelahan <= 0.5",
-                "Kategori_Tekanan_Darah_Pra-hipertensi > 0.5"
-            ],
-            "prediction": "Demam reumatik (Dampak)"
-        },
-        "confidence": 0.67,
-        "coverage": 0.01
-    },
-    {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH BESAR DARI 0.5 DAN Denyut_Jantung LEBIH BESAR DARI 56.5 DAN Usia LEBIH KECIL SAMA DENGAN 67.5 DAN Kategori_Tekanan_Darah_Hipertensi Derajat 2 LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Normal LEBIH KECIL SAMA DENGAN 0.5 DAN Nyeri_Dada LEBIH BESAR DARI 0.5 DAN Kelelahan LEBIH BESAR DARI 0.5 MAKA PREDICT Demam reumatik (Dampak)",
-        "machine_rule": {
-            "conditions": [
-                "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
-                "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas > 0.5",
-                "Denyut_Jantung > 56.5",
-                "Usia <= 67.5",
-                "Kategori_Tekanan_Darah_Hipertensi Derajat 2 <= 0.5",
-                "Kategori_Tekanan_Darah_Normal <= 0.5",
-                "Nyeri_Dada > 0.5",
-                "Kelelahan > 0.5"
-            ],
-            "prediction": "Demam reumatik (Dampak)"
-        },
-        "confidence": 0.83,
-        "coverage": 0.03
-    },
-    {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH BESAR DARI 0.5 DAN Denyut_Jantung LEBIH BESAR DARI 56.5 DAN Usia LEBIH KECIL SAMA DENGAN 67.5 DAN Kategori_Tekanan_Darah_Hipertensi Derajat 2 LEBIH KECIL SAMA DENGAN 0.5 DAN Kategori_Tekanan_Darah_Normal LEBIH BESAR DARI 0.5 MAKA PREDICT Demam reumatik (Dampak)",
-        "machine_rule": {
-            "conditions": [
-                "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
-                "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas > 0.5",
-                "Denyut_Jantung > 56.5",
-                "Usia <= 67.5",
-                "Kategori_Tekanan_Darah_Hipertensi Derajat 2 <= 0.5",
-                "Kategori_Tekanan_Darah_Normal > 0.5"
-            ],
-            "prediction": "Demam reumatik (Dampak)"
+            "prediction": "Gagal jantung",
+            "class_distribution": "Gagal jantung: 1 (100.0%)"
         },
         "confidence": 1.0,
-        "coverage": 0.02
+        "coverage": 0.0,
+        "class_distribution": "Gagal jantung: 1 (100.0%)"
     },
     {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH BESAR DARI 0.5 DAN Denyut_Jantung LEBIH BESAR DARI 56.5 DAN Usia LEBIH KECIL SAMA DENGAN 67.5 DAN Kategori_Tekanan_Darah_Hipertensi Derajat 2 LEBIH BESAR DARI 0.5 MAKA PREDICT Gagal jantung",
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 170.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 168.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 117.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 275.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 272.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 267.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 261.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 167.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 166.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 164.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 111.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 258.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 107.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 105.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 103.0 DAN Diastolik LEBIH KECIL SAMA DENGAN 101.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 175.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 162.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 161.0 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 172.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 100.5 DAN Gula_Darah LEBIH BESAR DARI 168.5 DAN Usia LEBIH BESAR DARI 43.5 MAKA PREDICT Demam reumatik (Dampak)",
         "machine_rule": {
             "conditions": [
                 "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
                 "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas > 0.5",
-                "Denyut_Jantung > 56.5",
-                "Usia <= 67.5",
-                "Kategori_Tekanan_Darah_Hipertensi Derajat 2 > 0.5"
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik <= 170.0",
+                "Sistolik <= 168.5",
+                "Diastolik <= 117.5",
+                "Kolesterol <= 275.5",
+                "Kolesterol <= 272.0",
+                "Kolesterol <= 267.0",
+                "Kolesterol <= 261.5",
+                "Sistolik <= 167.5",
+                "Sistolik <= 166.5",
+                "Sistolik <= 164.5",
+                "Diastolik <= 111.5",
+                "Kolesterol <= 258.5",
+                "Diastolik <= 107.5",
+                "Diastolik <= 105.5",
+                "Diastolik <= 103.0",
+                "Diastolik <= 101.5",
+                "Gula_Darah <= 175.0",
+                "Sistolik <= 162.5",
+                "Sistolik <= 161.0",
+                "Gula_Darah <= 172.5",
+                "Diastolik <= 100.5",
+                "Gula_Darah > 168.5",
+                "Usia > 43.5"
             ],
-            "prediction": "Gagal jantung"
+            "prediction": "Demam reumatik (Dampak)",
+            "class_distribution": "Demam reumatik (Dampak): 1 (100.0%)"
         },
         "confidence": 1.0,
-        "coverage": 0.0
+        "coverage": 0.0,
+        "class_distribution": "Demam reumatik (Dampak): 1 (100.0%)"
     },
     {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 180.0 DAN Sesak_Napas LEBIH BESAR DARI 0.5 DAN Denyut_Jantung LEBIH BESAR DARI 56.5 DAN Usia LEBIH BESAR DARI 67.5 MAKA PREDICT Gagal jantung",
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 170.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 168.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 117.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 275.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 272.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 267.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 261.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 167.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 166.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 164.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 111.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 258.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 107.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 105.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 103.0 DAN Diastolik LEBIH KECIL SAMA DENGAN 101.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 175.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 162.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 161.0 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 172.5 DAN Diastolik LEBIH BESAR DARI 100.5 DAN Usia LEBIH KECIL SAMA DENGAN 59.0 MAKA PREDICT Gagal jantung",
         "machine_rule": {
             "conditions": [
                 "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
                 "Diastolik > 70.5",
-                "Sistolik <= 180.0",
-                "Sesak_Napas > 0.5",
-                "Denyut_Jantung > 56.5",
-                "Usia > 67.5"
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik <= 170.0",
+                "Sistolik <= 168.5",
+                "Diastolik <= 117.5",
+                "Kolesterol <= 275.5",
+                "Kolesterol <= 272.0",
+                "Kolesterol <= 267.0",
+                "Kolesterol <= 261.5",
+                "Sistolik <= 167.5",
+                "Sistolik <= 166.5",
+                "Sistolik <= 164.5",
+                "Diastolik <= 111.5",
+                "Kolesterol <= 258.5",
+                "Diastolik <= 107.5",
+                "Diastolik <= 105.5",
+                "Diastolik <= 103.0",
+                "Diastolik <= 101.5",
+                "Gula_Darah <= 175.0",
+                "Sistolik <= 162.5",
+                "Sistolik <= 161.0",
+                "Gula_Darah <= 172.5",
+                "Diastolik > 100.5",
+                "Usia <= 59.0"
             ],
-            "prediction": "Gagal jantung"
+            "prediction": "Gagal jantung",
+            "class_distribution": "Gagal jantung: 1 (100.0%)"
         },
         "confidence": 1.0,
-        "coverage": 0.01
+        "coverage": 0.0,
+        "class_distribution": "Gagal jantung: 1 (100.0%)"
     },
     {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH BESAR DARI 180.0 DAN Denyut_Jantung LEBIH KECIL SAMA DENGAN 103.0 DAN Usia LEBIH KECIL SAMA DENGAN 46.5 MAKA PREDICT Penyakit jantung koroner",
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 170.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 168.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 117.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 275.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 272.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 267.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 261.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 167.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 166.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 164.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 111.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 258.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 107.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 105.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 103.0 DAN Diastolik LEBIH KECIL SAMA DENGAN 101.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 175.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 162.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 161.0 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 172.5 DAN Diastolik LEBIH BESAR DARI 100.5 DAN Usia LEBIH BESAR DARI 59.0 MAKA PREDICT Penyakit jantung koroner",
         "machine_rule": {
             "conditions": [
                 "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
                 "Diastolik > 70.5",
-                "Sistolik > 180.0",
-                "Denyut_Jantung <= 103.0",
-                "Usia <= 46.5"
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik <= 170.0",
+                "Sistolik <= 168.5",
+                "Diastolik <= 117.5",
+                "Kolesterol <= 275.5",
+                "Kolesterol <= 272.0",
+                "Kolesterol <= 267.0",
+                "Kolesterol <= 261.5",
+                "Sistolik <= 167.5",
+                "Sistolik <= 166.5",
+                "Sistolik <= 164.5",
+                "Diastolik <= 111.5",
+                "Kolesterol <= 258.5",
+                "Diastolik <= 107.5",
+                "Diastolik <= 105.5",
+                "Diastolik <= 103.0",
+                "Diastolik <= 101.5",
+                "Gula_Darah <= 175.0",
+                "Sistolik <= 162.5",
+                "Sistolik <= 161.0",
+                "Gula_Darah <= 172.5",
+                "Diastolik > 100.5",
+                "Usia > 59.0"
             ],
-            "prediction": "Penyakit jantung koroner"
-        },
-        "confidence": 0.5,
-        "coverage": 0.01
-    },
-    {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH BESAR DARI 180.0 DAN Denyut_Jantung LEBIH KECIL SAMA DENGAN 103.0 DAN Usia LEBIH BESAR DARI 46.5 MAKA PREDICT Gagal jantung",
-        "machine_rule": {
-            "conditions": [
-                "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
-                "Diastolik > 70.5",
-                "Sistolik > 180.0",
-                "Denyut_Jantung <= 103.0",
-                "Usia > 46.5"
-            ],
-            "prediction": "Gagal jantung"
+            "prediction": "Penyakit jantung koroner",
+            "class_distribution": "Penyakit jantung koroner: 1 (100.0%)"
         },
         "confidence": 1.0,
-        "coverage": 0.02
+        "coverage": 0.0,
+        "class_distribution": "Penyakit jantung koroner: 1 (100.0%)"
     },
     {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 279.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Sistolik LEBIH BESAR DARI 180.0 DAN Denyut_Jantung LEBIH BESAR DARI 103.0 MAKA PREDICT Demam reumatik (Dampak)",
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 170.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 168.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 117.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 275.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 272.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 267.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 261.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 167.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 166.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 164.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 111.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 258.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 107.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 105.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 103.0 DAN Diastolik LEBIH KECIL SAMA DENGAN 101.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 175.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 162.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 161.0 DAN Gula_Darah LEBIH BESAR DARI 172.5 MAKA PREDICT Demam reumatik (Dampak)",
         "machine_rule": {
             "conditions": [
                 "Gula_Darah > 90.5",
-                "Kolesterol <= 279.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
                 "Diastolik > 70.5",
-                "Sistolik > 180.0",
-                "Denyut_Jantung > 103.0"
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik <= 170.0",
+                "Sistolik <= 168.5",
+                "Diastolik <= 117.5",
+                "Kolesterol <= 275.5",
+                "Kolesterol <= 272.0",
+                "Kolesterol <= 267.0",
+                "Kolesterol <= 261.5",
+                "Sistolik <= 167.5",
+                "Sistolik <= 166.5",
+                "Sistolik <= 164.5",
+                "Diastolik <= 111.5",
+                "Kolesterol <= 258.5",
+                "Diastolik <= 107.5",
+                "Diastolik <= 105.5",
+                "Diastolik <= 103.0",
+                "Diastolik <= 101.5",
+                "Gula_Darah <= 175.0",
+                "Sistolik <= 162.5",
+                "Sistolik <= 161.0",
+                "Gula_Darah > 172.5"
             ],
-            "prediction": "Demam reumatik (Dampak)"
+            "prediction": "Demam reumatik (Dampak)",
+            "class_distribution": "Demam reumatik (Dampak): 1 (100.0%)"
         },
         "confidence": 1.0,
-        "coverage": 0.0
+        "coverage": 0.0,
+        "class_distribution": "Demam reumatik (Dampak): 1 (100.0%)"
     },
     {
-        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Kolesterol LEBIH BESAR DARI 279.5 MAKA PREDICT Penyakit jantung koroner",
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 170.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 168.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 117.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 275.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 272.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 267.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 261.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 167.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 166.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 164.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 111.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 258.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 107.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 105.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 103.0 DAN Diastolik LEBIH KECIL SAMA DENGAN 101.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 175.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 162.5 DAN Sistolik LEBIH BESAR DARI 161.0 MAKA PREDICT Penyakit jantung koroner",
         "machine_rule": {
             "conditions": [
                 "Gula_Darah > 90.5",
-                "Kolesterol > 279.5"
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik <= 170.0",
+                "Sistolik <= 168.5",
+                "Diastolik <= 117.5",
+                "Kolesterol <= 275.5",
+                "Kolesterol <= 272.0",
+                "Kolesterol <= 267.0",
+                "Kolesterol <= 261.5",
+                "Sistolik <= 167.5",
+                "Sistolik <= 166.5",
+                "Sistolik <= 164.5",
+                "Diastolik <= 111.5",
+                "Kolesterol <= 258.5",
+                "Diastolik <= 107.5",
+                "Diastolik <= 105.5",
+                "Diastolik <= 103.0",
+                "Diastolik <= 101.5",
+                "Gula_Darah <= 175.0",
+                "Sistolik <= 162.5",
+                "Sistolik > 161.0"
             ],
-            "prediction": "Penyakit jantung koroner"
+            "prediction": "Penyakit jantung koroner",
+            "class_distribution": "Penyakit jantung koroner: 3 (100.0%)"
         },
         "confidence": 1.0,
-        "coverage": 0.0
+        "coverage": 0.01,
+        "class_distribution": "Penyakit jantung koroner: 3 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 170.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 168.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 117.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 275.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 272.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 267.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 261.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 167.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 166.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 164.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 111.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 258.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 107.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 105.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 103.0 DAN Diastolik LEBIH KECIL SAMA DENGAN 101.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 175.0 DAN Sistolik LEBIH BESAR DARI 162.5 MAKA PREDICT Jantung bawaan biru (Riwayat)",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik <= 170.0",
+                "Sistolik <= 168.5",
+                "Diastolik <= 117.5",
+                "Kolesterol <= 275.5",
+                "Kolesterol <= 272.0",
+                "Kolesterol <= 267.0",
+                "Kolesterol <= 261.5",
+                "Sistolik <= 167.5",
+                "Sistolik <= 166.5",
+                "Sistolik <= 164.5",
+                "Diastolik <= 111.5",
+                "Kolesterol <= 258.5",
+                "Diastolik <= 107.5",
+                "Diastolik <= 105.5",
+                "Diastolik <= 103.0",
+                "Diastolik <= 101.5",
+                "Gula_Darah <= 175.0",
+                "Sistolik > 162.5"
+            ],
+            "prediction": "Jantung bawaan biru (Riwayat)",
+            "class_distribution": "Jantung bawaan biru (Riwayat): 1 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.0,
+        "class_distribution": "Jantung bawaan biru (Riwayat): 1 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 170.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 168.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 117.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 275.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 272.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 267.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 261.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 167.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 166.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 164.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 111.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 258.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 107.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 105.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 103.0 DAN Diastolik LEBIH KECIL SAMA DENGAN 101.5 DAN Gula_Darah LEBIH BESAR DARI 175.0 MAKA PREDICT Jantung bawaan biru (Riwayat)",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik <= 170.0",
+                "Sistolik <= 168.5",
+                "Diastolik <= 117.5",
+                "Kolesterol <= 275.5",
+                "Kolesterol <= 272.0",
+                "Kolesterol <= 267.0",
+                "Kolesterol <= 261.5",
+                "Sistolik <= 167.5",
+                "Sistolik <= 166.5",
+                "Sistolik <= 164.5",
+                "Diastolik <= 111.5",
+                "Kolesterol <= 258.5",
+                "Diastolik <= 107.5",
+                "Diastolik <= 105.5",
+                "Diastolik <= 103.0",
+                "Diastolik <= 101.5",
+                "Gula_Darah > 175.0"
+            ],
+            "prediction": "Jantung bawaan biru (Riwayat)",
+            "class_distribution": "Jantung bawaan biru (Riwayat): 1 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.0,
+        "class_distribution": "Jantung bawaan biru (Riwayat): 1 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 170.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 168.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 117.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 275.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 272.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 267.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 261.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 167.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 166.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 164.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 111.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 258.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 107.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 105.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 103.0 DAN Diastolik LEBIH BESAR DARI 101.5 MAKA PREDICT Gagal jantung",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik <= 170.0",
+                "Sistolik <= 168.5",
+                "Diastolik <= 117.5",
+                "Kolesterol <= 275.5",
+                "Kolesterol <= 272.0",
+                "Kolesterol <= 267.0",
+                "Kolesterol <= 261.5",
+                "Sistolik <= 167.5",
+                "Sistolik <= 166.5",
+                "Sistolik <= 164.5",
+                "Diastolik <= 111.5",
+                "Kolesterol <= 258.5",
+                "Diastolik <= 107.5",
+                "Diastolik <= 105.5",
+                "Diastolik <= 103.0",
+                "Diastolik > 101.5"
+            ],
+            "prediction": "Gagal jantung",
+            "class_distribution": "Gagal jantung: 1 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.0,
+        "class_distribution": "Gagal jantung: 1 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 170.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 168.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 117.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 275.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 272.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 267.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 261.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 167.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 166.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 164.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 111.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 258.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 107.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 105.5 DAN Diastolik LEBIH BESAR DARI 103.0 MAKA PREDICT Jantung bawaan biru (Riwayat)",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik <= 170.0",
+                "Sistolik <= 168.5",
+                "Diastolik <= 117.5",
+                "Kolesterol <= 275.5",
+                "Kolesterol <= 272.0",
+                "Kolesterol <= 267.0",
+                "Kolesterol <= 261.5",
+                "Sistolik <= 167.5",
+                "Sistolik <= 166.5",
+                "Sistolik <= 164.5",
+                "Diastolik <= 111.5",
+                "Kolesterol <= 258.5",
+                "Diastolik <= 107.5",
+                "Diastolik <= 105.5",
+                "Diastolik > 103.0"
+            ],
+            "prediction": "Jantung bawaan biru (Riwayat)",
+            "class_distribution": "Jantung bawaan biru (Riwayat): 2 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.01,
+        "class_distribution": "Jantung bawaan biru (Riwayat): 2 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 170.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 168.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 117.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 275.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 272.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 267.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 261.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 167.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 166.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 164.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 111.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 258.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 107.5 DAN Diastolik LEBIH BESAR DARI 105.5 MAKA PREDICT Gagal jantung",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik <= 170.0",
+                "Sistolik <= 168.5",
+                "Diastolik <= 117.5",
+                "Kolesterol <= 275.5",
+                "Kolesterol <= 272.0",
+                "Kolesterol <= 267.0",
+                "Kolesterol <= 261.5",
+                "Sistolik <= 167.5",
+                "Sistolik <= 166.5",
+                "Sistolik <= 164.5",
+                "Diastolik <= 111.5",
+                "Kolesterol <= 258.5",
+                "Diastolik <= 107.5",
+                "Diastolik > 105.5"
+            ],
+            "prediction": "Gagal jantung",
+            "class_distribution": "Gagal jantung: 1 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.0,
+        "class_distribution": "Gagal jantung: 1 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 170.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 168.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 117.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 275.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 272.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 267.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 261.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 167.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 166.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 164.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 111.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 258.5 DAN Diastolik LEBIH BESAR DARI 107.5 MAKA PREDICT Penyakit jantung koroner",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik <= 170.0",
+                "Sistolik <= 168.5",
+                "Diastolik <= 117.5",
+                "Kolesterol <= 275.5",
+                "Kolesterol <= 272.0",
+                "Kolesterol <= 267.0",
+                "Kolesterol <= 261.5",
+                "Sistolik <= 167.5",
+                "Sistolik <= 166.5",
+                "Sistolik <= 164.5",
+                "Diastolik <= 111.5",
+                "Kolesterol <= 258.5",
+                "Diastolik > 107.5"
+            ],
+            "prediction": "Penyakit jantung koroner",
+            "class_distribution": "Penyakit jantung koroner: 2 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.01,
+        "class_distribution": "Penyakit jantung koroner: 2 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 170.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 168.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 117.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 275.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 272.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 267.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 261.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 167.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 166.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 164.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 111.5 DAN Kolesterol LEBIH BESAR DARI 258.5 MAKA PREDICT Demam reumatik (Dampak)",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik <= 170.0",
+                "Sistolik <= 168.5",
+                "Diastolik <= 117.5",
+                "Kolesterol <= 275.5",
+                "Kolesterol <= 272.0",
+                "Kolesterol <= 267.0",
+                "Kolesterol <= 261.5",
+                "Sistolik <= 167.5",
+                "Sistolik <= 166.5",
+                "Sistolik <= 164.5",
+                "Diastolik <= 111.5",
+                "Kolesterol > 258.5"
+            ],
+            "prediction": "Demam reumatik (Dampak)",
+            "class_distribution": "Demam reumatik (Dampak): 2 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.01,
+        "class_distribution": "Demam reumatik (Dampak): 2 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 170.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 168.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 117.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 275.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 272.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 267.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 261.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 167.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 166.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 164.5 DAN Diastolik LEBIH BESAR DARI 111.5 DAN Usia LEBIH KECIL SAMA DENGAN 63.5 MAKA PREDICT Gagal jantung",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik <= 170.0",
+                "Sistolik <= 168.5",
+                "Diastolik <= 117.5",
+                "Kolesterol <= 275.5",
+                "Kolesterol <= 272.0",
+                "Kolesterol <= 267.0",
+                "Kolesterol <= 261.5",
+                "Sistolik <= 167.5",
+                "Sistolik <= 166.5",
+                "Sistolik <= 164.5",
+                "Diastolik > 111.5",
+                "Usia <= 63.5"
+            ],
+            "prediction": "Gagal jantung",
+            "class_distribution": "Gagal jantung: 3 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.01,
+        "class_distribution": "Gagal jantung: 3 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 170.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 168.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 117.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 275.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 272.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 267.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 261.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 167.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 166.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 164.5 DAN Diastolik LEBIH BESAR DARI 111.5 DAN Usia LEBIH BESAR DARI 63.5 MAKA PREDICT Jantung bawaan biru (Riwayat)",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik <= 170.0",
+                "Sistolik <= 168.5",
+                "Diastolik <= 117.5",
+                "Kolesterol <= 275.5",
+                "Kolesterol <= 272.0",
+                "Kolesterol <= 267.0",
+                "Kolesterol <= 261.5",
+                "Sistolik <= 167.5",
+                "Sistolik <= 166.5",
+                "Sistolik <= 164.5",
+                "Diastolik > 111.5",
+                "Usia > 63.5"
+            ],
+            "prediction": "Jantung bawaan biru (Riwayat)",
+            "class_distribution": "Jantung bawaan biru (Riwayat): 1 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.0,
+        "class_distribution": "Jantung bawaan biru (Riwayat): 1 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 170.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 168.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 117.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 275.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 272.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 267.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 261.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 167.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 166.5 DAN Sistolik LEBIH BESAR DARI 164.5 MAKA PREDICT Gagal jantung",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik <= 170.0",
+                "Sistolik <= 168.5",
+                "Diastolik <= 117.5",
+                "Kolesterol <= 275.5",
+                "Kolesterol <= 272.0",
+                "Kolesterol <= 267.0",
+                "Kolesterol <= 261.5",
+                "Sistolik <= 167.5",
+                "Sistolik <= 166.5",
+                "Sistolik > 164.5"
+            ],
+            "prediction": "Gagal jantung",
+            "class_distribution": "Gagal jantung: 2 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.01,
+        "class_distribution": "Gagal jantung: 2 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 170.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 168.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 117.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 275.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 272.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 267.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 261.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 167.5 DAN Sistolik LEBIH BESAR DARI 166.5 MAKA PREDICT Jantung bawaan biru (Riwayat)",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik <= 170.0",
+                "Sistolik <= 168.5",
+                "Diastolik <= 117.5",
+                "Kolesterol <= 275.5",
+                "Kolesterol <= 272.0",
+                "Kolesterol <= 267.0",
+                "Kolesterol <= 261.5",
+                "Sistolik <= 167.5",
+                "Sistolik > 166.5"
+            ],
+            "prediction": "Jantung bawaan biru (Riwayat)",
+            "class_distribution": "Jantung bawaan biru (Riwayat): 2 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.01,
+        "class_distribution": "Jantung bawaan biru (Riwayat): 2 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 170.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 168.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 117.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 275.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 272.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 267.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 261.5 DAN Sistolik LEBIH BESAR DARI 167.5 MAKA PREDICT Gagal jantung",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik <= 170.0",
+                "Sistolik <= 168.5",
+                "Diastolik <= 117.5",
+                "Kolesterol <= 275.5",
+                "Kolesterol <= 272.0",
+                "Kolesterol <= 267.0",
+                "Kolesterol <= 261.5",
+                "Sistolik > 167.5"
+            ],
+            "prediction": "Gagal jantung",
+            "class_distribution": "Gagal jantung: 1 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.0,
+        "class_distribution": "Gagal jantung: 1 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 170.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 168.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 117.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 275.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 272.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 267.0 DAN Kolesterol LEBIH BESAR DARI 261.5 MAKA PREDICT Demam reumatik (Dampak)",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik <= 170.0",
+                "Sistolik <= 168.5",
+                "Diastolik <= 117.5",
+                "Kolesterol <= 275.5",
+                "Kolesterol <= 272.0",
+                "Kolesterol <= 267.0",
+                "Kolesterol > 261.5"
+            ],
+            "prediction": "Demam reumatik (Dampak)",
+            "class_distribution": "Demam reumatik (Dampak): 1 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.0,
+        "class_distribution": "Demam reumatik (Dampak): 1 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 170.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 168.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 117.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 275.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 272.0 DAN Kolesterol LEBIH BESAR DARI 267.0 MAKA PREDICT Penyakit jantung koroner",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik <= 170.0",
+                "Sistolik <= 168.5",
+                "Diastolik <= 117.5",
+                "Kolesterol <= 275.5",
+                "Kolesterol <= 272.0",
+                "Kolesterol > 267.0"
+            ],
+            "prediction": "Penyakit jantung koroner",
+            "class_distribution": "Penyakit jantung koroner: 1 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.0,
+        "class_distribution": "Penyakit jantung koroner: 1 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 170.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 168.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 117.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 275.5 DAN Kolesterol LEBIH BESAR DARI 272.0 MAKA PREDICT Tidak Ada",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik <= 170.0",
+                "Sistolik <= 168.5",
+                "Diastolik <= 117.5",
+                "Kolesterol <= 275.5",
+                "Kolesterol > 272.0"
+            ],
+            "prediction": "Tidak Ada",
+            "class_distribution": "Tidak Ada: 2 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.01,
+        "class_distribution": "Tidak Ada: 2 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 170.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 168.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 117.5 DAN Kolesterol LEBIH BESAR DARI 275.5 DAN Usia LEBIH KECIL SAMA DENGAN 63.5 MAKA PREDICT Gagal jantung",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik <= 170.0",
+                "Sistolik <= 168.5",
+                "Diastolik <= 117.5",
+                "Kolesterol > 275.5",
+                "Usia <= 63.5"
+            ],
+            "prediction": "Gagal jantung",
+            "class_distribution": "Gagal jantung: 1 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.0,
+        "class_distribution": "Gagal jantung: 1 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 170.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 168.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 117.5 DAN Kolesterol LEBIH BESAR DARI 275.5 DAN Usia LEBIH BESAR DARI 63.5 MAKA PREDICT Jantung bawaan biru (Riwayat)",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik <= 170.0",
+                "Sistolik <= 168.5",
+                "Diastolik <= 117.5",
+                "Kolesterol > 275.5",
+                "Usia > 63.5"
+            ],
+            "prediction": "Jantung bawaan biru (Riwayat)",
+            "class_distribution": "Jantung bawaan biru (Riwayat): 1 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.0,
+        "class_distribution": "Jantung bawaan biru (Riwayat): 1 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 170.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 168.5 DAN Diastolik LEBIH BESAR DARI 117.5 MAKA PREDICT Gagal jantung",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik <= 170.0",
+                "Sistolik <= 168.5",
+                "Diastolik > 117.5"
+            ],
+            "prediction": "Gagal jantung",
+            "class_distribution": "Gagal jantung: 2 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.01,
+        "class_distribution": "Gagal jantung: 2 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 170.0 DAN Sistolik LEBIH BESAR DARI 168.5 MAKA PREDICT Jantung bawaan biru (Riwayat)",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik <= 170.0",
+                "Sistolik > 168.5"
+            ],
+            "prediction": "Jantung bawaan biru (Riwayat)",
+            "class_distribution": "Jantung bawaan biru (Riwayat): 1 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.0,
+        "class_distribution": "Jantung bawaan biru (Riwayat): 1 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 172.0 DAN Sistolik LEBIH BESAR DARI 170.0 MAKA PREDICT Penyakit jantung koroner",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik <= 172.0",
+                "Sistolik > 170.0"
+            ],
+            "prediction": "Penyakit jantung koroner",
+            "class_distribution": "Penyakit jantung koroner: 1 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.0,
+        "class_distribution": "Penyakit jantung koroner: 1 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 174.5 DAN Sistolik LEBIH BESAR DARI 172.0 MAKA PREDICT Jantung bawaan biru (Riwayat)",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik <= 174.5",
+                "Sistolik > 172.0"
+            ],
+            "prediction": "Jantung bawaan biru (Riwayat)",
+            "class_distribution": "Jantung bawaan biru (Riwayat): 1 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.0,
+        "class_distribution": "Jantung bawaan biru (Riwayat): 1 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH KECIL SAMA DENGAN 178.0 DAN Sistolik LEBIH BESAR DARI 174.5 MAKA PREDICT Gagal jantung",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik <= 178.0",
+                "Sistolik > 174.5"
+            ],
+            "prediction": "Gagal jantung",
+            "class_distribution": "Gagal jantung: 1 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.0,
+        "class_distribution": "Gagal jantung: 1 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH KECIL SAMA DENGAN 181.0 DAN Sistolik LEBIH BESAR DARI 178.0 MAKA PREDICT Tidak Ada",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik <= 181.0",
+                "Sistolik > 178.0"
+            ],
+            "prediction": "Tidak Ada",
+            "class_distribution": "Tidak Ada: 1 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.0,
+        "class_distribution": "Tidak Ada: 1 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH BESAR DARI 181.0 DAN Kolesterol LEBIH KECIL SAMA DENGAN 212.5 MAKA PREDICT Jantung bawaan biru (Riwayat)",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik > 181.0",
+                "Kolesterol <= 212.5"
+            ],
+            "prediction": "Jantung bawaan biru (Riwayat)",
+            "class_distribution": "Jantung bawaan biru (Riwayat): 1 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.0,
+        "class_distribution": "Jantung bawaan biru (Riwayat): 1 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH BESAR DARI 181.0 DAN Kolesterol LEBIH BESAR DARI 212.5 DAN Denyut_Jantung LEBIH KECIL SAMA DENGAN 58.5 MAKA PREDICT Penyakit jantung koroner",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik > 181.0",
+                "Kolesterol > 212.5",
+                "Denyut_Jantung <= 58.5"
+            ],
+            "prediction": "Penyakit jantung koroner",
+            "class_distribution": "Penyakit jantung koroner: 1 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.0,
+        "class_distribution": "Penyakit jantung koroner: 1 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH KECIL SAMA DENGAN 118.5 DAN Sistolik LEBIH BESAR DARI 181.0 DAN Kolesterol LEBIH BESAR DARI 212.5 DAN Denyut_Jantung LEBIH BESAR DARI 58.5 MAKA PREDICT Gagal jantung",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik <= 118.5",
+                "Sistolik > 181.0",
+                "Kolesterol > 212.5",
+                "Denyut_Jantung > 58.5"
+            ],
+            "prediction": "Gagal jantung",
+            "class_distribution": "Gagal jantung: 6 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.03,
+        "class_distribution": "Gagal jantung: 6 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH BESAR DARI 118.5 DAN Usia LEBIH KECIL SAMA DENGAN 54.0 MAKA PREDICT Jantung bawaan biru (Riwayat)",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik > 118.5",
+                "Usia <= 54.0"
+            ],
+            "prediction": "Jantung bawaan biru (Riwayat)",
+            "class_distribution": "Jantung bawaan biru (Riwayat): 1 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.0,
+        "class_distribution": "Jantung bawaan biru (Riwayat): 1 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH KECIL SAMA DENGAN 278.5 DAN Diastolik LEBIH BESAR DARI 118.5 DAN Usia LEBIH BESAR DARI 54.0 MAKA PREDICT Gagal jantung",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol <= 278.5",
+                "Diastolik > 118.5",
+                "Usia > 54.0"
+            ],
+            "prediction": "Gagal jantung",
+            "class_distribution": "Gagal jantung: 3 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.01,
+        "class_distribution": "Gagal jantung: 3 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 177.5 DAN Diastolik LEBIH BESAR DARI 70.5 DAN Kolesterol LEBIH BESAR DARI 278.5 MAKA PREDICT Penyakit jantung koroner",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah <= 177.5",
+                "Diastolik > 70.5",
+                "Kolesterol > 278.5"
+            ],
+            "prediction": "Penyakit jantung koroner",
+            "class_distribution": "Penyakit jantung koroner: 1 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.0,
+        "class_distribution": "Penyakit jantung koroner: 1 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH KECIL SAMA DENGAN 179.5 DAN Gula_Darah LEBIH BESAR DARI 177.5 MAKA PREDICT Gagal jantung",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah <= 179.5",
+                "Gula_Darah > 177.5"
+            ],
+            "prediction": "Gagal jantung",
+            "class_distribution": "Gagal jantung: 4 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.02,
+        "class_distribution": "Gagal jantung: 4 (100.0%)"
+    },
+    {
+        "display_rule": "JIKA Gula_Darah LEBIH BESAR DARI 90.5 DAN Gula_Darah LEBIH BESAR DARI 179.5 MAKA PREDICT Demam reumatik (Dampak)",
+        "machine_rule": {
+            "conditions": [
+                "Gula_Darah > 90.5",
+                "Gula_Darah > 179.5"
+            ],
+            "prediction": "Demam reumatik (Dampak)",
+            "class_distribution": "Demam reumatik (Dampak): 1 (100.0%)"
+        },
+        "confidence": 1.0,
+        "coverage": 0.0,
+        "class_distribution": "Demam reumatik (Dampak): 1 (100.0%)"
     }
 ]

@@ -1,91 +1,61 @@
-Nama,Usia,Jenis_Kelamin,Sistolik,Diastolik,Kategori_Tekanan_Darah,Kolesterol,Gula_Darah,Nyeri_Dada,Sesak_Napas,Kelelahan,Denyut_Jantung,Penyakit_Jantung,Prediksi
-Siti Aminah,61,,136,72,Pra-hipertensi,220,135,0,0,0,97,Tidak Ada,Tidak Ada
-Retno Wulandari,55,,155,113,Hipertensi Derajat 1,271,150,0,1,1,89,Penyakit jantung koroner,Gagal jantung
-Ani Lestari,45,,126,85,Pra-hipertensi,185,129,0,0,0,73,Tidak Ada,Tidak Ada
-Asep Saepudin,50,,122,80,Pra-hipertensi,199,97,1,1,0,114,Penyakit jantung koroner,Demam reumatik (Dampak)
-Lina Marlina,49,,143,96,Hipertensi Derajat 1,203,125,0,0,0,112,Penyakit jantung koroner,Demam reumatik (Dampak)
-Endang Sulastri,56,,160,91,Hipertensi Derajat 1,205,120,0,0,1,111,Penyakit jantung koroner,Gagal jantung
-Sugeng Riyadi,64,,135,91,Pra-hipertensi,256,149,0,0,0,81,Penyakit jantung koroner,Tidak Ada
-Ahmad Fauzi,57,,159,91,Hipertensi Derajat 1,232,165,1,0,0,85,Penyakit jantung koroner,Demam reumatik (Dampak)
-Lely Suryani,67,,141,91,Hipertensi Derajat 1,245,138,0,0,0,113,Penyakit jantung koroner,Demam reumatik (Dampak)
-Qomaruddin,58,,162,90,Hipertensi Derajat 1,255,137,0,0,0,57,Penyakit jantung koroner,Demam reumatik (Dampak)
-Ratih Kumala,51,,138,83,Pra-hipertensi,213,148,0,0,0,116,Penyakit jantung koroner,Tidak Ada
-Udin Samsudin,50,,130,83,Pra-hipertensi,189,94,1,0,0,79,Jantung bawaan biru (Riwayat),Demam reumatik (Dampak)
-Vera Febrianti,49,,130,77,Pra-hipertensi,170,101,1,1,0,74,Demam reumatik (Dampak),Demam reumatik (Dampak)
-Zainal Arifin,53,,139,83,Pra-hipertensi,200,149,1,1,0,51,Demam reumatik (Dampak),Demam reumatik (Dampak)
-Zuhariah,68,,110,71,Normal,211,127,0,0,0,110,Penyakit jantung koroner,Penyakit jantung koroner
-Agus Salim,42,,135,83,Pra-hipertensi,212,123,0,1,0,98,Jantung bawaan biru (Riwayat),Gagal jantung
-Siti Fatimah,56,,117,85,Pra-hipertensi,170,147,0,0,0,55,Penyakit jantung koroner,Tidak Ada
-Retno Susanti,43,,189,118,Hipertensi Derajat 3,264,122,1,0,1,56,Penyakit jantung koroner,Penyakit jantung koroner
-Joko Santoso,57,,114,90,Hipertensi Derajat 1,202,157,0,0,0,112,Penyakit jantung koroner,Demam reumatik (Dampak)
-Eko Wibowo,62,,153,90,Hipertensi Derajat 1,259,175,0,0,0,105,Penyakit jantung koroner,Demam reumatik (Dampak)
-Bambang Nugroho,40,,118,83,Pra-hipertensi,173,123,1,0,0,61,Demam reumatik (Dampak),Demam reumatik (Dampak)
-Dadang Iskandar,67,,158,97,Hipertensi Derajat 1,206,112,0,0,0,99,Penyakit jantung koroner,Demam reumatik (Dampak)
-Sugeng Handoyo,51,,119,87,Pra-hipertensi,177,142,0,1,1,100,Gagal jantung,Gagal jantung
-Rina Wulandari,44,,133,78,Pra-hipertensi,175,113,0,0,0,69,Tidak Ada,Tidak Ada
-Cecep Suryana,56,,166,86,Pra-hipertensi,240,113,0,1,1,86,Gagal jantung,Gagal jantung
-Gina Lestari,64,,125,99,Pra-hipertensi,191,150,0,1,0,99,Penyakit jantung koroner,Gagal jantung
-Pipit Karlina,69,,151,90,Hipertensi Derajat 1,207,149,0,0,1,117,Penyakit jantung koroner,Penyakit jantung koroner
-Qodir Jaelani,40,,137,73,Pra-hipertensi,218,124,0,1,0,114,Jantung bawaan biru (Riwayat),Gagal jantung
-Tuti Susilawati,61,,135,71,Pra-hipertensi,200,111,0,0,1,64,Gagal jantung,Tidak Ada
-Wawan Darmawan,67,,138,97,Pra-hipertensi,257,119,0,0,1,92,Penyakit jantung koroner,Tidak Ada
-Siti Jubaedah,58,,139,91,Pra-hipertensi,252,108,0,0,0,55,Penyakit jantung koroner,Tidak Ada
-Joko Waluyo,65,,132,114,Pra-hipertensi,258,106,0,1,0,62,Gagal jantung,Gagal jantung
-Eko Nugroho,50,,136,89,Pra-hipertensi,184,107,0,0,0,91,Tidak Ada,Tidak Ada
-Rudi Hermawan,60,,112,83,Pra-hipertensi,189,121,0,1,1,104,Jantung bawaan biru (Riwayat),Gagal jantung
-Ani Sumiati,47,,160,89,Pra-hipertensi,235,150,0,0,0,73,Demam reumatik (Dampak),Tidak Ada
-Nurlela,56,,124,97,Pra-hipertensi,242,95,0,0,0,96,Tidak Ada,Tidak Ada
-Ahmad Hidayat,61,,181,98,Hipertensi Derajat 1,236,153,0,0,0,88,Gagal jantung,Gagal jantung
-Ujang Sumardi,55,,183,109,Hipertensi Derajat 2,232,129,1,1,1,82,Gagal jantung,Gagal jantung
-Fifie Handayani,45,,117,71,Normal,212,91,0,0,1,105,Demam reumatik (Dampak),Demam reumatik (Dampak)
-Gina Susanti,51,,125,80,Pra-hipertensi,254,104,0,0,0,51,Demam reumatik (Dampak),Tidak Ada
-Iwan Gunawan,44,,146,105,Hipertensi Derajat 1,219,144,1,0,0,81,Jantung bawaan biru (Riwayat),Demam reumatik (Dampak)
-Kusmiati,50,,181,101,Hipertensi Derajat 2,241,132,0,0,1,88,Gagal jantung,Gagal jantung
-Neneng Fatimah,49,,141,101,Hipertensi Derajat 1,246,122,0,0,1,91,Gagal jantung,Gagal jantung
-Zainal Abidin,46,,138,80,Pra-hipertensi,231,127,0,0,1,57,Gagal jantung,Tidak Ada
-Budi Kusuma,59,,151,83,Pra-hipertensi,224,146,0,1,1,89,Gagal jantung,Gagal jantung
-Joko Nugroho,61,,121,72,Pra-hipertensi,193,110,0,0,1,52,Jantung bawaan biru (Riwayat),Tidak Ada
-Sri Budiarti,55,,118,84,Pra-hipertensi,186,103,0,0,0,116,Demam reumatik (Dampak),Tidak Ada
-Bambang Wijaya,59,,136,89,Pra-hipertensi,201,146,0,0,0,85,Jantung bawaan biru (Riwayat),Tidak Ada
-Asep Mulyana,51,,134,79,Pra-hipertensi,184,122,0,0,0,86,Tidak Ada,Tidak Ada
-Lina Novianti,44,,129,83,Pra-hipertensi,241,122,1,0,1,60,Demam reumatik (Dampak),Penyakit jantung koroner
-Wahyu Kurniawan,47,,112,88,Pra-hipertensi,190,131,1,1,0,78,Demam reumatik (Dampak),Demam reumatik (Dampak)
-Rina Agustin,42,,143,81,Pra-hipertensi,238,94,0,0,1,92,Gagal jantung,Tidak Ada
-Maman Hidayat,62,,133,88,Pra-hipertensi,260,142,0,1,0,53,Demam reumatik (Dampak),Demam reumatik (Dampak)
-Ratih Wulandari,63,,123,90,Pra-hipertensi,200,148,0,0,0,96,Jantung bawaan biru (Riwayat),Tidak Ada
-Sobirin Santoso,45,,145,93,Hipertensi Derajat 1,259,143,1,1,0,52,Demam reumatik (Dampak),Demam reumatik (Dampak)
-Tuti Sumiati,58,,132,89,Pra-hipertensi,208,143,0,0,0,87,Jantung bawaan biru (Riwayat),Tidak Ada
-Udin Tajudin,51,,124,78,Pra-hipertensi,174,95,1,0,1,94,Demam reumatik (Dampak),Penyakit jantung koroner
-Vera Puspitasari,44,,138,82,Pra-hipertensi,234,141,0,0,1,111,Demam reumatik (Dampak),Tidak Ada
-Retno Wati,42,,144,88,Pra-hipertensi,206,135,0,1,1,66,Gagal jantung,Gagal jantung
-Eko Setiawan,64,,124,79,Pra-hipertensi,198,141,0,1,0,111,Jantung bawaan biru (Riwayat),Gagal jantung
-Bambang Hermawan,46,,148,87,Pra-hipertensi,241,130,0,0,0,88,Tidak Ada,Tidak Ada
-Taufik Akbar,69,,120,80,Pra-hipertensi,239,127,1,0,1,76,Gagal jantung,Jantung bawaan biru (Riwayat)
-Ira Rahmawati,48,,131,72,Pra-hipertensi,209,114,0,1,0,76,Gagal jantung,Gagal jantung
-Yulianti,67,,130,74,Pra-hipertensi,207,150,0,1,1,67,Gagal jantung,Gagal jantung
-Endang Wulandari,59,,152,102,Hipertensi Derajat 1,268,178,0,1,1,58,Gagal jantung,Gagal jantung
-Sugeng Winarno,63,,110,74,Normal,175,150,0,0,0,68,Tidak Ada,Penyakit jantung koroner
-Kartika Sari,51,,133,98,Pra-hipertensi,237,138,0,0,1,57,Gagal jantung,Tidak Ada
-Cecep Rahmat,53,,129,78,Pra-hipertensi,205,116,0,0,0,55,Jantung bawaan biru (Riwayat),Tidak Ada
-Qomarudin,46,,168,109,Hipertensi Derajat 2,225,139,0,1,0,105,Gagal jantung,Demam reumatik (Dampak)
-Vera Agustina,52,,145,106,Hipertensi Derajat 1,217,177,0,0,0,85,Gagal jantung,Demam reumatik (Dampak)
-Wawan Rachman,61,,163,88,Pra-hipertensi,212,128,0,0,0,71,Jantung bawaan biru (Riwayat),Tidak Ada
-Zainal Fanani,55,,112,70,Normal,192,91,1,0,0,81,Jantung bawaan biru (Riwayat),Tidak Ada
-Sri Utami,44,,156,91,Hipertensi Derajat 1,239,150,0,0,0,98,Jantung bawaan biru (Riwayat),Demam reumatik (Dampak)
-Rudi Santoso,65,,173,119,Hipertensi Derajat 2,261,125,1,0,0,60,Gagal jantung,Demam reumatik (Dampak)
-Nurul Fauziah,53,,133,80,Pra-hipertensi,203,114,0,0,0,92,Jantung bawaan biru (Riwayat),Tidak Ada
-Asep Lukman,68,,158,94,Hipertensi Derajat 1,257,118,1,0,0,61,Jantung bawaan biru (Riwayat),Penyakit jantung koroner
-Ira Diana,64,,184,103,Hipertensi Derajat 2,200,164,0,0,0,76,Jantung bawaan biru (Riwayat),Gagal jantung
-Yuli Fatimah,57,,169,118,Hipertensi Derajat 2,238,115,1,0,0,51,Jantung bawaan biru (Riwayat),Demam reumatik (Dampak)
-Wahyu Adi,62,,142,89,Pra-hipertensi,257,99,0,1,0,89,Tidak Ada,Gagal jantung
-Ujang Maman,52,,159,100,Hipertensi Derajat 1,262,168,1,1,0,65,Tidak Ada,Demam reumatik (Dampak)
-Nina Suryani,55,,131,79,Pra-hipertensi,204,146,0,1,1,120,Jantung bawaan biru (Riwayat),Gagal jantung
-Fifie Mariana,41,,126,79,Pra-hipertensi,196,98,1,0,0,120,Tidak Ada,Penyakit jantung koroner
-Cecep Wahyu,59,,167,104,Hipertensi Derajat 2,258,127,0,0,0,83,Jantung bawaan biru (Riwayat),Demam reumatik (Dampak)
-Lely Ningsih,58,,165,110,Hipertensi Derajat 2,274,148,0,0,0,72,Tidak Ada,Demam reumatik (Dampak)
-Tuti Susanti,53,,118,74,Normal,193,97,0,0,1,106,Tidak Ada,Demam reumatik (Dampak)
-Wawan Sutiawan,56,,173,99,Hipertensi Derajat 1,225,129,0,0,0,72,Jantung bawaan biru (Riwayat),Demam reumatik (Dampak)
-Yati Nurhayati,64,,136,85,Pra-hipertensi,250,137,1,1,0,62,Jantung bawaan biru (Riwayat),Demam reumatik (Dampak)
-Agus Fathurrahman,62,,126,83,Pra-hipertensi,193,109,0,0,0,117,Jantung bawaan biru (Riwayat),Tidak Ada
-Joko Susanto,40,,135,87,Pra-hipertensi,217,127,0,0,1,94,Penyakit jantung koroner,Tidak Ada
-Eko Wahyudi,59,,180,105,Hipertensi Derajat 2,205,169,0,0,0,105,Tidak Ada,Demam reumatik (Dampak)
+Nama;Usia;Jenis_Kelamin;Kolesterol;Gula_Darah;Nyeri_Dada;Sesak_Napas;Kelelahan;Denyut_Jantung;Penyakit_Jantung;Sistolik;Diastolik;Prediksi
+Zainal Muttaqin;43;P;194;144;Tidak;Tidak;Tidak;72;Jantung bawaan biru (Riwayat);126;85;Jantung bawaan biru (Riwayat)
+Yati Hartati;48;P;236;94;Tidak;Ya;Tidak;114;Demam reumatik (Dampak);126;84;Jantung bawaan biru (Riwayat)
+Diah Suryani;63;L;266;142;Ya;Tidak;Tidak;50;Demam reumatik (Dampak);169;92;Jantung bawaan biru (Riwayat)
+Ade Supriyadi;59;L;172;96;Tidak;Tidak;Tidak;57;Demam reumatik (Dampak);133;72;Demam reumatik (Dampak)
+Joko Waluyo;65;P;258;106;Tidak;Ya;Tidak;62;Gagal jantung;132;114;Gagal jantung
+Ani Sumiati;47;P;235;150;Tidak;Tidak;Tidak;73;Demam reumatik (Dampak);160;89;Demam reumatik (Dampak)
+Heru Susanto;55;L;255;140;Tidak;Tidak;Tidak;102;Jantung bawaan biru (Riwayat);136;92;Jantung bawaan biru (Riwayat)
+Yulianti;67;P;207;150;Tidak;Ya;Ya;67;Gagal jantung;130;74;Gagal jantung
+Agus Mulyadi;41;L;207;110;Tidak;Tidak;Tidak;90;Tidak Ada;127;91;Jantung bawaan biru (Riwayat)
+Udin Badut;48;P;173;137;Tidak;Ya;Tidak;51;Demam reumatik (Dampak);125;81;Jantung bawaan biru (Riwayat)
+Pipit Karlina;69;L;207;149;Tidak;Tidak;Ya;117;Penyakit jantung koroner;151;90;Jantung bawaan biru (Riwayat)
+Zainal Fanani;55;L;192;91;Ya;Tidak;Tidak;81;Jantung bawaan biru (Riwayat);112;70;Tidak Ada
+Maman Setiawan;50;L;195;140;Ya;Tidak;Tidak;103;Jantung bawaan biru (Riwayat);128;81;Jantung bawaan biru (Riwayat)
+Vera Karlina;42;L;220;114;Tidak;Tidak;Ya;79;Tidak Ada;120;76;Tidak Ada
+Tuti Rahayu;56;P;241;137;Tidak;Tidak;Ya;80;Tidak Ada;136;83;Tidak Ada
+Pipit Susilawati;47;P;200;111;Tidak;Tidak;Ya;79;Tidak Ada;119;86;Tidak Ada
+Eko Wibowo;62;P;259;175;Tidak;Tidak;Tidak;105;Penyakit jantung koroner;153;90;Demam reumatik (Dampak)
+Lina Puspita;42;L;240;144;Tidak;Tidak;Tidak;103;Jantung bawaan biru (Riwayat);122;94;Jantung bawaan biru (Riwayat)
+Asep Hidayat;48;P;279;111;Tidak;Tidak;Tidak;64;Penyakit jantung koroner;177;108;Penyakit jantung koroner
+Tuti Sunarti;40;P;193;173;Tidak;Tidak;Tidak;120;Tidak Ada;140;78;Demam reumatik (Dampak)
+Diah Kumala;54;P;259;153;Tidak;Ya;Tidak;88;Jantung bawaan biru (Riwayat);156;92;Jantung bawaan biru (Riwayat)
+Iwan Kurniawan;42;L;204;141;Tidak;Tidak;Ya;119;Gagal jantung;147;106;Gagal jantung
+Nurul Huda;40;P;209;114;Tidak;Tidak;Tidak;57;Jantung bawaan biru (Riwayat);129;77;Jantung bawaan biru (Riwayat)
+Ahmad Hidayat;61;L;236;153;Tidak;Tidak;Tidak;88;Gagal jantung;181;98;Gagal jantung
+Taufik Hidayat;44;L;211;101;Tidak;Tidak;Tidak;102;Penyakit jantung koroner;132;111;Penyakit jantung koroner
+Rudianto;54;P;179;139;Tidak;Tidak;Ya;67;Gagal jantung;126;85;Gagal jantung
+Retno Wati;42;L;206;135;Tidak;Ya;Ya;66;Gagal jantung;144;88;Gagal jantung
+Ira Fauziah;41;L;171;148;Tidak;Tidak;Ya;65;Tidak Ada;114;88;Tidak Ada
+Cecep Suryana;56;P;240;113;Tidak;Ya;Ya;86;Gagal jantung;166;86;Gagal jantung
+Sugeng Riyadi;64;L;256;149;Tidak;Tidak;Tidak;81;Penyakit jantung koroner;135;91;Penyakit jantung koroner
+Pipit Lestari;45;P;228;96;Tidak;Tidak;Ya;108;Demam reumatik (Dampak);120;80;Jantung bawaan biru (Riwayat)
+Oman Fauzi;60;L;200;115;Tidak;Tidak;Tidak;71;Tidak Ada;137;113;Gagal jantung
+Gina Lestari;64;L;191;150;Tidak;Ya;Tidak;99;Penyakit jantung koroner;125;99;Penyakit jantung koroner
+Pipit Susanti;62;P;209;144;Tidak;Tidak;Tidak;77;Gagal jantung;132;71;Gagal jantung
+Iwan Suryana;52;P;213;138;Tidak;Tidak;Tidak;72;Demam reumatik (Dampak);142;99;Demam reumatik (Dampak)
+Ratih Kumala;51;P;213;148;Tidak;Tidak;Tidak;116;Penyakit jantung koroner;138;83;Penyakit jantung koroner
+Siti Nurjanah;53;L;217;176;Tidak;Ya;Tidak;78;Gagal jantung;144;110;Gagal jantung
+Ade Hidayat;67;P;270;177;Ya;Tidak;Tidak;57;Tidak Ada;178;104;Tidak Ada
+Eko Cokro;51;P;245;125;Tidak;Tidak;Tidak;81;Jantung bawaan biru (Riwayat);154;84;Jantung bawaan biru (Riwayat)
+Dadang Supriatna;60;L;220;108;Tidak;Tidak;Tidak;116;Penyakit jantung koroner;137;93;Penyakit jantung koroner
+Dadang Iskandar;61;L;266;123;Tidak;Ya;Ya;109;Gagal jantung;140;89;Demam reumatik (Dampak)
+Joko Susanto;40;P;217;127;Tidak;Tidak;Ya;94;Penyakit jantung koroner;135;87;Penyakit jantung koroner
+Eko Prasetyo;41;L;218;129;Tidak;Tidak;Tidak;92;Penyakit jantung koroner;186;87;Penyakit jantung koroner
+Neneng Siti;44;L;220;101;Tidak;Tidak;Ya;65;Jantung bawaan biru (Riwayat);137;85;Jantung bawaan biru (Riwayat)
+Nina Karmila;49;P;240;137;Tidak;Tidak;Ya;98;Gagal jantung;121;84;Gagal jantung
+Ira Kumala;50;L;245;108;Ya;Ya;Ya;68;Demam reumatik (Dampak);137;95;Demam reumatik (Dampak)
+Siti Fatimah;56;P;170;147;Tidak;Tidak;Tidak;55;Penyakit jantung koroner;117;85;Penyakit jantung koroner
+Bambang Nugroho;40;P;173;123;Ya;Tidak;Tidak;61;Demam reumatik (Dampak);118;83;Demam reumatik (Dampak)
+Ahmad Ghozali;40;P;212;106;Tidak;Tidak;Ya;119;Tidak Ada;120;97;Jantung bawaan biru (Riwayat)
+Kusmiati;50;L;241;132;Tidak;Tidak;Ya;88;Gagal jantung;181;101;Tidak Ada
+Udin Samsudin;50;L;189;94;Ya;Tidak;Tidak;79;Jantung bawaan biru (Riwayat);130;83;Jantung bawaan biru (Riwayat)
+Sugeng Widodo;54;P;264;148;Tidak;Ya;Tidak;79;Jantung bawaan biru (Riwayat);135;119;Jantung bawaan biru (Riwayat)
+Bambang Sunaryo;49;P;239;117;Tidak;Ya;Tidak;68;Jantung bawaan biru (Riwayat);129;92;Jantung bawaan biru (Riwayat)
+Maman Suryana;41;L;206;92;Tidak;Tidak;Tidak;67;Demam reumatik (Dampak);157;80;Jantung bawaan biru (Riwayat)
+Heru Prasetyo;59;P;204;118;Tidak;Tidak;Tidak;113;Penyakit jantung koroner;116;72;Jantung bawaan biru (Riwayat)
+Sobari;47;P;213;110;Tidak;Tidak;Tidak;65;Tidak Ada;150;85;Tidak Ada
+Ujang Maman;52;P;262;168;Ya;Ya;Tidak;65;Tidak Ada;159;100;Tidak Ada
+Sri Wahyuni;49;P;262;180;Ya;Tidak;Ya;109;Demam reumatik (Dampak);189;92;Demam reumatik (Dampak)
+Zuhairah;63;L;189;105;Tidak;Tidak;Tidak;55;Demam reumatik (Dampak);113;81;Jantung bawaan biru (Riwayat)
+Lina Marlina;49;P;203;125;Tidak;Tidak;Tidak;112;Penyakit jantung koroner;143;96;Jantung bawaan biru (Riwayat)

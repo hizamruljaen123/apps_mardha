@@ -1,24 +1,54 @@
 import pandas as pd
+import pandas as pd
 import numpy as np
 import math
+import traceback
 from collections import Counter
 from flask import Flask, render_template, request, jsonify, send_file
 from io import BytesIO
 import json
 import os
+# Import the custom C5.0 implementation
+from c5_algorithm import (build_c5_tree, predict_c5_instance, extract_rules_from_c5_tree, 
+                         format_rules_for_display, calculate_accuracy, C5Booster, preprocess_data)
+try:
+    from sklearn.model_selection import train_test_split as sk_train_test_split
+except ImportError:
+    sk_train_test_split = None
 
 app = Flask(__name__)
 
 extracted_rules = []
 
+# Load and clean the training data
 df = pd.read_csv('data_latih_2.csv', sep=';')
 
+# Fix duplicated columns issue in data_latih_2.csv
+if len(df.columns) > 13 and 'Nama.1' in df.columns:
+    print("Fixing duplicated columns in dataset...")
+    original_columns = ['#', 'Nama', 'Usia', 'Jenis_Kelamin', 'Tekanan_Darah', 
+                        'Kolesterol', 'Gula_Darah', 'Nyeri_Dada', 'Sesak_Napas', 
+                        'Kelelahan', 'Denyut_Jantung', 'Penyakit_Jantung']
+    df = df[original_columns]
+
+# Handle specific issues in the data
+if '#' in df.columns:
+    df.drop('#', axis=1, inplace=True)  # Drop the index column
+    
+# Fix any whitespace in the Jenis_Kelamin column
+if 'Jenis_Kelamin' in df.columns:
+    df['Jenis_Kelamin'] = df['Jenis_Kelamin'].str.strip()
+
+# Split the blood pressure into systolic and diastolic
 df[['Sistolik', 'Diastolik']] = df['Tekanan_Darah'].str.split('/', expand=True).astype(int)
 df = df.drop('Tekanan_Darah', axis=1)
-df['Jenis_Kelamin'] = df['Jenis_Kelamin'].map({'L': 0, 'P': 1})
-df['Nyeri_Dada'] = df['Nyeri_Dada'].map({'Tidak': 0, 'Ya': 1})
-df['Sesak_Napas'] = df['Sesak_Napas'].map({'Tidak': 0, 'Ya': 1})
-df['Kelelahan'] = df['Kelelahan'].map({'Tidak': 0, 'Ya': 1})
+
+# Encode categorical variables for the old model
+df_encoded = df.copy()
+df_encoded['Jenis_Kelamin'] = df_encoded['Jenis_Kelamin'].map({'L': 0, 'P': 1})
+df_encoded['Nyeri_Dada'] = df_encoded['Nyeri_Dada'].map({'Tidak': 0, 'Ya': 1})
+df_encoded['Sesak_Napas'] = df_encoded['Sesak_Napas'].map({'Tidak': 0, 'Ya': 1})
+df_encoded['Kelelahan'] = df_encoded['Kelelahan'].map({'Tidak': 0, 'Ya': 1})
 
 # Initial split removed, will be done in train_model route
 train_data = pd.DataFrame() # Initialize as empty DataFrame
@@ -238,7 +268,6 @@ def build_tree(data, target, features, depth=0, max_depth=3, min_samples_split=2
 target = 'Penyakit_Jantung'
 features = df.columns.drop(target) # Initial features based on df
 tree = None # Initialize tree as None, build it inside train_model route
-# tree = build_tree(train_data, target, features, max_depth=3) # Removed initial build
 
 boosted_trees = []
 boosted_alphas = []
@@ -272,102 +301,335 @@ def predict_single_tree(node, sample):
 import os
 import json
 
-def predict(sample, use_rules=True, use_boosting=False):
-    global extracted_rules
+def get_majority_class(data, target_col):
+    """Ambil kelas mayoritas dari data latih. Jika ada lebih dari satu kelas mayoritas, pilih secara acak."""
+    if data is not None and not data.empty and target_col in data.columns:
+        mode_vals = data[target_col].mode()
+        if len(mode_vals) == 1:
+            return mode_vals[0]
+        elif len(mode_vals) > 1:
+            import random
+            return random.choice(mode_vals.tolist())
+    return "N/A"
+
+def predict_with_confidence(sample, use_rules=True, use_boosting=False):
+    """
+    Predict with confidence score. Returns a tuple of (prediction, confidence_score).
+    Confidence score is between 0 and 1, with higher values indicating more confidence.
+    """
+    global extracted_rules, train_data, target, boosted_trees, boosted_alphas, is_boosted, tree
+
+    # Fallback: majority class from training data
+    fallback_majority = get_majority_class(train_data, target)
 
     if use_rules:
-        best_full_match_prediction = None
-        best_partial_match_prediction = "N/A"  # Default if no rule matches at all
-        max_conditions_partially_met = -1    # Max conditions met for rules *with conditions*
-        
-        default_rule_prediction = "N/A"      # For rules with no conditions
+        # Initialize variables for tracking best rule matches
+        best_full_match_rule = None
+        best_partial_match_rule = None
+        max_conditions_met = 0
+        max_confidence = -1
+        default_rule = None
 
-        if not extracted_rules: # Handle case of no rules
-            return "N/A"
+        if not extracted_rules:
+            return (fallback_majority, 0.5)  # Return with medium confidence
 
+        # Sort rules by confidence for better prediction
+        sorted_rules = sorted(extracted_rules, key=lambda x: x.get('confidence', 0), reverse=True)
+
+        # First pass: find the default rule and rules with conditions
         rules_with_conditions = []
-        # First pass to identify default rules and collect rules with conditions
-        for rule in extracted_rules:
+        for rule in sorted_rules:
             if 'machine_rule' not in rule or 'conditions' not in rule['machine_rule'] or 'prediction' not in rule['machine_rule']:
-                # print(f"Skipping malformed rule: {rule}")
                 continue
-
+                
             conditions = rule['machine_rule']['conditions']
             prediction = rule['machine_rule']['prediction']
-
-            if not conditions:  # This is a default rule
-                if default_rule_prediction == "N/A": # Take the first one encountered
-                    default_rule_prediction = prediction
-                continue
+            confidence = rule.get('confidence', 0)
             
-            rules_with_conditions.append(rule)
-
-        # Second pass: Process rules with conditions
+            if not conditions:
+                # Rule without conditions is considered a default rule
+                if default_rule is None or confidence > default_rule.get('confidence', 0):
+                    default_rule = rule
+            else:
+                rules_with_conditions.append(rule)
+        
+        # Second pass: evaluate each rule with conditions
         for rule in rules_with_conditions:
-            # At this point, rule structure is assumed to be valid and conditions list is non-empty
             conditions = rule['machine_rule']['conditions']
             prediction = rule['machine_rule']['prediction']
+            confidence = rule.get('confidence', 0)
             
-            num_conditions_in_rule = len(conditions) # Should be > 0
-            current_conditions_met_count = 0
-            all_conditions_met_for_this_rule = True # Assume true until a condition fails
-
+            num_conditions_in_rule = len(conditions)
+            conditions_met = 0
+            all_met = True
+            
             for condition_str in conditions:
                 try:
                     parts = condition_str.split()
-                    if len(parts) < 3: # Basic validation for condition string
-                        all_conditions_met_for_this_rule = False
-                        continue # Move to next condition
-
+                    if len(parts) < 3:
+                        all_met = False
+                        continue
+                        
                     feature = parts[0]
                     operator = parts[1]
                     value_from_rule = float(parts[2])
-
+                    
                     if feature not in sample.index:
-                        all_conditions_met_for_this_rule = False
-                        # This condition is not met, don't increment count for it.
-                        # Continue to the next condition in this rule to check if others might match.
+                        all_met = False
                         continue
-
+                        
                     sample_value = sample[feature]
                     
                     condition_holds = False
                     if operator == '<=':
-                        if sample_value <= value_from_rule:
-                            condition_holds = True
+                        condition_holds = sample_value <= value_from_rule
                     elif operator == '>':
-                        if sample_value > value_from_rule:
-                            condition_holds = True
-                    # Potentially add other operators like '==' if your rule system supports them
+                        condition_holds = sample_value > value_from_rule
                     
                     if condition_holds:
-                        current_conditions_met_count += 1
+                        conditions_met += 1
                     else:
-                        all_conditions_met_for_this_rule = False
-                
-                except (IndexError, ValueError) as e:
-                    # Malformed condition string or sample value issue for this specific condition
-                    # print(f"Warning: Error processing condition '{condition_str}'. Error: {e}")
-                    all_conditions_met_for_this_rule = False
-                    # Continue to the next condition in this rule
+                        all_met = False
+                        
+                except (IndexError, ValueError):
+                    all_met = False
                     continue
             
-            if all_conditions_met_for_this_rule and num_conditions_in_rule > 0:
-                best_full_match_prediction = prediction
-                break # Found a full match among rules with conditions, prioritize this
-
-            # If not a full match, check for best partial match from rules with conditions
-            if current_conditions_met_count > max_conditions_partially_met:
-                max_conditions_partially_met = current_conditions_met_count
-                best_partial_match_prediction = prediction
+            # Calculate match ratio for partial matches
+            match_ratio = conditions_met / num_conditions_in_rule if num_conditions_in_rule > 0 else 0
+            
+            # Prioritize rules based on match type, number of conditions met, and confidence
+            if all_met and num_conditions_in_rule > 0:
+                if best_full_match_rule is None or confidence > max_confidence:
+                    best_full_match_rule = rule
+                    max_confidence = confidence
+                    break  # Found a full match, no need to check other rules
+            elif conditions_met > max_conditions_met:
+                best_partial_match_rule = rule
+                max_conditions_met = conditions_met
+                max_confidence = confidence * match_ratio  # Adjust confidence for partial matches
+            elif conditions_met == max_conditions_met and confidence > max_confidence:
+                best_partial_match_rule = rule
+                max_confidence = confidence * match_ratio  # Adjust confidence for partial matches
         
-        # Determine final prediction based on findings
-        if best_full_match_prediction is not None:
-            return best_full_match_prediction
-        elif max_conditions_partially_met > 0: # A partial match from a rule with conditions was found
-            return best_partial_match_prediction
-        else: # No full or partial match from rules with conditions, try default rule
-            return default_rule_prediction # This will be "N/A" if no default rule was found or no rules at all
+        # Return prediction based on the best matching rule
+        if best_full_match_rule is not None:
+            return (best_full_match_rule['machine_rule']['prediction'], best_full_match_rule.get('confidence', 0.5))
+        elif best_partial_match_rule is not None and max_conditions_met > 0:
+            # Calculate adjusted confidence based on partial match
+            adjusted_confidence = best_partial_match_rule.get('confidence', 0.5) * (max_conditions_met / len(best_partial_match_rule['machine_rule']['conditions']))
+            return (best_partial_match_rule['machine_rule']['prediction'], adjusted_confidence)
+        elif default_rule is not None:
+            return (default_rule['machine_rule']['prediction'], default_rule.get('confidence', 0.5))
+        else:
+            return (fallback_majority, 0.5)  # Return with medium confidence
+
+    else:  # This is the tree-based prediction (single or boosted)
+        current_model_is_boosted = is_boosted
+
+        if use_boosting and current_model_is_boosted and boosted_trees and boosted_alphas:
+            weighted_votes = {}
+            total_weight = sum(boosted_alphas)
+
+            for b_tree, alpha in zip(boosted_trees, boosted_alphas):
+                pred = predict_single_tree(b_tree, sample)
+                if pred is not None:
+                    weighted_votes[pred] = weighted_votes.get(pred, 0) + alpha
+
+            if not weighted_votes:
+                return (None, 0.0)
+
+            # Find the prediction with highest weighted vote
+            best_pred = max(weighted_votes, key=weighted_votes.get)
+            # Calculate confidence as the proportion of total weight
+            confidence = weighted_votes[best_pred] / total_weight if total_weight > 0 else 0.5
+            return (best_pred, confidence)
+
+        elif not use_boosting and tree:
+            # For single tree, use a simple confidence calculation based on tree structure
+            prediction, node_depth = predict_single_tree_with_depth(tree, sample)
+            if prediction is None:
+                return (None, 0.0)
+            
+            # Calculate confidence based on tree depth: deeper nodes are typically more confident
+            confidence = min(0.5 + (node_depth * 0.1), 0.95)  # Caps at 0.95 confidence
+            return (prediction, confidence)
+        
+        elif use_boosting and not current_model_is_boosted and tree:
+            prediction, node_depth = predict_single_tree_with_depth(tree, sample)
+            if prediction is None:
+                return (None, 0.0)
+            
+            # Calculate confidence based on tree depth
+            confidence = min(0.5 + (node_depth * 0.1), 0.95)
+            return (prediction, confidence)
+        
+        else:
+            return (None, 0.0)
+
+def predict_single_tree_with_depth(node, sample, depth=0):
+    """Predicts using a single tree and returns both the prediction and the depth at which the prediction was made"""
+    if node is None:
+        return None, depth
+        
+    if node.value is not None:
+        return node.value, depth
+        
+    feature = node.feature
+    
+    if feature not in sample.index:
+        # If feature is missing in the sample, make a best guess
+        left_result, left_depth = predict_single_tree_with_depth(node.left, sample, depth + 1) if hasattr(node, 'left') else (None, depth)
+        right_result, right_depth = predict_single_tree_with_depth(node.right, sample, depth + 1) if hasattr(node, 'right') else (None, depth)
+        
+        if left_result is not None and right_result is not None:
+            # Choose the deeper path which typically has more specific rules
+            if left_depth >= right_depth:
+                return left_result, left_depth
+            else:
+                return right_result, right_depth
+        elif left_result is not None:
+            return left_result, left_depth
+        elif right_result is not None:
+            return right_result, right_depth
+        else:
+            return None, depth
+    
+    if node.threshold is not None and pd.api.types.is_numeric_dtype(sample[feature]):
+        if sample[feature] <= node.threshold:
+            return predict_single_tree_with_depth(node.left, sample, depth + 1)
+        else:
+            return predict_single_tree_with_depth(node.right, sample, depth + 1)
+    elif node.threshold == 0.5:  # For binary features, typically encoded as 0 or 1
+        if sample[feature] <= 0.5:  # Treat as binary decision
+            return predict_single_tree_with_depth(node.left, sample, depth + 1)
+        else:
+            return predict_single_tree_with_depth(node.right, sample, depth + 1)
+    else:
+        # For other cases (e.g., categorical features), make best guess
+        left_result, left_depth = predict_single_tree_with_depth(node.left, sample, depth + 1) if hasattr(node, 'left') else (None, depth)
+        right_result, right_depth = predict_single_tree_with_depth(node.right, sample, depth + 1) if hasattr(node, 'right') else (None, depth)
+        
+        if left_result is not None and right_result is not None:
+            if left_depth >= right_depth:
+                return left_result, left_depth
+            else:
+                return right_result, right_depth
+        elif left_result is not None:
+            return left_result, left_depth
+        elif right_result is not None:
+            return right_result, right_depth
+        else:
+            return None, depth
+
+def predict(sample, use_rules=True, use_boosting=False):
+    """
+    Original predict function - now updated to use predict_with_confidence
+    and return just the prediction for backward compatibility
+    """
+    result = predict_with_confidence(sample, use_rules, use_boosting)
+    if isinstance(result, tuple) and len(result) == 2:
+        return result[0]  # Return just the prediction
+    return result  # In case of error, return the result as is
+
+    # Fallback: majority class from training data
+    fallback_majority = get_majority_class(train_data, target)
+
+    if use_rules:
+        # Initialize variables for tracking best rule matches
+        best_full_match_rule = None
+        best_partial_match_rule = None
+        max_conditions_met = 0
+        max_confidence = -1
+        default_rule = None
+
+        if not extracted_rules:
+            return fallback_majority
+
+        # Sort rules by confidence for better prediction
+        sorted_rules = sorted(extracted_rules, key=lambda x: x.get('confidence', 0), reverse=True)
+
+        # First pass: find the default rule and rules with conditions
+        rules_with_conditions = []
+        for rule in sorted_rules:
+            if 'machine_rule' not in rule or 'conditions' not in rule['machine_rule'] or 'prediction' not in rule['machine_rule']:
+                continue
+                
+            conditions = rule['machine_rule']['conditions']
+            prediction = rule['machine_rule']['prediction']
+            confidence = rule.get('confidence', 0)
+            
+            if not conditions:
+                # Rule without conditions is considered a default rule
+                if default_rule is None or confidence > default_rule.get('confidence', 0):
+                    default_rule = rule
+            else:
+                rules_with_conditions.append(rule)
+        
+        # Second pass: evaluate each rule with conditions
+        for rule in rules_with_conditions:
+            conditions = rule['machine_rule']['conditions']
+            prediction = rule['machine_rule']['prediction']
+            confidence = rule.get('confidence', 0)
+            
+            num_conditions_in_rule = len(conditions)
+            conditions_met = 0
+            all_met = True
+            
+            for condition_str in conditions:
+                try:
+                    parts = condition_str.split()
+                    if len(parts) < 3:
+                        all_met = False
+                        continue
+                        
+                    feature = parts[0]
+                    operator = parts[1]
+                    value_from_rule = float(parts[2])
+                    
+                    if feature not in sample.index:
+                        all_met = False
+                        continue
+                        
+                    sample_value = sample[feature]
+                    
+                    condition_holds = False
+                    if operator == '<=':
+                        condition_holds = sample_value <= value_from_rule
+                    elif operator == '>':
+                        condition_holds = sample_value > value_from_rule
+                    
+                    if condition_holds:
+                        conditions_met += 1
+                    else:
+                        all_met = False
+                        
+                except (IndexError, ValueError):
+                    all_met = False
+                    continue
+            
+            # Prioritize rules based on match type, number of conditions met, and confidence
+            if all_met and num_conditions_in_rule > 0:
+                if best_full_match_rule is None or confidence > max_confidence:
+                    best_full_match_rule = rule
+                    max_confidence = confidence
+                    break  # Found a full match, no need to check other rules
+            elif conditions_met > max_conditions_met:
+                best_partial_match_rule = rule
+                max_conditions_met = conditions_met
+            elif conditions_met == max_conditions_met and confidence > max_confidence:
+                best_partial_match_rule = rule
+                max_confidence = confidence
+        
+        # Return prediction based on the best matching rule
+        if best_full_match_rule is not None:
+            return best_full_match_rule['machine_rule']['prediction']
+        elif best_partial_match_rule is not None and max_conditions_met > 0:
+            return best_partial_match_rule['machine_rule']['prediction']
+        elif default_rule is not None:
+            return default_rule['machine_rule']['prediction']
+        else:
+            return fallback_majority
 
     else: # This is the tree-based prediction (single or boosted)
         global boosted_trees, boosted_alphas, is_boosted, tree
@@ -428,7 +690,15 @@ def get_all_predictions():
     global df, tree, target
     results = []
     for idx, row in df.iterrows():
-        pred = predict(row, use_rules=True, use_boosting=is_boosted) # Use global is_boosted
+        # Get prediction with confidence
+        pred_result = predict_with_confidence(row, use_rules=True, use_boosting=is_boosted)
+        
+        if isinstance(pred_result, tuple) and len(pred_result) == 2:
+            pred, confidence = pred_result
+        else:
+            pred = pred_result
+            confidence = 0.0
+            
         result_dict = {
             'Usia': row['Usia'],
             'Jenis_Kelamin': 'Laki-laki' if row['Jenis_Kelamin'] == 0 else 'Perempuan',
@@ -441,7 +711,8 @@ def get_all_predictions():
             'Kelelahan': 'Ya' if row['Kelelahan'] == 1 else 'Tidak',
             'Denyut_Jantung': row['Denyut_Jantung'],
             'Aktual': row[target],
-            'Prediksi': pred
+            'Prediksi': pred if pred is not None else "N/A",
+            'Confidence': round(confidence, 2) if confidence is not None else 0.0
         }
         results.append(result_dict)
     return jsonify(results)
@@ -715,6 +986,7 @@ def get_results():
             'denyut_jantung': item['Denyut_Jantung'],
             'aktual': item['Aktual'],
             'prediksi': item['Prediksi'],
+            'confidence': item.get('Confidence', 0.0),  # Include confidence value
             'status': 'Correct' if item['Aktual'] == item['Prediksi'] else 'Incorrect'
         }
         for item in paginated_results
@@ -883,7 +1155,7 @@ def upload_test_data():
 @app.route('/train_model', methods=['POST'])
 def train_model():
     global tree, results, train_data, test_data, target, features, df # Added test_data and df
-    global boosted_trees, boosted_alphas, is_boosted
+    global boosted_trees, boosted_alphas, is_boosted, extracted_rules
 
     # --- 1. Get Parameters and Split Data ---
     try:
@@ -891,15 +1163,37 @@ def train_model():
         min_samples_split = int(request.form.get('min_samples_split', 2))
         boosting = request.form.get('boosting', 'false').lower() == 'true'
         n_estimators = int(request.form.get('n_estimators', 10)) if boosting else 1
-        train_test_split_ratio = float(request.form.get('train_test_split', 0.8)) # Get split ratio
+        train_test_split_ratio = float(request.form.get('train_test_split', 0.8))
     except ValueError:
-         return jsonify({'status': 'error', 'message': 'Invalid training parameters (must be numbers)'}), 400
+        return jsonify({'status': 'error', 'message': 'Invalid training parameters (must be numbers)'}), 400
 
-    # Perform data split based on the ratio from the request
+    # Perform data split with stratification to maintain class distributions
     if df.empty:
-         return jsonify({'status': 'error', 'message': 'Original dataset (df) is empty. Cannot split.'}), 400
-    train_data = df.sample(frac=train_test_split_ratio, random_state=42)
-    test_data = df.drop(train_data.index)
+        return jsonify({'status': 'error', 'message': 'Original dataset (df) is empty. Cannot split.'}), 400
+    
+    # Try to stratify if possible to maintain class distributions
+    try:
+        if sk_train_test_split is not None:
+            train_idx, test_idx = sk_train_test_split(
+                df.index, 
+                test_size=(1-train_test_split_ratio),
+                random_state=42,
+                stratify=df[target] if len(df[target].unique()) > 1 else None
+            )
+            train_data = df.loc[train_idx]
+            test_data = df.loc[test_idx]
+            print("Using stratified train-test split")
+        else:
+            # Fallback to pandas sampling if sklearn is not available
+            train_data = df.sample(frac=train_test_split_ratio, random_state=42)
+            test_data = df.drop(train_data.index)
+            print("Using random train-test split (stratified split not available)")
+    except Exception as e:
+        # Fallback to pandas sampling if stratification fails
+        train_data = df.sample(frac=train_test_split_ratio, random_state=42)
+        test_data = df.drop(train_data.index)
+        print(f"Using random train-test split (stratified split failed: {str(e)})")
+    
     print(f"Data split: {len(train_data)} training samples, {len(test_data)} testing samples (Ratio: {train_test_split_ratio*100:.0f}%)")
 
     # Save original test data to CSV
@@ -912,85 +1206,70 @@ def train_model():
     if target not in train_data.columns:
          return jsonify({'status': 'error', 'message': f'Target column "{target}" not found in training data'}), 400
 
-    current_features = [col for col in train_data.columns if col != target]
-    if not current_features:
-         return jsonify({'status': 'error', 'message': 'No features found in training data (excluding target)'}), 400
-    # Create dummy variables for categorical features, excluding 'Nama'
-    categorical_features = [col for col in current_features if not pd.api.types.is_numeric_dtype(train_data[col]) and col != 'Nama']
-    train_data = pd.get_dummies(train_data, columns=categorical_features, drop_first=True)
-    features = [col for col in train_data.columns if col != target and col != 'Nama']  # Update global features based on current train_data, excluding 'Nama'
-
+    # Parse feature types for the C5.0 algorithm
+    feature_types = {}
+    for col in train_data.columns:
+        if col == target or col == 'Nama':
+            continue
+        
+        if col in ['Jenis_Kelamin', 'Nyeri_Dada', 'Sesak_Napas', 'Kelelahan']:
+            feature_types[col] = 'categorical'
+        elif pd.api.types.is_numeric_dtype(train_data[col]):
+            feature_types[col] = 'numeric'
+        else:
+            feature_types[col] = 'categorical'
+    
+    # Use our original non-encoded data for training
+    c5_train_data = train_data.copy()
+    
     # --- 3. Train Model (Boosting or Single Tree) ---
     boosted_trees = []
     boosted_alphas = []
     is_boosted = False # Reset boosting status for each training run
+    
+    # Prepare data for C5.0 algorithm
+    feature_columns = [col for col in c5_train_data.columns if col != target and col != 'Nama']
+    X_train = c5_train_data[feature_columns]
+    y_train = c5_train_data[target]
 
     if boosting:
-        print(f"Starting Boosting with {n_estimators} estimators...")
+        print(f"Starting C5.0 Boosting with {n_estimators} estimators...")
         is_boosted = True
-        sample_weights = np.ones(len(train_data)) / len(train_data)
-
-        for i in range(n_estimators):
-            print(f"Building tree {i+1}/{n_estimators}...")
-            current_tree = build_tree(train_data, target, features,
-                                      max_depth=max_depth,
-                                      min_samples_split=min_samples_split,
-                                      sample_weights=sample_weights)
-
-            if current_tree is None:
-                 print(f"Warning: Tree {i+1} could not be built.")
-                 continue
-
-            predictions = [predict_single_tree(current_tree, row) for _, row in train_data.iterrows()]
-
-            actuals = train_data[target].values
-            incorrect = np.array([1 if pred != true else 0 for pred, true in zip(predictions, actuals)])
-
-            valid_preds_mask = np.array([p is not None for p in predictions])
-            masked_weights = sample_weights[valid_preds_mask]
-            masked_incorrect = incorrect[valid_preds_mask]
-
-            total_masked_weight = np.sum(masked_weights)
-
-            if total_masked_weight == 0:
-                 error = 0.5
-                 print(f"Warning: Total weight for error calculation is zero in tree {i+1}. Assigning neutral error.")
-            else:
-                 error = np.dot(masked_weights, masked_incorrect) / total_masked_weight
-
-            error = np.clip(error, 1e-10, 1 - 1e-10)
-
-            alpha = 0.5 * np.log((1 - error) / error)
-
-            weight_update_factors = np.array([np.exp(alpha) if inc == 1 else np.exp(-alpha) for inc in incorrect])
-
-            sample_weights *= weight_update_factors
-
-            total_weight = np.sum(sample_weights)
-            if total_weight == 0 or not np.isfinite(total_weight):
-                 print("Warning: Sample weights became zero or non-finite. Resetting weights.")
-                 sample_weights = np.ones(len(train_data)) / len(train_data)
-            else:
-                 sample_weights /= total_weight
-
-            boosted_trees.append(current_tree)
-            boosted_alphas.append(alpha)
-            print(f"Tree {i+1}: Error={error:.4f}, Alpha={alpha:.4f}")
-
+        
+        booster = C5Booster(
+            max_depth=max_depth, 
+            min_samples_split=min_samples_split,
+            n_estimators=n_estimators
+        )
+        
+        booster.fit(X_train, y_train, feature_types=feature_types)
+        boosted_trees = booster.trees
+        boosted_alphas = booster.weights
+        
         if not boosted_trees:
-             return jsonify({'status': 'error', 'message': 'Boosting failed: No trees were built.'}), 500
-        tree = boosted_trees[0]
-        print("Boosting complete.")
-
+             return jsonify({'status': 'error', 'message': 'C5.0 Boosting failed: No trees were built.'}), 500
+        tree = boosted_trees[0]  # Use the first tree for rule extraction
+        print("C5.0 Boosting complete.")
     else:
-        print("Starting Single Tree Training...")
+        print("Starting Single C5.0 Tree Training...")
         is_boosted = False
-        tree = build_tree(train_data, target, features,
-                          max_depth=max_depth,
-                          min_samples_split=min_samples_split)
-        boosted_trees = []
-        boosted_alphas = []
-        print("Single tree training complete.")
+        
+        # Get feature list excluding target and Nama
+        features = [col for col in c5_train_data.columns if col != target and col != 'Nama']
+        
+        # Build a C5.0 decision tree
+        tree = build_c5_tree(
+            X_train,
+            y_train, 
+            features, 
+            feature_types,
+            max_depth=max_depth,
+            min_samples_split=min_samples_split
+        )
+        
+        boosted_trees = [tree]
+        boosted_alphas = [1.0]
+        print("Single C5.0 tree training complete.")
 
     global extracted_rules
     extracted_rules = extract_rules(tree, path_data=train_data)
@@ -1000,41 +1279,58 @@ def train_model():
     with open('static/rules.json', 'w') as f:
         json.dump(extracted_rules, f, indent=4)
     
-        # --- Generate hasil_prediksi.csv using the latest rules and properly dummified test_data ---
-        # test_data is from the original split (line 835), non-dummified.
-        # categorical_features is from line 864.
-        # features (global) is from line 866 (columns of dummified train_data).
-        
-        df_for_csv_output = test_data.copy()
+    # --- 5. Generate predictions for test data ---
+        df_for_csv_output = test_data.copy()        # Process test data the same way as training data
+        categorical_features = [col for col in df_for_csv_output.columns if 
+                              col in ['Jenis_Kelamin', 'Nyeri_Dada', 'Sesak_Napas', 'Kelelahan']]
+        temp_test_processed = pd.get_dummies(df_for_csv_output, columns=categorical_features, drop_first=True)
     
-        # Dummify a temporary version of test_data for rule prediction
-        temp_test_dummified_for_rules = pd.get_dummies(df_for_csv_output, columns=categorical_features, drop_first=True, dtype=int)
-    
-        # Align columns with the features used for training the tree (from dummified train_data)
-        # These are the features that rules will be based on.
+        # Add missing columns that might be in the training features but not in test
         for feature_col in features:
-            if feature_col not in temp_test_dummified_for_rules.columns:
-                temp_test_dummified_for_rules[feature_col] = 0
-        # Ensure only relevant columns (those in `features` plus any others needed by `predict` if not in `features`) are passed,
-        # or ensure `predict` handles rows robustly. The current `predict` checks `feature in sample.index`.
-        # Reindexing to `features` might be too strict if `predict` can handle a superset of columns.
-        # For now, adding missing `features` columns is the key step.
+            if feature_col not in temp_test_processed.columns:
+                temp_test_processed[feature_col] = 0
     
-        # Make predictions using rules
-        rule_predictions_for_csv = temp_test_dummified_for_rules.apply(
-            lambda row: predict(row, use_rules=True), axis=1
-        ).values
+        # Make predictions using both rule-based and direct tree-based methods
+        rule_predictions = []
+        tree_predictions = []
     
-        df_for_csv_output['Prediksi'] = rule_predictions_for_csv
+        for _, row in temp_test_processed.iterrows():
+            rule_pred = predict(row, use_rules=True, use_boosting=False)
+            tree_pred = predict(row, use_rules=False, use_boosting=is_boosted)
+            rule_predictions.append(rule_pred if rule_pred is not None else "N/A")
+            tree_predictions.append(tree_pred if tree_pred is not None else "N/A")
+    
+        # Use the better of the two prediction methods
+        df_for_csv_output['Prediksi_Rule'] = rule_predictions
+        df_for_csv_output['Prediksi_Tree'] = tree_predictions
+    
+        # Compare prediction accuracy for both methods on the test set
+        rule_correct = sum(1 for i, row in df_for_csv_output.iterrows() 
+                           if row['Prediksi_Rule'] == row[target] and row['Prediksi_Rule'] != "N/A")
+        tree_correct = sum(1 for i, row in df_for_csv_output.iterrows() 
+                           if row['Prediksi_Tree'] == row[target] and row['Prediksi_Tree'] != "N/A")
+                      
+        rule_accuracy = rule_correct / len(df_for_csv_output) if len(df_for_csv_output) > 0 else 0
+        tree_accuracy = tree_correct / len(df_for_csv_output) if len(df_for_csv_output) > 0 else 0
+    
+        print(f"Rule-based accuracy: {rule_accuracy:.4f}, Tree-based accuracy: {tree_accuracy:.4f}")
+    
+        # Use the better method for the final prediction
+        if rule_accuracy >= tree_accuracy:
+            df_for_csv_output['Prediksi'] = df_for_csv_output['Prediksi_Rule']
+            print("Using rule-based predictions as they're more accurate")
+        else:
+            df_for_csv_output['Prediksi'] = df_for_csv_output['Prediksi_Tree'] 
+            print("Using tree-based predictions as they're more accurate")
+    
+        # Ensure N/A values are filled appropriately
         df_for_csv_output['Prediksi'] = df_for_csv_output['Prediksi'].fillna("N/A")
-        
-        # Ensure 'Jenis_Kelamin' is in 0/1 format for the CSV if it wasn't already
-        # This was done to df initially, so test_data should have it as 0/1.
-        # If 'Jenis_Kelamin' in df_for_csv_output.columns and df_for_csv_output['Jenis_Kelamin'].dtype == 'object':
-        #    df_for_csv_output['Jenis_Kelamin'] = df_for_csv_output['Jenis_Kelamin'].map({'L': 0, 'P': 1, 'Laki-laki': 0, 'Perempuan': 1}).fillna(df_for_csv_output['Jenis_Kelamin'])
     
+        # Drop the intermediate columns
+        df_for_csv_output.drop(['Prediksi_Rule', 'Prediksi_Tree'], axis=1, inplace=True)
+    
+        # Save the predictions
         df_for_csv_output.to_csv('static/hasil_prediksi.csv', index=False)
-        # --- End of hasil_prediksi.csv generation ---
     
         if tree is None and not is_boosted:
             return jsonify({'status': 'error', 'message': 'Model training failed: Could not build tree.'}), 500
@@ -1087,16 +1383,21 @@ def train_model():
                  return {
                      'name': node_name,
                      'value': 'Decision',
-                     'children': [child for child in [left_child_dict, right_child_dict] if child is not None]
-                 }
+                     'children': [child for child in [left_child_dict, right_child_dict] if child is not None]                 }
              tree_structure = tree_to_dict(display_tree)
          except Exception as e:
               print(f"Error calculating metrics or tree structure: {e}")
-
     print(f"Generating predictions using {'boosted' if is_boosted else 'single'} model...")
     results = []
     for idx, row in df.iterrows():
-        pred = predict(row, use_boosting=is_boosted)
+        # Get prediction and confidence
+        pred_result = predict_with_confidence(row, use_boosting=is_boosted)
+        
+        if isinstance(pred_result, tuple) and len(pred_result) == 2:
+            pred, confidence = pred_result
+        else:
+            pred = pred_result
+            confidence = 0.0
 
         jenis_kelamin_display = 'Laki-laki' if row['Jenis_Kelamin'] == 0 else 'Perempuan'
         nyeri_dada_display = 'Ya' if row['Nyeri_Dada'] == 1 else 'Tidak'
@@ -1115,21 +1416,22 @@ def train_model():
             'Kelelahan': kelelahan_display,
             'Denyut_Jantung': row['Denyut_Jantung'],
             'Aktual': row[target],
-            'Prediksi': pred if pred is not None else "N/A"
+            'Prediksi': pred if pred is not None else "N/A",
+            'Confidence': round(confidence, 2) if confidence is not None else 0.0
          }
         results.append(result_dict)
-    print("Prediction generation complete.")
-
-    feature_importance = {}
-    for feature in features:
-        feature_importance[feature] = 0.1
+    print("Prediction generation complete.")    # Calculate feature importance
+    from feature_importance import calculate_feature_importance
+    feature_importance = calculate_feature_importance(tree, features)
 
     return jsonify({
         'status': 'success',
         'message': f"Model trained successfully ({'Boosting enabled' if is_boosted else 'Single tree'}).",
         'metrics': tree_metrics,
         'tree_structure': tree_structure,
-        'feature_importance': feature_importance
+        'feature_importance': feature_importance,
+        'rule_accuracy': round(rule_accuracy * 100, 2),
+        'tree_accuracy': round(tree_accuracy * 100, 2)
     })
 
 @app.route('/download_results')
@@ -1148,22 +1450,37 @@ def download_rules():
     output.seek(0)
     return send_file(output, download_name='decision_rules.csv', as_attachment=True)
 
-def extract_rules(node, rule_conditions=[], path_data=train_data):
+def extract_rules(node, rule_conditions=[], path_data=None):
+    global train_data, target
+    
     rules = []
+    
+    # Use the full train_data as default if path_data is None
+    if path_data is None:
+        path_data = train_data.copy()
+    
     if node.value is not None:
-        subset = path_data
-        if not subset.empty:
-            correct = len(subset[subset[target] == node.value])
-            total = len(subset)
+        # Calculate rule confidence and coverage only if we have valid path data
+        if not path_data.empty:
+            correct = len(path_data[path_data[target] == node.value])
+            total = len(path_data)
             confidence = correct / total if total > 0 else 0
-            coverage = total / len(train_data)
+            coverage = total / len(train_data) if len(train_data) > 0 else 0
+            
+            # Calculate class distribution for this rule
+            class_distribution = path_data[target].value_counts().to_dict()
+            class_distribution_str = ", ".join([f"{cls}: {count} ({count/total*100:.1f}%)" 
+                                              for cls, count in class_distribution.items()])
         else:
             confidence = 0
             coverage = 0
+            class_distribution = {}
+            class_distribution_str = "No data"
 
         machine_rule = {
             'conditions': rule_conditions,
-            'prediction': node.value
+            'prediction': node.value,
+            'class_distribution': class_distribution_str
         }
 
         display_rule = "JIKA " + " DAN ".join(
@@ -1174,15 +1491,24 @@ def extract_rules(node, rule_conditions=[], path_data=train_data):
             'display_rule': display_rule,
             'machine_rule': machine_rule,
             'confidence': round(confidence, 2),
-            'coverage': round(coverage, 2)
+            'coverage': round(coverage, 2),
+            'class_distribution': class_distribution_str
         })
         return rules
 
     if node.feature and node.threshold is not None:
+        # Create proper path data subsets for left and right branches
+        left_mask = path_data[node.feature] <= node.threshold
+        right_mask = path_data[node.feature] > node.threshold
+        
+        left_path_data = path_data[left_mask].copy() if not path_data.empty else pd.DataFrame()
+        right_path_data = path_data[right_mask].copy() if not path_data.empty else pd.DataFrame()
+        
         condition = f"{node.feature} <= {node.threshold}"
-        left_rules = extract_rules(node.left, rule_conditions + [condition], path_data[path_data[node.feature] <= node.threshold])
-        right_rules = extract_rules(node.right, rule_conditions + [condition.replace('<=', '>') ], path_data[path_data[node.feature] > node.threshold])
+        left_rules = extract_rules(node.left, rule_conditions + [condition], left_path_data)
+        right_rules = extract_rules(node.right, rule_conditions + [condition.replace('<=', '>')], right_path_data)
         return left_rules + right_rules
+    
     return rules
 
 import requests # type: ignore
