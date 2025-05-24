@@ -1,301 +1,301 @@
-#;Nama;Usia;Jenis_Kelamin;Sistolik;Diastolik;Tekanan_Darah;Kolesterol;Gula_Darah;Nyeri_Dada;Sesak_Napas;Kelelahan;Denyut_Jantung;Penyakit_Jantung;Nama;Usia;Jenis_Kelamin;Sistolik;Diastolik;Tekanan_Darah;Kolesterol;Gula_Darah;Nyeri_Dada;Sesak_Napas;Kelelahan;Denyut_Jantung;Penyakit_Jantung
-1;Agus Setiawan;52; L;118;76;118/76;220;104;Ya;Tidak;Ya;99;Demam reumatik (Dampak);Agus Setiawan;52; L;118;76;118/76;220;104;Ya;Tidak;Ya;99;Demam reumatik (Dampak)
-2;Siti Aminah;61; P;136;72;136/72;220;135;Tidak;Tidak;Tidak;97;Tidak Ada;Siti Aminah;61; P;136;72;136/72;220;135;Tidak;Tidak;Tidak;97;Tidak Ada
-3;Budi Santoso;48; L;121;77;121/77;215;116;Ya;Tidak;Tidak;118;Demam reumatik (Dampak);Budi Santoso;48; L;121;77;121/77;215;116;Ya;Tidak;Tidak;118;Demam reumatik (Dampak)
-4;Retno Wulandari;55; P;155;113;155/113;271;150;Tidak;Ya;Ya;89;Penyakit jantung koroner;Retno Wulandari;55; P;155;113;155/113;271;150;Tidak;Ya;Ya;89;Penyakit jantung koroner
-5;Joko Susilo;67; L;142;86;142/86;231;140;Tidak;Ya;Ya;114;Penyakit jantung koroner;Joko Susilo;67; L;142;86;142/86;231;140;Tidak;Ya;Ya;114;Penyakit jantung koroner
-6;Eko Prasetyo;41; L;186;87;186/87;218;129;Tidak;Tidak;Tidak;92;Penyakit jantung koroner;Eko Prasetyo;41; L;186;87;186/87;218;129;Tidak;Tidak;Tidak;92;Penyakit jantung koroner
-7;Sri Rahayu;59; P;160;96;160/96;250;123;Tidak;Tidak;Ya;76;Penyakit jantung koroner;Sri Rahayu;59; P;160;96;160/96;250;123;Tidak;Tidak;Ya;76;Penyakit jantung koroner
-8;Rudi Hartono;63; L;129;80;129/80;176;91;Tidak;Ya;Tidak;109;Demam reumatik (Dampak);Rudi Hartono;63; L;129;80;129/80;176;91;Tidak;Ya;Tidak;109;Demam reumatik (Dampak)
-9;Ani Lestari;45; P;126;85;126/85;185;129;Tidak;Tidak;Tidak;73;Tidak Ada;Ani Lestari;45; P;126;85;126/85;185;129;Tidak;Tidak;Tidak;73;Tidak Ada
-10;Bambang Irawan;58; L;116;71;116/71;204;115;Tidak;Tidak;Ya;116;Demam reumatik (Dampak);Bambang Irawan;58; L;116;71;116/71;204;115;Tidak;Tidak;Ya;116;Demam reumatik (Dampak)
-11;Diah Ayu;51; P;134;87;134/87;255;149;Ya;Tidak;Ya;94;Penyakit jantung koroner;Diah Ayu;51; P;134;87;134/87;255;149;Ya;Tidak;Ya;94;Penyakit jantung koroner
-12;Taufik Hidayat;44; L;132;111;132/111;211;101;Tidak;Tidak;Tidak;102;Penyakit jantung koroner;Taufik Hidayat;44; L;132;111;132/111;211;101;Tidak;Tidak;Tidak;102;Penyakit jantung koroner
-13;Nurul Hasanah;65; P;134;119;134/119;224;99;Tidak;Tidak;Ya;58;Gagal jantung;Nurul Hasanah;65; P;134;119;134/119;224;99;Tidak;Tidak;Ya;58;Gagal jantung
-14;Asep Saepudin;50; L;122;80;122/80;199;97;Ya;Ya;Tidak;114;Penyakit jantung koroner;Asep Saepudin;50; L;122;80;122/80;199;97;Ya;Ya;Tidak;114;Penyakit jantung koroner
-15;Lina Marlina;49; P;143;96;143/96;203;125;Tidak;Tidak;Tidak;112;Penyakit jantung koroner;Lina Marlina;49; P;143;96;143/96;203;125;Tidak;Tidak;Tidak;112;Penyakit jantung koroner
-16;Dadang Supriatna;60; L;137;93;137/93;220;108;Tidak;Tidak;Tidak;116;Penyakit jantung koroner;Dadang Supriatna;60; L;137;93;137/93;220;108;Tidak;Tidak;Tidak;116;Penyakit jantung koroner
-17;Ira Novianti;47; P;138;72;138/72;207;90;Ya;Tidak;Ya;104;Demam reumatik (Dampak);Ira Novianti;47; P;138;72;138/72;207;90;Ya;Tidak;Ya;104;Demam reumatik (Dampak)
-18;Heru Santoso;53; L;114;75;114/75;174;145;Tidak;Tidak;Tidak;109;Penyakit jantung koroner;Heru Santoso;53; L;114;75;114/75;174;145;Tidak;Tidak;Tidak;109;Penyakit jantung koroner
-19;Yuli Astuti;68; P;129;75;129/75;194;147;Ya;Tidak;Tidak;110;Demam reumatik (Dampak);Yuli Astuti;68; P;129;75;129/75;194;147;Ya;Tidak;Tidak;110;Demam reumatik (Dampak)
-20;Wahyu Widodo;42; L;150;97;150/97;245;164;Ya;Tidak;Tidak;78;Penyakit jantung koroner;Wahyu Widodo;42; L;150;97;150/97;245;164;Ya;Tidak;Tidak;78;Penyakit jantung koroner
-21;Endang Sulastri;56; P;160;91;160/91;205;120;Tidak;Tidak;Ya;111;Penyakit jantung koroner;Endang Sulastri;56; P;160;91;160/91;205;120;Tidak;Tidak;Ya;111;Penyakit jantung koroner
-22;Sugeng Riyadi;64; L;135;91;135/91;256;149;Tidak;Tidak;Tidak;81;Penyakit jantung koroner;Sugeng Riyadi;64; L;135;91;135/91;256;149;Tidak;Tidak;Tidak;81;Penyakit jantung koroner
-23;Rina Fitriani;43; P;158;85;158/85;195;96;Tidak;Tidak;Tidak;83;Penyakit jantung koroner;Rina Fitriani;43; P;158;85;158/85;195;96;Tidak;Tidak;Tidak;83;Penyakit jantung koroner
-24;Ahmad Fauzi;57; L;159;91;159/91;232;165;Ya;Tidak;Tidak;85;Penyakit jantung koroner;Ahmad Fauzi;57; L;159;91;159/91;232;165;Ya;Tidak;Tidak;85;Penyakit jantung koroner
-25;Kartika Sari;62; P;159;95;159/95;250;158;Ya;Ya;Tidak;106;Penyakit jantung koroner;Kartika Sari;62; P;159;95;159/95;250;158;Ya;Ya;Tidak;106;Penyakit jantung koroner
-26;Ujang Iskandar;46; L;162;93;162/93;215;168;Tidak;Tidak;Tidak;107;Penyakit jantung koroner;Ujang Iskandar;46; L;162;93;162/93;215;168;Tidak;Tidak;Tidak;107;Penyakit jantung koroner
-27;Dewi Sartika;54; P;132;86;132/86;250;127;Tidak;Tidak;Tidak;89;Penyakit jantung koroner;Dewi Sartika;54; P;132;86;132/86;250;127;Tidak;Tidak;Tidak;89;Penyakit jantung koroner
-28;Maman Abdurahman;69; L;130;71;130/71;199;149;Tidak;Tidak;Tidak;57;Demam reumatik (Dampak);Maman Abdurahman;69; L;130;71;130/71;199;149;Tidak;Tidak;Tidak;57;Demam reumatik (Dampak)
-29;Nina Handayani;40; P;154;92;154/92;208;132;Tidak;Ya;Tidak;106;Penyakit jantung koroner;Nina Handayani;40; P;154;92;154/92;208;132;Tidak;Ya;Tidak;106;Penyakit jantung koroner
-30;Ade Supriyadi;59; L;133;72;133/72;172;96;Tidak;Tidak;Tidak;57;Demam reumatik (Dampak);Ade Supriyadi;59; L;133;72;133/72;172;96;Tidak;Tidak;Tidak;57;Demam reumatik (Dampak)
-31;Fifie Anggraini;52; P;150;93;150/93;214;134;Tidak;Tidak;Ya;116;Penyakit jantung koroner;Fifie Anggraini;52; P;150;93;150/93;214;134;Tidak;Tidak;Ya;116;Penyakit jantung koroner
-32;Cecep Maulana;61; L;157;81;157/81;248;132;Tidak;Tidak;Ya;73;Penyakit jantung koroner;Cecep Maulana;61; L;157;81;157/81;248;132;Tidak;Tidak;Ya;73;Penyakit jantung koroner
-33;Gina Fauziah;48; P;126;84;126/84;222;91;Tidak;Tidak;Tidak;89;Penyakit jantung koroner;Gina Fauziah;48; P;126;84;126/84;222;91;Tidak;Tidak;Tidak;89;Penyakit jantung koroner
-34;Iwan Setiawan;55; L;132;71;132/71;207;141;Tidak;Tidak;Tidak;98;Penyakit jantung koroner;Iwan Setiawan;55; L;132;71;132/71;207;141;Tidak;Tidak;Tidak;98;Penyakit jantung koroner
-35;Lely Suryani;67; P;141;91;141/91;245;138;Tidak;Tidak;Tidak;113;Penyakit jantung koroner;Lely Suryani;67; P;141;91;141/91;245;138;Tidak;Tidak;Tidak;113;Penyakit jantung koroner
-36;Kusnadi;41; L;138;83;138/83;211;139;Tidak;Tidak;Tidak;109;Penyakit jantung koroner;Kusnadi;41; L;138;83;138/83;211;139;Tidak;Tidak;Tidak;109;Penyakit jantung koroner
-37;Neneng Hasanah;59; P;121;76;121/76;203;133;Ya;Ya;Ya;58;Demam reumatik (Dampak);Neneng Hasanah;59; P;121;76;121/76;203;133;Ya;Ya;Ya;58;Demam reumatik (Dampak)
-38;Oman Rohman;63; L;110;72;110/72;210;122;Ya;Ya;Tidak;64;Demam reumatik (Dampak);Oman Rohman;63; L;110;72;110/72;210;122;Ya;Ya;Tidak;64;Demam reumatik (Dampak)
-39;Pipit Lestari;45; P;120;80;120/80;228;96;Tidak;Tidak;Ya;108;Demam reumatik (Dampak);Pipit Lestari;45; P;120;80;120/80;228;96;Tidak;Tidak;Ya;108;Demam reumatik (Dampak)
-40;Qomaruddin;58; L;162;90;162/90;255;137;Tidak;Tidak;Tidak;57;Penyakit jantung koroner;Qomaruddin;58; L;162;90;162/90;255;137;Tidak;Tidak;Tidak;57;Penyakit jantung koroner
-41;Ratih Kumala;51; P;138;83;138/83;213;148;Tidak;Tidak;Tidak;116;Penyakit jantung koroner;Ratih Kumala;51; P;138;83;138/83;213;148;Tidak;Tidak;Tidak;116;Penyakit jantung koroner
-42;Sobirin;44; L;155;95;155/95;195;137;Tidak;Tidak;Tidak;97;Penyakit jantung koroner;Sobirin;44; L;155;95;155/95;195;137;Tidak;Tidak;Tidak;97;Penyakit jantung koroner
-43;Tuti Alawiyah;65; P;129;82;129/82;218;123;Ya;Ya;Tidak;119;Penyakit jantung koroner;Tuti Alawiyah;65; P;129;82;129/82;218;123;Ya;Ya;Tidak;119;Penyakit jantung koroner
-44;Udin Samsudin;50; L;130;83;130/83;189;94;Ya;Tidak;Tidak;79;Jantung bawaan biru (Riwayat);Udin Samsudin;50; L;130;83;130/83;189;94;Ya;Tidak;Tidak;79;Jantung bawaan biru (Riwayat)
-45;Vera Febrianti;49; P;130;77;130/77;170;101;Ya;Ya;Tidak;74;Demam reumatik (Dampak);Vera Febrianti;49; P;130;77;130/77;170;101;Ya;Ya;Tidak;74;Demam reumatik (Dampak)
-46;Wawan Ridwan;60; L;149;104;149/104;280;128;Tidak;Ya;Ya;109;Penyakit jantung koroner;Wawan Ridwan;60; L;149;104;149/104;280;128;Tidak;Ya;Ya;109;Penyakit jantung koroner
-47;Yati Maryati;47; P;131;81;131/81;257;140;Ya;Tidak;Tidak;87;Penyakit jantung koroner;Yati Maryati;47; P;131;81;131/81;257;140;Ya;Tidak;Tidak;87;Penyakit jantung koroner
-48;Zainal Arifin;53; L;139;83;139/83;200;149;Ya;Ya;Tidak;51;Demam reumatik (Dampak);Zainal Arifin;53; L;139;83;139/83;200;149;Ya;Ya;Tidak;51;Demam reumatik (Dampak)
-49;Zuhariah;68; P;110;71;110/71;211;127;Tidak;Tidak;Tidak;110;Penyakit jantung koroner;Zuhariah;68; P;110;71;110/71;211;127;Tidak;Tidak;Tidak;110;Penyakit jantung koroner
-50;Agus Salim;42; L;135;83;135/83;212;123;Tidak;Ya;Tidak;98;Jantung bawaan biru (Riwayat);Agus Salim;42; L;135;83;135/83;212;123;Tidak;Ya;Tidak;98;Jantung bawaan biru (Riwayat)
-51;Siti Fatimah;56; P;117;85;117/85;170;147;Tidak;Tidak;Tidak;55;Penyakit jantung koroner;Siti Fatimah;56; P;117;85;117/85;170;147;Tidak;Tidak;Tidak;55;Penyakit jantung koroner
-52;Budi Raharjo;64; L;171;109;171/109;257;140;Tidak;Tidak;Tidak;84;Penyakit jantung koroner;Budi Raharjo;64; L;171;109;171/109;257;140;Tidak;Tidak;Tidak;84;Penyakit jantung koroner
-53;Retno Susanti;43; P;189;118;189/118;264;122;Ya;Tidak;Ya;56;Penyakit jantung koroner;Retno Susanti;43; P;189;118;189/118;264;122;Ya;Tidak;Ya;56;Penyakit jantung koroner
-54;Joko Santoso;57; L;114;90;114/90;202;157;Tidak;Tidak;Tidak;112;Penyakit jantung koroner;Joko Santoso;57; L;114;90;114/90;202;157;Tidak;Tidak;Tidak;112;Penyakit jantung koroner
-55;Eko Wibowo;62; P;153;90;153/90;259;175;Tidak;Tidak;Tidak;105;Penyakit jantung koroner;Eko Wibowo;62; P;153;90;153/90;259;175;Tidak;Tidak;Tidak;105;Penyakit jantung koroner
-56;Sri Mulyani;46; L;110;85;110/85;184;114;Ya;Ya;Tidak;80;Demam reumatik (Dampak);Sri Mulyani;46; L;110;85;110/85;184;114;Ya;Ya;Tidak;80;Demam reumatik (Dampak)
-57;Rudianto;54; P;126;85;126/85;179;139;Tidak;Tidak;Ya;67;Gagal jantung;Rudianto;54; P;126;85;126/85;179;139;Tidak;Tidak;Ya;67;Gagal jantung
-58;Ani Suryani;69; L;143;101;143/101;233;147;Tidak;Tidak;Tidak;62;Penyakit jantung koroner;Ani Suryani;69; L;143;101;143/101;233;147;Tidak;Tidak;Tidak;62;Penyakit jantung koroner
-59;Bambang Nugroho;40; P;118;83;118/83;173;123;Ya;Tidak;Tidak;61;Demam reumatik (Dampak);Bambang Nugroho;40; P;118;83;118/83;173;123;Ya;Tidak;Tidak;61;Demam reumatik (Dampak)
-60;Diah Lestari;59; L;130;89;130/89;183;104;Tidak;Tidak;Ya;72;Tidak Ada;Diah Lestari;59; L;130;89;130/89;183;104;Tidak;Tidak;Ya;72;Tidak Ada
-61;Taufik Rahman;52; P;114;90;114/90;205;126;Tidak;Tidak;Tidak;67;Tidak Ada;Taufik Rahman;52; P;114;90;114/90;205;126;Tidak;Tidak;Tidak;67;Tidak Ada
-62;Nurhayati;61; L;122;90;122/90;205;91;Tidak;Tidak;Tidak;72;Tidak Ada;Nurhayati;61; L;122;90;122/90;205;91;Tidak;Tidak;Tidak;72;Tidak Ada
-63;Asep Hidayat;48; P;177;108;177/108;279;111;Tidak;Tidak;Tidak;64;Penyakit jantung koroner;Asep Hidayat;48; P;177;108;177/108;279;111;Tidak;Tidak;Tidak;64;Penyakit jantung koroner
-64;Lina Susanti;55; L;117;71;117/71;183;93;Tidak;Tidak;Ya;82;Tidak Ada;Lina Susanti;55; L;117;71;117/71;183;93;Tidak;Tidak;Ya;82;Tidak Ada
-65;Dadang Iskandar;67; P;158;97;158/97;206;112;Tidak;Tidak;Tidak;99;Penyakit jantung koroner;Dadang Iskandar;67; P;158;97;158/97;206;112;Tidak;Tidak;Tidak;99;Penyakit jantung koroner
-66;Ira Fauziah;41; L;114;88;114/88;171;148;Tidak;Tidak;Ya;65;Tidak Ada;Ira Fauziah;41; L;114;88;114/88;171;148;Tidak;Tidak;Ya;65;Tidak Ada
-67;Heru Prasetyo;59; P;116;72;116/72;204;118;Tidak;Tidak;Tidak;113;Penyakit jantung koroner;Heru Prasetyo;59; P;116;72;116/72;204;118;Tidak;Tidak;Tidak;113;Penyakit jantung koroner
-68;Yuli Ningsih;63; L;123;90;123/90;215;108;Tidak;Tidak;Tidak;109;Penyakit jantung koroner;Yuli Ningsih;63; L;123;90;123/90;215;108;Tidak;Tidak;Tidak;109;Penyakit jantung koroner
-69;Wahyu Saputro;45; P;162;86;162/86;209;144;Tidak;Tidak;Ya;88;Penyakit jantung koroner;Wahyu Saputro;45; P;162;86;162/86;209;144;Tidak;Tidak;Ya;88;Penyakit jantung koroner
-70;Endang Puspitasari;58; L;122;90;122/90;206;111;Ya;Tidak;Tidak;61;Penyakit jantung koroner;Endang Puspitasari;58; L;122;90;122/90;206;111;Ya;Tidak;Tidak;61;Penyakit jantung koroner
-71;Sugeng Handoyo;51; P;119;87;119/87;177;142;Tidak;Ya;Ya;100;Gagal jantung;Sugeng Handoyo;51; P;119;87;119/87;177;142;Tidak;Ya;Ya;100;Gagal jantung
-72;Rina Wulandari;44; L;133;78;133/78;175;113;Tidak;Tidak;Tidak;69;Tidak Ada;Rina Wulandari;44; L;133;78;133/78;175;113;Tidak;Tidak;Tidak;69;Tidak Ada
-73;Ahmad Riyadi;65; P;139;97;139/97;249;139;Ya;Tidak;Ya;90;Penyakit jantung koroner;Ahmad Riyadi;65; P;139;97;139/97;249;139;Ya;Tidak;Ya;90;Penyakit jantung koroner
-74;Kartika Dewi;50; L;128;98;128/98;247;146;Tidak;Tidak;Tidak;75;Penyakit jantung koroner;Kartika Dewi;50; L;128;98;128/98;247;146;Tidak;Tidak;Tidak;75;Penyakit jantung koroner
-75;Ujang Rahman;49; P;138;96;138/96;204;99;Ya;Ya;Ya;61;Demam reumatik (Dampak);Ujang Rahman;49; P;138;96;138/96;204;99;Ya;Ya;Ya;61;Demam reumatik (Dampak)
-76;Dewi Puspita;60; L;132;109;132/109;204;124;Ya;Tidak;Tidak;75;Penyakit jantung koroner;Dewi Puspita;60; L;132;109;132/109;204;124;Ya;Tidak;Tidak;75;Penyakit jantung koroner
-77;Maman Sudirman;47; P;134;109;134/109;230;117;Tidak;Ya;Tidak;72;Penyakit jantung koroner;Maman Sudirman;47; P;134;109;134/109;230;117;Tidak;Ya;Tidak;72;Penyakit jantung koroner
-78;Nina Agustina;53; L;118;75;118/75;174;142;Tidak;Tidak;Tidak;115;Penyakit jantung koroner;Nina Agustina;53; L;118;75;118/75;174;142;Tidak;Tidak;Tidak;115;Penyakit jantung koroner
-79;Ade Firmansyah;68; P;118;77;118/77;177;127;Tidak;Tidak;Tidak;120;Penyakit jantung koroner;Ade Firmansyah;68; P;118;77;118/77;177;127;Tidak;Tidak;Tidak;120;Penyakit jantung koroner
-80;Fifie Karlina;42; L;125;97;125/97;226;145;Tidak;Tidak;Ya;114;Penyakit jantung koroner;Fifie Karlina;42; L;125;97;125/97;226;145;Tidak;Tidak;Ya;114;Penyakit jantung koroner
-81;Cecep Suryana;56; P;166;86;166/86;240;113;Tidak;Ya;Ya;86;Gagal jantung;Cecep Suryana;56; P;166;86;166/86;240;113;Tidak;Ya;Ya;86;Gagal jantung
-82;Gina Lestari;64; L;125;99;125/99;191;150;Tidak;Ya;Tidak;99;Penyakit jantung koroner;Gina Lestari;64; L;125;99;125/99;191;150;Tidak;Ya;Tidak;99;Penyakit jantung koroner
-83;Iwan Hermawan;43; P;151;82;151/82;207;122;Tidak;Tidak;Tidak;87;Penyakit jantung koroner;Iwan Hermawan;43; P;151;82;151/82;207;122;Tidak;Tidak;Tidak;87;Penyakit jantung koroner
-84;Lely Marlina;57; L;129;98;129/98;196;110;Tidak;Tidak;Tidak;72;Penyakit jantung koroner;Lely Marlina;57; L;129;98;129/98;196;110;Tidak;Tidak;Tidak;72;Penyakit jantung koroner
-85;Kusmana;62; P;110;86;110/86;170;100;Tidak;Tidak;Tidak;91;Tidak Ada;Kusmana;62; P;110;86;110/86;170;100;Tidak;Tidak;Tidak;91;Tidak Ada
-86;Neneng Suryani;46; L;121;86;121/86;246;146;Tidak;Tidak;Ya;76;Penyakit jantung koroner;Neneng Suryani;46; L;121;86;121/86;246;146;Tidak;Tidak;Ya;76;Penyakit jantung koroner
-87;Oman Somantri;54; P;137;99;137/99;221;130;Ya;Tidak;Ya;80;Penyakit jantung koroner;Oman Somantri;54; P;137;99;137/99;221;130;Ya;Tidak;Ya;80;Penyakit jantung koroner
-88;Pipit Karlina;69; L;151;90;151/90;207;149;Tidak;Tidak;Ya;117;Penyakit jantung koroner;Pipit Karlina;69; L;151;90;151/90;207;149;Tidak;Tidak;Ya;117;Penyakit jantung koroner
-89;Qodir Jaelani;40; P;137;73;137/73;218;124;Tidak;Ya;Tidak;114;Jantung bawaan biru (Riwayat);Qodir Jaelani;40; P;137;73;137/73;218;124;Tidak;Ya;Tidak;114;Jantung bawaan biru (Riwayat)
-90;Ratih Handayani;59; L;117;86;117/86;219;120;Ya;Tidak;Ya;63;Demam reumatik (Dampak);Ratih Handayani;59; L;117;86;117/86;219;120;Ya;Tidak;Ya;63;Demam reumatik (Dampak)
-91;Sobari;52; P;139;92;139/92;215;118;Ya;Tidak;Tidak;53;Demam reumatik (Dampak);Sobari;52; P;139;92;139/92;215;118;Ya;Tidak;Tidak;53;Demam reumatik (Dampak)
-92;Tuti Susilawati;61; L;135;71;135/71;200;111;Tidak;Tidak;Ya;64;Gagal jantung;Tuti Susilawati;61; L;135;71;135/71;200;111;Tidak;Tidak;Ya;64;Gagal jantung
-93;Udin Badut;48; P;125;81;125/81;173;137;Tidak;Ya;Tidak;51;Demam reumatik (Dampak);Udin Badut;48; P;125;81;125/81;173;137;Tidak;Ya;Tidak;51;Demam reumatik (Dampak)
-94;Vera Susanti;55; L;135;95;135/95;215;148;Tidak;Tidak;Tidak;50;Penyakit jantung koroner;Vera Susanti;55; L;135;95;135/95;215;148;Tidak;Tidak;Tidak;50;Penyakit jantung koroner
-95;Wawan Darmawan;67; P;138;97;138/97;257;119;Tidak;Tidak;Ya;92;Penyakit jantung koroner;Wawan Darmawan;67; P;138;97;138/97;257;119;Tidak;Tidak;Ya;92;Penyakit jantung koroner
-96;Yati Rokayah;41; L;121;86;121/86;177;97;Tidak;Tidak;Tidak;88;Tidak Ada;Yati Rokayah;41; L;121;86;121/86;177;97;Tidak;Tidak;Tidak;88;Tidak Ada
-97;Zainal Mustofa;59; P;133;100;133/100;251;111;Tidak;Ya;Ya;107;Demam reumatik (Dampak);Zainal Mustofa;59; P;133;100;133/100;251;111;Tidak;Ya;Ya;107;Demam reumatik (Dampak)
-98;Zuhairah;63; L;113;81;113/81;189;105;Tidak;Tidak;Tidak;55;Demam reumatik (Dampak);Zuhairah;63; L;113;81;113/81;189;105;Tidak;Tidak;Tidak;55;Demam reumatik (Dampak)
-99;Agus Wiguna;45; P;121;89;121/89;251;132;Tidak;Tidak;Ya;60;Tidak Ada;Agus Wiguna;45; P;121;89;121/89;251;132;Tidak;Tidak;Ya;60;Tidak Ada
-100;Siti Jubaedah;58; L;139;91;139/91;252;108;Tidak;Tidak;Tidak;55;Penyakit jantung koroner;Siti Jubaedah;58; L;139;91;139/91;252;108;Tidak;Tidak;Tidak;55;Penyakit jantung koroner
-101;Budianto;51; P;135;120;135/120;233;110;Ya;Tidak;Tidak;74;Jantung bawaan biru (Riwayat);Budianto;51; P;135;120;135/120;233;110;Ya;Tidak;Tidak;74;Jantung bawaan biru (Riwayat)
-102;Retno Anggraini;44; L;116;90;116/90;180;172;Tidak;Tidak;Tidak;117;Demam reumatik (Dampak);Retno Anggraini;44; L;116;90;116/90;180;172;Tidak;Tidak;Tidak;117;Demam reumatik (Dampak)
-103;Joko Waluyo;65; P;132;114;132/114;258;106;Tidak;Ya;Tidak;62;Gagal jantung;Joko Waluyo;65; P;132;114;132/114;258;106;Tidak;Ya;Tidak;62;Gagal jantung
-104;Eko Nugroho;50; L;136;89;136/89;184;107;Tidak;Tidak;Tidak;91;Tidak Ada;Eko Nugroho;50; L;136;89;136/89;184;107;Tidak;Tidak;Tidak;91;Tidak Ada
-105;Sri Wahyuni;49; P;189;92;189/92;262;180;Ya;Tidak;Ya;109;Demam reumatik (Dampak);Sri Wahyuni;49; P;189;92;189/92;262;180;Ya;Tidak;Ya;109;Demam reumatik (Dampak)
-106;Rudi Hermawan;60; L;112;83;112/83;189;121;Tidak;Ya;Ya;104;Jantung bawaan biru (Riwayat);Rudi Hermawan;60; L;112;83;112/83;189;121;Tidak;Ya;Ya;104;Jantung bawaan biru (Riwayat)
-107;Ani Sumiati;47; P;160;89;160/89;235;150;Tidak;Tidak;Tidak;73;Demam reumatik (Dampak);Ani Sumiati;47; P;160;89;160/89;235;150;Tidak;Tidak;Tidak;73;Demam reumatik (Dampak)
-108;Bambang Susilo;53; L;154;115;154/115;241;161;Tidak;Tidak;Ya;67;Gagal jantung;Bambang Susilo;53; L;154;115;154/115;241;161;Tidak;Tidak;Ya;67;Gagal jantung
-109;Diah Ningsih;68; P;160;85;160/85;252;104;Tidak;Tidak;Tidak;69;Jantung bawaan biru (Riwayat);Diah Ningsih;68; P;160;85;160/85;252;104;Tidak;Tidak;Tidak;69;Jantung bawaan biru (Riwayat)
-110;Taufik Iskandar;42; L;168;115;168/115;263;137;Ya;Tidak;Tidak;108;Demam reumatik (Dampak);Taufik Iskandar;42; L;168;115;168/115;263;137;Ya;Tidak;Tidak;108;Demam reumatik (Dampak)
-111;Nurlela;56; P;124;97;124/97;242;95;Tidak;Tidak;Tidak;96;Tidak Ada;Nurlela;56; P;124;97;124/97;242;95;Tidak;Tidak;Tidak;96;Tidak Ada
-112;Asep Rahmat;64; L;166;106;166/106;214;130;Tidak;Tidak;Tidak;90;Gagal jantung;Asep Rahmat;64; L;166;106;166/106;214;130;Tidak;Tidak;Tidak;90;Gagal jantung
-113;Lina Ningsih;43; P;120;81;120/81;225;105;Tidak;Ya;Tidak;85;Gagal jantung;Lina Ningsih;43; P;120;81;120/81;225;105;Tidak;Ya;Tidak;85;Gagal jantung
-114;Dadang Kurniawan;57; L;151;100;151/100;199;158;Tidak;Tidak;Ya;74;Tidak Ada;Dadang Kurniawan;57; L;151;100;151/100;199;158;Tidak;Tidak;Ya;74;Tidak Ada
-115;Ira Rusdiana;62; P;146;81;146/81;194;104;Ya;Ya;Tidak;79;Demam reumatik (Dampak);Ira Rusdiana;62; P;146;81;146/81;194;104;Ya;Ya;Tidak;79;Demam reumatik (Dampak)
-116;Heru Irawan;46; L;157;90;157/90;279;178;Tidak;Tidak;Ya;68;Gagal jantung;Heru Irawan;46; L;157;90;157/90;279;178;Tidak;Tidak;Ya;68;Gagal jantung
-117;Yuli Handayani;54; P;182;87;182/87;235;145;Ya;Ya;Tidak;87;Gagal jantung;Yuli Handayani;54; P;182;87;182/87;235;145;Ya;Ya;Tidak;87;Gagal jantung
-118;Wahyu Hidayat;69; L;145;100;145/100;256;110;Tidak;Ya;Tidak;68;Gagal jantung;Wahyu Hidayat;69; L;145;100;145/100;256;110;Tidak;Ya;Tidak;68;Gagal jantung
-119;Endang Setyowati;40; P;112;72;112/72;194;134;Tidak;Ya;Tidak;119;Demam reumatik (Dampak);Endang Setyowati;40; P;112;72;112/72;194;134;Tidak;Ya;Tidak;119;Demam reumatik (Dampak)
-120;Sugeng Prayitno;59; L;130;70;130/70;216;122;Tidak;Tidak;Ya;73;Tidak Ada;Sugeng Prayitno;59; L;130;70;130/70;216;122;Tidak;Tidak;Ya;73;Tidak Ada
-121;Rina Nofitasari;52; P;182;101;182/101;257;134;Tidak;Tidak;Tidak;61;Gagal jantung;Rina Nofitasari;52; P;182;101;182/101;257;134;Tidak;Tidak;Tidak;61;Gagal jantung
-122;Ahmad Hidayat;61; L;181;98;181/98;236;153;Tidak;Tidak;Tidak;88;Gagal jantung;Ahmad Hidayat;61; L;181;98;181/98;236;153;Tidak;Tidak;Tidak;88;Gagal jantung
-123;Kartika Handayani;48; P;121;71;121/71;195;108;Tidak;Tidak;Tidak;68;Tidak Ada;Kartika Handayani;48; P;121;71;121/71;195;108;Tidak;Tidak;Tidak;68;Tidak Ada
-124;Ujang Sumardi;55; L;183;109;183/109;232;129;Ya;Ya;Ya;82;Gagal jantung;Ujang Sumardi;55; L;183;109;183/109;232;129;Ya;Ya;Ya;82;Gagal jantung
-125;Dewi Susanti;67; P;158;95;158/95;241;114;Tidak;Tidak;Tidak;53;Demam reumatik (Dampak);Dewi Susanti;67; P;158;95;158/95;241;114;Tidak;Tidak;Tidak;53;Demam reumatik (Dampak)
-126;Maman Suryana;41; L;157;80;157/80;206;92;Tidak;Tidak;Tidak;67;Demam reumatik (Dampak);Maman Suryana;41; L;157;80;157/80;206;92;Tidak;Tidak;Tidak;67;Demam reumatik (Dampak)
-127;Nina Susanti;59; P;130;91;130/91;277;136;Tidak;Tidak;Ya;57;Gagal jantung;Nina Susanti;59; P;130;91;130/91;277;136;Tidak;Tidak;Ya;57;Gagal jantung
-128;Ade Sobari;63; L;130;74;130/74;207;127;Tidak;Tidak;Ya;74;Tidak Ada;Ade Sobari;63; L;130;74;130/74;207;127;Tidak;Tidak;Ya;74;Tidak Ada
-129;Fifie Handayani;45; P;117;71;117/71;212;91;Tidak;Tidak;Ya;105;Demam reumatik (Dampak);Fifie Handayani;45; P;117;71;117/71;212;91;Tidak;Tidak;Ya;105;Demam reumatik (Dampak)
-130;Cecep Abdullah;58; L;127;91;127/91;195;139;Tidak;Ya;Ya;94;Jantung bawaan biru (Riwayat);Cecep Abdullah;58; L;127;91;127/91;195;139;Tidak;Ya;Ya;94;Jantung bawaan biru (Riwayat)
-131;Gina Susanti;51; P;125;80;125/80;254;104;Tidak;Tidak;Tidak;51;Demam reumatik (Dampak);Gina Susanti;51; P;125;80;125/80;254;104;Tidak;Tidak;Tidak;51;Demam reumatik (Dampak)
-132;Iwan Gunawan;44; L;146;105;146/105;219;144;Ya;Tidak;Tidak;81;Jantung bawaan biru (Riwayat);Iwan Gunawan;44; L;146;105;146/105;219;144;Ya;Tidak;Tidak;81;Jantung bawaan biru (Riwayat)
-133;Lely Nuraeni;65; P;114;83;114/83;172;143;Tidak;Ya;Ya;111;Demam reumatik (Dampak);Lely Nuraeni;65; P;114;83;114/83;172;143;Tidak;Ya;Ya;111;Demam reumatik (Dampak)
-134;Kusmiati;50; L;181;101;181/101;241;132;Tidak;Tidak;Ya;88;Gagal jantung;Kusmiati;50; L;181;101;181/101;241;132;Tidak;Tidak;Ya;88;Gagal jantung
-135;Neneng Fatimah;49; P;141;101;141/101;246;122;Tidak;Tidak;Ya;91;Gagal jantung;Neneng Fatimah;49; P;141;101;141/101;246;122;Tidak;Tidak;Ya;91;Gagal jantung
-136;Oman Fauzi;60; L;137;113;137/113;200;115;Tidak;Tidak;Tidak;71;Tidak Ada;Oman Fauzi;60; L;137;113;137/113;200;115;Tidak;Tidak;Tidak;71;Tidak Ada
-137;Pipit Susilawati;47; P;119;86;119/86;200;111;Tidak;Tidak;Ya;79;Tidak Ada;Pipit Susilawati;47; P;119;86;119/86;200;111;Tidak;Tidak;Ya;79;Tidak Ada
-138;Qosim;53; L;127;76;127/76;183;128;Ya;Tidak;Tidak;65;Demam reumatik (Dampak);Qosim;53; L;127;76;127/76;183;128;Ya;Tidak;Tidak;65;Demam reumatik (Dampak)
-139;Ratih Susanti;68; P;133;102;133/102;242;124;Tidak;Tidak;Tidak;119;Gagal jantung;Ratih Susanti;68; P;133;102;133/102;242;124;Tidak;Tidak;Tidak;119;Gagal jantung
-140;Sobur;42; L;124;87;124/87;192;146;Ya;Tidak;Ya;101;Demam reumatik (Dampak);Sobur;42; L;124;87;124/87;192;146;Ya;Tidak;Ya;101;Demam reumatik (Dampak)
-141;Tuti Rahayu;56; P;136;83;136/83;241;137;Tidak;Tidak;Ya;80;Tidak Ada;Tuti Rahayu;56; P;136;83;136/83;241;137;Tidak;Tidak;Ya;80;Tidak Ada
-142;Udin Saripudin;64; L;122;91;122/91;232;90;Tidak;Tidak;Tidak;56;Demam reumatik (Dampak);Udin Saripudin;64; L;122;91;122/91;232;90;Tidak;Tidak;Tidak;56;Demam reumatik (Dampak)
-143;Vera Ningsih;43; P;133;82;133/82;193;137;Tidak;Tidak;Tidak;83;Tidak Ada;Vera Ningsih;43; P;133;82;133/82;193;137;Tidak;Tidak;Tidak;83;Tidak Ada
-144;Wawan Setiawan;57; L;166;88;166/88;260;133;Tidak;Ya;Tidak;57;Gagal jantung;Wawan Setiawan;57; L;166;88;166/88;260;133;Tidak;Ya;Tidak;57;Gagal jantung
-145;Yati Rohayati;62; P;139;97;139/97;207;133;Ya;Tidak;Ya;92;Gagal jantung;Yati Rohayati;62; P;139;97;139/97;207;133;Ya;Tidak;Ya;92;Gagal jantung
-146;Zainal Abidin;46; L;138;80;138/80;231;127;Tidak;Tidak;Ya;57;Gagal jantung;Zainal Abidin;46; L;138;80;138/80;231;127;Tidak;Tidak;Ya;57;Gagal jantung
-147;Zuhriyah;54; P;120;82;120/82;170;96;Tidak;Tidak;Tidak;81;Jantung bawaan biru (Riwayat);Zuhriyah;54; P;120;82;120/82;170;96;Tidak;Tidak;Tidak;81;Jantung bawaan biru (Riwayat)
-148;Agus Budiman;69; L;157;81;157/81;233;106;Tidak;Tidak;Tidak;55;Jantung bawaan biru (Riwayat);Agus Budiman;69; L;157;81;157/81;233;106;Tidak;Tidak;Tidak;55;Jantung bawaan biru (Riwayat)
-149;Siti Khadijah;40; P;183;97;183/97;265;167;Tidak;Tidak;Ya;61;Gagal jantung;Siti Khadijah;40; P;183;97;183/97;265;167;Tidak;Tidak;Ya;61;Gagal jantung
-150;Budi Kusuma;59; L;151;83;151/83;224;146;Tidak;Ya;Ya;89;Gagal jantung;Budi Kusuma;59; L;151;83;151/83;224;146;Tidak;Ya;Ya;89;Gagal jantung
-151;Retno Kumala;52; P;141;100;141/100;256;152;Tidak;Tidak;Tidak;71;Jantung bawaan biru (Riwayat);Retno Kumala;52; P;141;100;141/100;256;152;Tidak;Tidak;Tidak;71;Jantung bawaan biru (Riwayat)
-152;Joko Nugroho;61; L;121;72;121/72;193;110;Tidak;Tidak;Ya;52;Jantung bawaan biru (Riwayat);Joko Nugroho;61; L;121;72;121/72;193;110;Tidak;Tidak;Ya;52;Jantung bawaan biru (Riwayat)
-153;Eko Budiman;48; P;157;90;157/90;208;143;Ya;Ya;Tidak;115;Demam reumatik (Dampak);Eko Budiman;48; P;157;90;157/90;208;143;Ya;Ya;Tidak;115;Demam reumatik (Dampak)
-154;Sri Budiarti;55; L;118;84;118/84;186;103;Tidak;Tidak;Tidak;116;Demam reumatik (Dampak);Sri Budiarti;55; L;118;84;118/84;186;103;Tidak;Tidak;Tidak;116;Demam reumatik (Dampak)
-155;Rudi Nugroho;67; P;185;99;185/99;272;142;Ya;Ya;Tidak;97;Gagal jantung;Rudi Nugroho;67; P;185;99;185/99;272;142;Ya;Ya;Tidak;97;Gagal jantung
-156;Ani Fauziah;41; L;153;100;153/100;200;180;Ya;Ya;Tidak;50;Demam reumatik (Dampak);Ani Fauziah;41; L;153;100;153/100;200;180;Ya;Ya;Tidak;50;Demam reumatik (Dampak)
-157;Bambang Wijaya;59; P;136;89;136/89;201;146;Tidak;Tidak;Tidak;85;Jantung bawaan biru (Riwayat);Bambang Wijaya;59; P;136;89;136/89;201;146;Tidak;Tidak;Tidak;85;Jantung bawaan biru (Riwayat)
-158;Diah Suryani;63; L;169;92;169/92;266;142;Ya;Tidak;Tidak;50;Demam reumatik (Dampak);Diah Suryani;63; L;169;92;169/92;266;142;Ya;Tidak;Tidak;50;Demam reumatik (Dampak)
-159;Taufik Imansyah;45; P;141;118;141/118;258;127;Ya;Tidak;Ya;73;Gagal jantung;Taufik Imansyah;45; P;141;118;141/118;258;127;Ya;Tidak;Ya;73;Gagal jantung
-160;Nur Khasanah;58; L;116;78;116/78;177;106;Tidak;Ya;Tidak;62;Demam reumatik (Dampak);Nur Khasanah;58; L;116;78;116/78;177;106;Tidak;Ya;Tidak;62;Demam reumatik (Dampak)
-161;Asep Mulyana;51; P;134;79;134/79;184;122;Tidak;Tidak;Tidak;86;Tidak Ada;Asep Mulyana;51; P;134;79;134/79;184;122;Tidak;Tidak;Tidak;86;Tidak Ada
-162;Lina Novianti;44; L;129;83;129/83;241;122;Ya;Tidak;Ya;60;Demam reumatik (Dampak);Lina Novianti;44; L;129;83;129/83;241;122;Ya;Tidak;Ya;60;Demam reumatik (Dampak)
-163;Dadang Hidayat;65; P;131;96;131/96;211;121;Ya;Tidak;Ya;59;Demam reumatik (Dampak);Dadang Hidayat;65; P;131;96;131/96;211;121;Ya;Tidak;Ya;59;Demam reumatik (Dampak)
-164;Ira Kumala;50; L;137;95;137/95;245;108;Ya;Ya;Ya;68;Demam reumatik (Dampak);Ira Kumala;50; L;137;95;137/95;245;108;Ya;Ya;Ya;68;Demam reumatik (Dampak)
-165;Heru Nugroho;49; P;133;75;133/75;219;119;Tidak;Tidak;Tidak;99;Tidak Ada;Heru Nugroho;49; P;133;75;133/75;219;119;Tidak;Tidak;Tidak;99;Tidak Ada
-166;Yuli Fauziah;60; L;134;80;134/80;215;145;Tidak;Tidak;Ya;68;Gagal jantung;Yuli Fauziah;60; L;134;80;134/80;215;145;Tidak;Tidak;Ya;68;Gagal jantung
-167;Wahyu Kurniawan;47; P;112;88;112/88;190;131;Ya;Ya;Tidak;78;Demam reumatik (Dampak);Wahyu Kurniawan;47; P;112;88;112/88;190;131;Ya;Ya;Tidak;78;Demam reumatik (Dampak)
-168;Endang Ningsih;53; L;176;97;176/97;236;148;Tidak;Tidak;Tidak;51;Gagal jantung;Endang Ningsih;53; L;176;97;176/97;236;148;Tidak;Tidak;Tidak;51;Gagal jantung
-169;Sugeng Santoso;68; P;160;87;160/87;253;104;Tidak;Ya;Ya;95;Gagal jantung;Sugeng Santoso;68; P;160;87;160/87;253;104;Tidak;Ya;Ya;95;Gagal jantung
-170;Rina Agustin;42; L;143;81;143/81;238;94;Tidak;Tidak;Ya;92;Gagal jantung;Rina Agustin;42; L;143;81;143/81;238;94;Tidak;Tidak;Ya;92;Gagal jantung
-171;Ahmad Kurniawan;56; P;113;89;113/89;187;139;Ya;Tidak;Tidak;53;Demam reumatik (Dampak);Ahmad Kurniawan;56; P;113;89;113/89;187;139;Ya;Tidak;Tidak;53;Demam reumatik (Dampak)
-172;Kartika Wati;64; L;145;82;145/82;203;131;Tidak;Tidak;Tidak;71;Tidak Ada;Kartika Wati;64; L;145;82;145/82;203;131;Tidak;Tidak;Tidak;71;Tidak Ada
-173;Ujang Saepudin;43; P;121;85;121/85;219;137;Ya;Tidak;Tidak;69;Demam reumatik (Dampak);Ujang Saepudin;43; P;121;85;121/85;219;137;Ya;Tidak;Tidak;69;Demam reumatik (Dampak)
-174;Dewi Ratna;57; L;161;120;161/120;217;176;Ya;Tidak;Tidak;64;Gagal jantung;Dewi Ratna;57; L;161;120;161/120;217;176;Ya;Tidak;Tidak;64;Gagal jantung
-175;Maman Hidayat;62; P;133;88;133/88;260;142;Tidak;Ya;Tidak;53;Demam reumatik (Dampak);Maman Hidayat;62; P;133;88;133/88;260;142;Tidak;Ya;Tidak;53;Demam reumatik (Dampak)
-176;Nina Ratnasari;46; L;139;88;139/88;197;117;Ya;Ya;Ya;99;Demam reumatik (Dampak);Nina Ratnasari;46; L;139;88;139/88;197;117;Ya;Ya;Ya;99;Demam reumatik (Dampak)
-177;Ade Supriyadi;54; P;133;85;133/85;214;137;Tidak;Tidak;Tidak;107;Demam reumatik (Dampak);Ade Supriyadi;54; P;133;85;133/85;214;137;Tidak;Tidak;Tidak;107;Demam reumatik (Dampak)
-178;Fifie Luthfiah;69; L;137;117;137/117;242;134;Ya;Tidak;Tidak;65;Jantung bawaan biru (Riwayat);Fifie Luthfiah;69; L;137;117;137/117;242;134;Ya;Tidak;Tidak;65;Jantung bawaan biru (Riwayat)
-179;Cecep Samsudin;40; P;111;81;111/81;174;103;Ya;Tidak;Tidak;64;Demam reumatik (Dampak);Cecep Samsudin;40; P;111;81;111/81;174;103;Ya;Tidak;Tidak;64;Demam reumatik (Dampak)
-180;Gina Mardiana;59; L;132;94;132/94;234;90;Tidak;Ya;Tidak;112;Demam reumatik (Dampak);Gina Mardiana;59; L;132;94;132/94;234;90;Tidak;Ya;Tidak;112;Demam reumatik (Dampak)
-181;Iwan Suryana;52; P;142;99;142/99;213;138;Tidak;Tidak;Tidak;72;Demam reumatik (Dampak);Iwan Suryana;52; P;142;99;142/99;213;138;Tidak;Tidak;Tidak;72;Demam reumatik (Dampak)
-182;Lely Agustina;61; L;139;82;139/82;199;116;Ya;Ya;Ya;105;Demam reumatik (Dampak);Lely Agustina;61; L;139;82;139/82;199;116;Ya;Ya;Ya;105;Demam reumatik (Dampak)
-183;Kusmianto;48; P;130;85;130/85;196;142;Tidak;Tidak;Ya;77;Gagal jantung;Kusmianto;48; P;130;85;130/85;196;142;Tidak;Tidak;Ya;77;Gagal jantung
-184;Neneng Fauziah;55; L;156;96;156/96;197;173;Ya;Tidak;Tidak;51;Demam reumatik (Dampak);Neneng Fauziah;55; L;156;96;156/96;197;173;Ya;Tidak;Tidak;51;Demam reumatik (Dampak)
-185;Oman Abdul Ghani;67; P;139;90;139/90;208;130;Ya;Tidak;Tidak;61;Demam reumatik (Dampak);Oman Abdul Ghani;67; P;139;90;139/90;208;130;Ya;Tidak;Tidak;61;Demam reumatik (Dampak)
-186;Pipit Karlina;41; L;126;86;126/86;221;119;Tidak;Tidak;Tidak;99;Tidak Ada;Pipit Karlina;41; L;126;86;126/86;221;119;Tidak;Tidak;Tidak;99;Tidak Ada
-187;Qodriyah;59; P;112;79;112/79;199;137;Tidak;Ya;Tidak;57;Demam reumatik (Dampak);Qodriyah;59; P;112;79;112/79;199;137;Tidak;Ya;Tidak;57;Demam reumatik (Dampak)
-188;Ratih Wulandari;63; L;123;90;123/90;200;148;Tidak;Tidak;Tidak;96;Jantung bawaan biru (Riwayat);Ratih Wulandari;63; L;123;90;123/90;200;148;Tidak;Tidak;Tidak;96;Jantung bawaan biru (Riwayat)
-189;Sobirin Santoso;45; P;145;93;145/93;259;143;Ya;Ya;Tidak;52;Demam reumatik (Dampak);Sobirin Santoso;45; P;145;93;145/93;259;143;Ya;Ya;Tidak;52;Demam reumatik (Dampak)
-190;Tuti Sumiati;58; L;132;89;132/89;208;143;Tidak;Tidak;Tidak;87;Jantung bawaan biru (Riwayat);Tuti Sumiati;58; L;132;89;132/89;208;143;Tidak;Tidak;Tidak;87;Jantung bawaan biru (Riwayat)
-191;Udin Tajudin;51; P;124;78;124/78;174;95;Ya;Tidak;Ya;94;Demam reumatik (Dampak);Udin Tajudin;51; P;124;78;124/78;174;95;Ya;Tidak;Ya;94;Demam reumatik (Dampak)
-192;Vera Puspitasari;44; L;138;82;138/82;234;141;Tidak;Tidak;Ya;111;Demam reumatik (Dampak);Vera Puspitasari;44; L;138;82;138/82;234;141;Tidak;Tidak;Ya;111;Demam reumatik (Dampak)
-193;Wawan Suherman;65; P;127;88;127/88;249;97;Ya;Tidak;Tidak;103;Demam reumatik (Dampak);Wawan Suherman;65; P;127;88;127/88;249;97;Ya;Tidak;Tidak;103;Demam reumatik (Dampak)
-194;Yati Siti;50; L;151;111;151/111;205;179;Tidak;Ya;Tidak;104;Gagal jantung;Yati Siti;50; L;151;111;151/111;205;179;Tidak;Ya;Tidak;104;Gagal jantung
-195;Zainal Muttaqin;49; P;132;90;132/90;189;116;Tidak;Ya;Tidak;120;Gagal jantung;Zainal Muttaqin;49; P;132;90;132/90;189;116;Tidak;Ya;Tidak;120;Gagal jantung
-196;Zuhairah;60; L;112;81;112/81;190;100;Tidak;Tidak;Tidak;75;Tidak Ada;Zuhairah;60; L;112;81;112/81;190;100;Tidak;Tidak;Tidak;75;Tidak Ada
-197;Agus Santoso;47; P;120;83;120/83;184;141;Tidak;Tidak;Tidak;99;Tidak Ada;Agus Santoso;47; P;120;83;120/83;184;141;Tidak;Tidak;Tidak;99;Tidak Ada
-198;Siti Nurjanah;53; L;144;110;144/110;217;176;Tidak;Ya;Tidak;78;Gagal jantung;Siti Nurjanah;53; L;144;110;144/110;217;176;Tidak;Ya;Tidak;78;Gagal jantung
-199;Budi Riyanto;68; P;151;90;151/90;277;124;Tidak;Tidak;Tidak;117;Jantung bawaan biru (Riwayat);Budi Riyanto;68; P;151;90;151/90;277;124;Tidak;Tidak;Tidak;117;Jantung bawaan biru (Riwayat)
-200;Retno Wati;42; L;144;88;144/88;206;135;Tidak;Ya;Ya;66;Gagal jantung;Retno Wati;42; L;144;88;144/88;206;135;Tidak;Ya;Ya;66;Gagal jantung
-201;Joko Prabowo;56; P;148;89;148/89;211;107;Tidak;Tidak;Tidak;66;Jantung bawaan biru (Riwayat);Joko Prabowo;56; P;148;89;148/89;211;107;Tidak;Tidak;Tidak;66;Jantung bawaan biru (Riwayat)
-202;Eko Setiawan;64; L;124;79;124/79;198;141;Tidak;Ya;Tidak;111;Jantung bawaan biru (Riwayat);Eko Setiawan;64; L;124;79;124/79;198;141;Tidak;Ya;Tidak;111;Jantung bawaan biru (Riwayat)
-203;Sri Untari;43; P;145;96;145/96;207;172;Tidak;Tidak;Ya;91;Gagal jantung;Sri Untari;43; P;145;96;145/96;207;172;Tidak;Tidak;Ya;91;Gagal jantung
-204;Rudi Wijaya;57; L;128;82;128/82;171;116;Ya;Tidak;Tidak;55;Jantung bawaan biru (Riwayat);Rudi Wijaya;57; L;128;82;128/82;171;116;Ya;Tidak;Tidak;55;Jantung bawaan biru (Riwayat)
-205;Ani Setiawati;62; P;154;84;154/84;226;102;Ya;Tidak;Tidak;65;Jantung bawaan biru (Riwayat);Ani Setiawati;62; P;154;84;154/84;226;102;Ya;Tidak;Tidak;65;Jantung bawaan biru (Riwayat)
-206;Bambang Hermawan;46; L;148;87;148/87;241;130;Tidak;Tidak;Tidak;88;Tidak Ada;Bambang Hermawan;46; L;148;87;148/87;241;130;Tidak;Tidak;Tidak;88;Tidak Ada
-207;Diah Kumala;54; P;156;92;156/92;259;153;Tidak;Ya;Tidak;88;Jantung bawaan biru (Riwayat);Diah Kumala;54; P;156;92;156/92;259;153;Tidak;Ya;Tidak;88;Jantung bawaan biru (Riwayat)
-208;Taufik Akbar;69; L;120;80;120/80;239;127;Ya;Tidak;Ya;76;Gagal jantung;Taufik Akbar;69; L;120;80;120/80;239;127;Ya;Tidak;Ya;76;Gagal jantung
-209;Nurul Huda;40; P;129;77;129/77;209;114;Tidak;Tidak;Tidak;57;Jantung bawaan biru (Riwayat);Nurul Huda;40; P;129;77;129/77;209;114;Tidak;Tidak;Tidak;57;Jantung bawaan biru (Riwayat)
-210;Asep Saepuloh;59; L;160;118;160/118;216;163;Tidak;Ya;Ya;74;Gagal jantung;Asep Saepuloh;59; L;160;118;160/118;216;163;Tidak;Ya;Ya;74;Gagal jantung
-211;Lina Herlina;52; P;122;83;122/83;183;141;Tidak;Tidak;Tidak;95;Tidak Ada;Lina Herlina;52; P;122;83;122/83;183;141;Tidak;Tidak;Tidak;95;Tidak Ada
-212;Dadang Iskandar;61; L;140;89;140/89;266;123;Tidak;Ya;Ya;109;Gagal jantung;Dadang Iskandar;61; L;140;89;140/89;266;123;Tidak;Ya;Ya;109;Gagal jantung
-213;Ira Rahmawati;48; P;131;72;131/72;209;114;Tidak;Ya;Tidak;76;Gagal jantung;Ira Rahmawati;48; P;131;72;131/72;209;114;Tidak;Ya;Tidak;76;Gagal jantung
-214;Heru Susanto;55; L;136;92;136/92;255;140;Tidak;Tidak;Tidak;102;Jantung bawaan biru (Riwayat);Heru Susanto;55; L;136;92;136/92;255;140;Tidak;Tidak;Tidak;102;Jantung bawaan biru (Riwayat)
-215;Yulianti;67; P;130;74;130/74;207;150;Tidak;Ya;Ya;67;Gagal jantung;Yulianti;67; P;130;74;130/74;207;150;Tidak;Ya;Ya;67;Gagal jantung
-216;Wahyu Fitrianto;41; L;146;81;146/81;228;103;Tidak;Tidak;Tidak;92;Tidak Ada;Wahyu Fitrianto;41; L;146;81;146/81;228;103;Tidak;Tidak;Tidak;92;Tidak Ada
-217;Endang Wulandari;59; P;152;102;152/102;268;178;Tidak;Ya;Ya;58;Gagal jantung;Endang Wulandari;59; P;152;102;152/102;268;178;Tidak;Ya;Ya;58;Gagal jantung
-218;Sugeng Winarno;63; L;110;74;110/74;175;150;Tidak;Tidak;Tidak;68;Tidak Ada;Sugeng Winarno;63; L;110;74;110/74;175;150;Tidak;Tidak;Tidak;68;Tidak Ada
-219;Rina Amelia;45; P;159;100;159/100;235;177;Tidak;Ya;Tidak;91;Jantung bawaan biru (Riwayat);Rina Amelia;45; P;159;100;159/100;235;177;Tidak;Ya;Tidak;91;Jantung bawaan biru (Riwayat)
-220;Ahmad Yani;58; L;150;114;150/114;214;112;Tidak;Tidak;Tidak;92;Gagal jantung;Ahmad Yani;58; L;150;114;150/114;214;112;Tidak;Tidak;Tidak;92;Gagal jantung
-221;Kartika Sari;51; P;133;98;133/98;237;138;Tidak;Tidak;Ya;57;Gagal jantung;Kartika Sari;51; P;133;98;133/98;237;138;Tidak;Tidak;Ya;57;Gagal jantung
-222;Ujang Kosasih;44; L;163;117;163/117;203;169;Tidak;Tidak;Ya;64;Gagal jantung;Ujang Kosasih;44; L;163;117;163/117;203;169;Tidak;Tidak;Ya;64;Gagal jantung
-223;Dewi Lestari;65; P;110;79;110/79;176;119;Ya;Tidak;Tidak;84;Jantung bawaan biru (Riwayat);Dewi Lestari;65; P;110;79;110/79;176;119;Ya;Tidak;Tidak;84;Jantung bawaan biru (Riwayat)
-224;Maman Setiawan;50; L;128;81;128/81;195;140;Ya;Tidak;Tidak;103;Jantung bawaan biru (Riwayat);Maman Setiawan;50; L;128;81;128/81;195;140;Ya;Tidak;Tidak;103;Jantung bawaan biru (Riwayat)
-225;Nina Karmila;49; P;121;84;121/84;240;137;Tidak;Tidak;Ya;98;Gagal jantung;Nina Karmila;49; P;121;84;121/84;240;137;Tidak;Tidak;Ya;98;Gagal jantung
-226;Ade Irawan;60; L;143;86;143/86;213;111;Tidak;Tidak;Ya;81;Gagal jantung;Ade Irawan;60; L;143;86;143/86;213;111;Tidak;Tidak;Ya;81;Gagal jantung
-227;Fifie Marlia;47; P;142;99;142/99;200;153;Tidak;Ya;Tidak;89;Gagal jantung;Fifie Marlia;47; P;142;99;142/99;200;153;Tidak;Ya;Tidak;89;Gagal jantung
-228;Cecep Rahmat;53; L;129;78;129/78;205;116;Tidak;Tidak;Tidak;55;Jantung bawaan biru (Riwayat);Cecep Rahmat;53; L;129;78;129/78;205;116;Tidak;Tidak;Tidak;55;Jantung bawaan biru (Riwayat)
-229;Gina Mariana;68; P;123;98;123/98;218;145;Ya;Tidak;Tidak;108;Jantung bawaan biru (Riwayat);Gina Mariana;68; P;123;98;123/98;218;145;Ya;Tidak;Tidak;108;Jantung bawaan biru (Riwayat)
-230;Iwan Kurniawan;42; L;147;106;147/106;204;141;Tidak;Tidak;Ya;119;Gagal jantung;Iwan Kurniawan;42; L;147;106;147/106;204;141;Tidak;Tidak;Ya;119;Gagal jantung
-231;Lely Suryawati;56; P;147;91;147/91;269;179;Tidak;Tidak;Tidak;50;Gagal jantung;Lely Suryawati;56; P;147;91;147/91;269;179;Tidak;Tidak;Tidak;50;Gagal jantung
-232;Kusuma Ningrum;64; L;160;104;160/104;210;146;Ya;Tidak;Tidak;102;Jantung bawaan biru (Riwayat);Kusuma Ningrum;64; L;160;104;160/104;210;146;Ya;Tidak;Tidak;102;Jantung bawaan biru (Riwayat)
-233;Neneng Rohaeti;43; P;126;89;126/89;198;141;Tidak;Tidak;Tidak;52;Jantung bawaan biru (Riwayat);Neneng Rohaeti;43; P;126;89;126/89;198;141;Tidak;Tidak;Tidak;52;Jantung bawaan biru (Riwayat)
-234;Oman Iskandar;57; L;147;100;147/100;239;126;Tidak;Tidak;Ya;81;Gagal jantung;Oman Iskandar;57; L;147;100;147/100;239;126;Tidak;Tidak;Ya;81;Gagal jantung
-235;Pipit Susanti;62; P;132;71;132/71;209;144;Tidak;Tidak;Tidak;77;Gagal jantung;Pipit Susanti;62; P;132;71;132/71;209;144;Tidak;Tidak;Tidak;77;Gagal jantung
-236;Qomarudin;46; L;168;109;168/109;225;139;Tidak;Ya;Tidak;105;Gagal jantung;Qomarudin;46; L;168;109;168/109;225;139;Tidak;Ya;Tidak;105;Gagal jantung
-237;Ratih Purnama;54; P;189;86;189/86;225;94;Ya;Ya;Tidak;68;Gagal jantung;Ratih Purnama;54; P;189;86;189/86;225;94;Ya;Ya;Tidak;68;Gagal jantung
-238;Sobri;69; L;125;74;125/74;204;109;Tidak;Tidak;Ya;84;Jantung bawaan biru (Riwayat);Sobri;69; L;125;74;125/74;204;109;Tidak;Tidak;Ya;84;Jantung bawaan biru (Riwayat)
-239;Tuti Sunarti;40; P;140;78;140/78;193;173;Tidak;Tidak;Tidak;120;Tidak Ada;Tuti Sunarti;40; P;140;78;140/78;193;173;Tidak;Tidak;Tidak;120;Tidak Ada
-240;Udin Jaenudin;59; L;126;95;126/95;210;125;Tidak;Tidak;Tidak;107;Jantung bawaan biru (Riwayat);Udin Jaenudin;59; L;126;95;126/95;210;125;Tidak;Tidak;Tidak;107;Jantung bawaan biru (Riwayat)
-241;Vera Agustina;52; P;145;106;145/106;217;177;Tidak;Tidak;Tidak;85;Gagal jantung;Vera Agustina;52; P;145;106;145/106;217;177;Tidak;Tidak;Tidak;85;Gagal jantung
-242;Wawan Rachman;61; L;163;88;163/88;212;128;Tidak;Tidak;Tidak;71;Jantung bawaan biru (Riwayat);Wawan Rachman;61; L;163;88;163/88;212;128;Tidak;Tidak;Tidak;71;Jantung bawaan biru (Riwayat)
-243;Yati Hartati;48; P;126;84;126/84;236;94;Tidak;Ya;Tidak;114;Demam reumatik (Dampak);Yati Hartati;48; P;126;84;126/84;236;94;Tidak;Ya;Tidak;114;Demam reumatik (Dampak)
-244;Zainal Fanani;55; L;112;70;112/70;192;91;Ya;Tidak;Tidak;81;Jantung bawaan biru (Riwayat);Zainal Fanani;55; L;112;70;112/70;192;91;Ya;Tidak;Tidak;81;Jantung bawaan biru (Riwayat)
-245;Zuhairiyah;67; P;130;97;130/97;250;104;Tidak;Tidak;Tidak;50;Gagal jantung;Zuhairiyah;67; P;130;97;130/97;250;104;Tidak;Tidak;Tidak;50;Gagal jantung
-246;Agus Mulyadi;41; L;127;91;127/91;207;110;Tidak;Tidak;Tidak;90;Tidak Ada;Agus Mulyadi;41; L;127;91;127/91;207;110;Tidak;Tidak;Tidak;90;Tidak Ada
-247;Siti Maryam;59; P;131;86;131/86;207;124;Tidak;Tidak;Tidak;99;Tidak Ada;Siti Maryam;59; P;131;86;131/86;207;124;Tidak;Tidak;Tidak;99;Tidak Ada
-248;Budi Laksana;63; L;116;78;116/78;175;120;Ya;Tidak;Tidak;73;Tidak Ada;Budi Laksana;63; L;116;78;116/78;175;120;Ya;Tidak;Tidak;73;Tidak Ada
-249;Retno Puspita;45; P;121;80;121/80;196;100;Ya;Tidak;Tidak;77;Jantung bawaan biru (Riwayat);Retno Puspita;45; P;121;80;121/80;196;100;Ya;Tidak;Tidak;77;Jantung bawaan biru (Riwayat)
-250;Joko Priyanto;58; L;153;99;153/99;210;147;Ya;Tidak;Ya;88;Tidak Ada;Joko Priyanto;58; L;153;99;153/99;210;147;Ya;Tidak;Ya;88;Tidak Ada
-251;Eko Cokro;51; P;154;84;154/84;245;125;Tidak;Tidak;Tidak;81;Jantung bawaan biru (Riwayat);Eko Cokro;51; P;154;84;154/84;245;125;Tidak;Tidak;Tidak;81;Jantung bawaan biru (Riwayat)
-252;Sri Utami;44; L;156;91;156/91;239;150;Tidak;Tidak;Tidak;98;Jantung bawaan biru (Riwayat);Sri Utami;44; L;156;91;156/91;239;150;Tidak;Tidak;Tidak;98;Jantung bawaan biru (Riwayat)
-253;Rudi Santoso;65; P;173;119;173/119;261;125;Ya;Tidak;Tidak;60;Gagal jantung;Rudi Santoso;65; P;173;119;173/119;261;125;Ya;Tidak;Tidak;60;Gagal jantung
-254;Ani Wulandari;50; L;167;96;167/96;219;162;Tidak;Ya;Tidak;102;Jantung bawaan biru (Riwayat);Ani Wulandari;50; L;167;96;167/96;219;162;Tidak;Ya;Tidak;102;Jantung bawaan biru (Riwayat)
-255;Bambang Sunaryo;49; P;129;92;129/92;239;117;Tidak;Ya;Tidak;68;Jantung bawaan biru (Riwayat);Bambang Sunaryo;49; P;129;92;129/92;239;117;Tidak;Ya;Tidak;68;Jantung bawaan biru (Riwayat)
-256;Diah Kumalasari;60; L;143;88;143/88;242;149;Tidak;Ya;Ya;84;Gagal jantung;Diah Kumalasari;60; L;143;88;143/88;242;149;Tidak;Ya;Ya;84;Gagal jantung
-257;Taufik Akbar;47; P;133;82;133/82;208;106;Ya;Tidak;Tidak;83;Jantung bawaan biru (Riwayat);Taufik Akbar;47; P;133;82;133/82;208;106;Ya;Tidak;Tidak;83;Jantung bawaan biru (Riwayat)
-258;Nurul Fauziah;53; L;133;80;133/80;203;114;Tidak;Tidak;Tidak;92;Jantung bawaan biru (Riwayat);Nurul Fauziah;53; L;133;80;133/80;203;114;Tidak;Tidak;Tidak;92;Jantung bawaan biru (Riwayat)
-259;Asep Lukman;68; P;158;94;158/94;257;118;Ya;Tidak;Tidak;61;Jantung bawaan biru (Riwayat);Asep Lukman;68; P;158;94;158/94;257;118;Ya;Tidak;Tidak;61;Jantung bawaan biru (Riwayat)
-260;Lina Puspita;42; L;122;94;122/94;240;144;Tidak;Tidak;Tidak;103;Jantung bawaan biru (Riwayat);Lina Puspita;42; L;122;94;122/94;240;144;Tidak;Tidak;Tidak;103;Jantung bawaan biru (Riwayat)
-261;Dadang Hermawan;56; P;138;93;138/93;219;146;Tidak;Ya;Ya;80;Gagal jantung;Dadang Hermawan;56; P;138;93;138/93;219;146;Tidak;Ya;Ya;80;Gagal jantung
-262;Ira Diana;64; L;184;103;184/103;200;164;Tidak;Tidak;Tidak;76;Jantung bawaan biru (Riwayat);Ira Diana;64; L;184;103;184/103;200;164;Tidak;Tidak;Tidak;76;Jantung bawaan biru (Riwayat)
-263;Heru Budiman;43; P;149;100;149/100;258;165;Tidak;Tidak;Ya;57;Tidak Ada;Heru Budiman;43; P;149;100;149/100;258;165;Tidak;Tidak;Ya;57;Tidak Ada
-264;Yuli Fatimah;57; L;169;118;169/118;238;115;Ya;Tidak;Tidak;51;Jantung bawaan biru (Riwayat);Yuli Fatimah;57; L;169;118;169/118;238;115;Ya;Tidak;Tidak;51;Jantung bawaan biru (Riwayat)
-265;Wahyu Adi;62; P;142;89;142/89;257;99;Tidak;Ya;Tidak;89;Tidak Ada;Wahyu Adi;62; P;142;89;142/89;257;99;Tidak;Ya;Tidak;89;Tidak Ada
-266;Endang Supriati;46; L;159;86;159/86;193;113;Ya;Ya;Ya;115;Jantung bawaan biru (Riwayat);Endang Supriati;46; L;159;86;159/86;193;113;Ya;Ya;Ya;115;Jantung bawaan biru (Riwayat)
-267;Sugeng Widodo;54; P;135;119;135/119;264;148;Tidak;Ya;Tidak;79;Jantung bawaan biru (Riwayat);Sugeng Widodo;54; P;135;119;135/119;264;148;Tidak;Ya;Tidak;79;Jantung bawaan biru (Riwayat)
-268;Rina Karlina;69; L;139;81;139/81;258;141;Ya;Tidak;Ya;90;Jantung bawaan biru (Riwayat);Rina Karlina;69; L;139;81;139/81;258;141;Ya;Tidak;Ya;90;Jantung bawaan biru (Riwayat)
-269;Ahmad Ghozali;40; P;120;97;120/97;212;106;Tidak;Tidak;Ya;119;Tidak Ada;Ahmad Ghozali;40; P;120;97;120/97;212;106;Tidak;Tidak;Ya;119;Tidak Ada
-270;Kartika Anggraini;59; L;143;97;143/97;242;133;Tidak;Tidak;Tidak;60;Jantung bawaan biru (Riwayat);Kartika Anggraini;59; L;143;97;143/97;242;133;Tidak;Tidak;Tidak;60;Jantung bawaan biru (Riwayat)
-271;Ujang Maman;52; P;159;100;159/100;262;168;Ya;Ya;Tidak;65;Tidak Ada;Ujang Maman;52; P;159;100;159/100;262;168;Ya;Ya;Tidak;65;Tidak Ada
-272;Dewi Anggraeni;61; L;129;71;129/71;191;137;Tidak;Tidak;Tidak;109;Penyakit jantung koroner;Dewi Anggraeni;61; L;129;71;129/71;191;137;Tidak;Tidak;Tidak;109;Penyakit jantung koroner
-273;Maman Kurdi;48; P;144;81;144/81;223;109;Ya;Tidak;Tidak;93;Jantung bawaan biru (Riwayat);Maman Kurdi;48; P;144;81;144/81;223;109;Ya;Tidak;Tidak;93;Jantung bawaan biru (Riwayat)
-274;Nina Suryani;55; L;131;79;131/79;204;146;Tidak;Ya;Ya;120;Jantung bawaan biru (Riwayat);Nina Suryani;55; L;131;79;131/79;204;146;Tidak;Ya;Ya;120;Jantung bawaan biru (Riwayat)
-275;Ade Hidayat;67; P;178;104;178/104;270;177;Ya;Tidak;Tidak;57;Tidak Ada;Ade Hidayat;67; P;178;104;178/104;270;177;Ya;Tidak;Tidak;57;Tidak Ada
-276;Fifie Mariana;41; L;126;79;126/79;196;98;Ya;Tidak;Tidak;120;Tidak Ada;Fifie Mariana;41; L;126;79;126/79;196;98;Ya;Tidak;Tidak;120;Tidak Ada
-277;Cecep Wahyu;59; P;167;104;167/104;258;127;Tidak;Tidak;Tidak;83;Jantung bawaan biru (Riwayat);Cecep Wahyu;59; P;167;104;167/104;258;127;Tidak;Tidak;Tidak;83;Jantung bawaan biru (Riwayat)
-278;Gina Rahayu;63; L;128;86;128/86;208;144;Tidak;Tidak;Tidak;101;Jantung bawaan biru (Riwayat);Gina Rahayu;63; L;128;86;128/86;208;144;Tidak;Tidak;Tidak;101;Jantung bawaan biru (Riwayat)
-279;Iwan Darmawan;45; P;124;77;124/77;174;95;Tidak;Tidak;Ya;79;Tidak Ada;Iwan Darmawan;45; P;124;77;124/77;174;95;Tidak;Tidak;Ya;79;Tidak Ada
-280;Lely Ningsih;58; L;165;110;165/110;274;148;Tidak;Tidak;Tidak;72;Tidak Ada;Lely Ningsih;58; L;165;110;165/110;274;148;Tidak;Tidak;Tidak;72;Tidak Ada
-281;Kusno;51; P;150;105;150/105;273;147;Tidak;Tidak;Tidak;85;Tidak Ada;Kusno;51; P;150;105;150/105;273;147;Tidak;Tidak;Tidak;85;Tidak Ada
-282;Neneng Siti;44; L;137;85;137/85;220;101;Tidak;Tidak;Ya;65;Jantung bawaan biru (Riwayat);Neneng Siti;44; L;137;85;137/85;220;101;Tidak;Tidak;Ya;65;Jantung bawaan biru (Riwayat)
-283;Oman Rukman;65; P;111;84;111/84;182;100;Ya;Tidak;Tidak;82;Tidak Ada;Oman Rukman;65; P;111;84;111/84;182;100;Ya;Tidak;Tidak;82;Tidak Ada
-284;Pipit Fatimah;50; L;159;83;159/83;192;117;Ya;Tidak;Tidak;69;Tidak Ada;Pipit Fatimah;50; L;159;83;159/83;192;117;Ya;Tidak;Tidak;69;Tidak Ada
-285;Qodir;49; P;126;89;126/89;196;131;Tidak;Tidak;Tidak;101;Tidak Ada;Qodir;49; P;126;89;126/89;196;131;Tidak;Tidak;Tidak;101;Tidak Ada
-286;Ratih Anggraeni;60; L;127;88;127/88;214;138;Tidak;Tidak;Tidak;81;Tidak Ada;Ratih Anggraeni;60; L;127;88;127/88;214;138;Tidak;Tidak;Tidak;81;Tidak Ada
-287;Sobari;47; P;150;85;150/85;213;110;Tidak;Tidak;Tidak;65;Tidak Ada;Sobari;47; P;150;85;150/85;213;110;Tidak;Tidak;Tidak;65;Tidak Ada
-288;Tuti Susanti;53; L;118;74;118/74;193;97;Tidak;Tidak;Ya;106;Tidak Ada;Tuti Susanti;53; L;118;74;118/74;193;97;Tidak;Tidak;Ya;106;Tidak Ada
-289;Udin Jamaludin;68; P;128;100;128/100;252;127;Tidak;Tidak;Tidak;59;Jantung bawaan biru (Riwayat);Udin Jamaludin;68; P;128;100;128/100;252;127;Tidak;Tidak;Tidak;59;Jantung bawaan biru (Riwayat)
-290;Vera Karlina;42; L;120;76;120/76;220;114;Tidak;Tidak;Ya;79;Tidak Ada;Vera Karlina;42; L;120;76;120/76;220;114;Tidak;Tidak;Ya;79;Tidak Ada
-291;Wawan Sutiawan;56; P;173;99;173/99;225;129;Tidak;Tidak;Tidak;72;Jantung bawaan biru (Riwayat);Wawan Sutiawan;56; P;173;99;173/99;225;129;Tidak;Tidak;Tidak;72;Jantung bawaan biru (Riwayat)
-292;Yati Nurhayati;64; L;136;85;136/85;250;137;Ya;Ya;Tidak;62;Jantung bawaan biru (Riwayat);Yati Nurhayati;64; L;136;85;136/85;250;137;Ya;Ya;Tidak;62;Jantung bawaan biru (Riwayat)
-293;Zainal Muttaqin;43; P;126;85;126/85;194;144;Tidak;Tidak;Tidak;72;Jantung bawaan biru (Riwayat);Zainal Muttaqin;43; P;126;85;126/85;194;144;Tidak;Tidak;Tidak;72;Jantung bawaan biru (Riwayat)
-294;Zuhriyah;57; L;159;93;159/93;191;159;Ya;Ya;Ya;56;Tidak Ada;Zuhriyah;57; L;159;93;159/93;191;159;Ya;Ya;Ya;56;Tidak Ada
-295;Agus Fathurrahman;62; P;126;83;126/83;193;109;Tidak;Tidak;Tidak;117;Jantung bawaan biru (Riwayat);Agus Fathurrahman;62; P;126;83;126/83;193;109;Tidak;Tidak;Tidak;117;Jantung bawaan biru (Riwayat)
-296;Siti Zulaikha;46; L;129;79;129/79;215;133;Tidak;Tidak;Tidak;50;Tidak Ada;Siti Zulaikha;46; L;129;79;129/79;215;133;Tidak;Tidak;Tidak;50;Tidak Ada
-297;Budi Santoso;54; P;144;93;144/93;254;113;Ya;Tidak;Ya;66;Tidak Ada;Budi Santoso;54; P;144;93;144/93;254;113;Ya;Tidak;Ya;66;Tidak Ada
-298;Retno Wati;69; L;121;94;121/94;199;99;Tidak;Tidak;Tidak;94;Tidak Ada;Retno Wati;69; L;121;94;121/94;199;99;Tidak;Tidak;Tidak;94;Tidak Ada
-299;Joko Susanto;40; P;135;87;135/87;217;127;Tidak;Tidak;Ya;94;Penyakit jantung koroner;Joko Susanto;40; P;135;87;135/87;217;127;Tidak;Tidak;Ya;94;Penyakit jantung koroner
-300;Eko Wahyudi;59; L;180;105;180/105;205;169;Tidak;Tidak;Tidak;105;Tidak Ada;Eko Wahyudi;59; L;180;105;180/105;205;169;Tidak;Tidak;Tidak;105;Tidak Ada
+#;Nama;Usia;Jenis_Kelamin;Sistolik;Diastolik;Tekanan_Darah;Kolesterol;Gula_Darah;Nyeri_Dada;Sesak_Napas;Kelelahan;Denyut_Jantung;Penyakit_Jantung
+1;Agus Setiawan;52; L;118;76;118/76;220;104;Ya;Tidak;Ya;99;Demam reumatik (Dampak)
+2;Siti Aminah;61; P;136;72;136/72;220;135;Tidak;Tidak;Tidak;97;Tidak Ada
+3;Budi Santoso;48; L;121;77;121/77;215;116;Ya;Tidak;Tidak;118;Demam reumatik (Dampak)
+4;Retno Wulandari;55; P;155;113;155/113;271;150;Tidak;Ya;Ya;89;Penyakit jantung koroner
+5;Joko Susilo;67; L;142;86;142/86;231;140;Tidak;Ya;Ya;114;Penyakit jantung koroner
+6;Eko Prasetyo;41; L;186;87;186/87;218;129;Tidak;Tidak;Tidak;92;Penyakit jantung koroner
+7;Sri Rahayu;59; P;160;96;160/96;250;123;Tidak;Tidak;Ya;76;Penyakit jantung koroner
+8;Rudi Hartono;63; L;129;80;129/80;176;91;Tidak;Ya;Tidak;109;Demam reumatik (Dampak)
+9;Ani Lestari;45; P;126;85;126/85;185;129;Tidak;Tidak;Tidak;73;Tidak Ada
+10;Bambang Irawan;58; L;116;71;116/71;204;115;Tidak;Tidak;Ya;116;Demam reumatik (Dampak)
+11;Diah Ayu;51; P;134;87;134/87;255;149;Ya;Tidak;Ya;94;Penyakit jantung koroner
+12;Taufik Hidayat;44; L;132;111;132/111;211;101;Tidak;Tidak;Tidak;102;Penyakit jantung koroner
+13;Nurul Hasanah;65; P;134;119;134/119;224;99;Tidak;Tidak;Ya;58;Gagal jantung
+14;Asep Saepudin;50; L;122;80;122/80;199;97;Ya;Ya;Tidak;114;Penyakit jantung koroner
+15;Lina Marlina;49; P;143;96;143/96;203;125;Tidak;Tidak;Tidak;112;Penyakit jantung koroner
+16;Dadang Supriatna;60; L;137;93;137/93;220;108;Tidak;Tidak;Tidak;116;Penyakit jantung koroner
+17;Ira Novianti;47; P;138;72;138/72;207;90;Ya;Tidak;Ya;104;Demam reumatik (Dampak)
+18;Heru Santoso;53; L;114;75;114/75;174;145;Tidak;Tidak;Tidak;109;Penyakit jantung koroner
+19;Yuli Astuti;68; P;129;75;129/75;194;147;Ya;Tidak;Tidak;110;Demam reumatik (Dampak)
+20;Wahyu Widodo;42; L;150;97;150/97;245;164;Ya;Tidak;Tidak;78;Penyakit jantung koroner
+21;Endang Sulastri;56; P;160;91;160/91;205;120;Tidak;Tidak;Ya;111;Penyakit jantung koroner
+22;Sugeng Riyadi;64; L;135;91;135/91;256;149;Tidak;Tidak;Tidak;81;Penyakit jantung koroner
+23;Rina Fitriani;43; P;158;85;158/85;195;96;Tidak;Tidak;Tidak;83;Penyakit jantung koroner
+24;Ahmad Fauzi;57; L;159;91;159/91;232;165;Ya;Tidak;Tidak;85;Penyakit jantung koroner
+25;Kartika Sari;62; P;159;95;159/95;250;158;Ya;Ya;Tidak;106;Penyakit jantung koroner
+26;Ujang Iskandar;46; L;162;93;162/93;215;168;Tidak;Tidak;Tidak;107;Penyakit jantung koroner
+27;Dewi Sartika;54; P;132;86;132/86;250;127;Tidak;Tidak;Tidak;89;Penyakit jantung koroner
+28;Maman Abdurahman;69; L;130;71;130/71;199;149;Tidak;Tidak;Tidak;57;Demam reumatik (Dampak)
+29;Nina Handayani;40; P;154;92;154/92;208;132;Tidak;Ya;Tidak;106;Penyakit jantung koroner
+30;Ade Supriyadi;59; L;133;72;133/72;172;96;Tidak;Tidak;Tidak;57;Demam reumatik (Dampak)
+31;Fifie Anggraini;52; P;150;93;150/93;214;134;Tidak;Tidak;Ya;116;Penyakit jantung koroner
+32;Cecep Maulana;61; L;157;81;157/81;248;132;Tidak;Tidak;Ya;73;Penyakit jantung koroner
+33;Gina Fauziah;48; P;126;84;126/84;222;91;Tidak;Tidak;Tidak;89;Penyakit jantung koroner
+34;Iwan Setiawan;55; L;132;71;132/71;207;141;Tidak;Tidak;Tidak;98;Penyakit jantung koroner
+35;Lely Suryani;67; P;141;91;141/91;245;138;Tidak;Tidak;Tidak;113;Penyakit jantung koroner
+36;Kusnadi;41; L;138;83;138/83;211;139;Tidak;Tidak;Tidak;109;Penyakit jantung koroner
+37;Neneng Hasanah;59; P;121;76;121/76;203;133;Ya;Ya;Ya;58;Demam reumatik (Dampak)
+38;Oman Rohman;63; L;110;72;110/72;210;122;Ya;Ya;Tidak;64;Demam reumatik (Dampak)
+39;Pipit Lestari;45; P;120;80;120/80;228;96;Tidak;Tidak;Ya;108;Demam reumatik (Dampak)
+40;Qomaruddin;58; L;162;90;162/90;255;137;Tidak;Tidak;Tidak;57;Penyakit jantung koroner
+41;Ratih Kumala;51; P;138;83;138/83;213;148;Tidak;Tidak;Tidak;116;Penyakit jantung koroner
+42;Sobirin;44; L;155;95;155/95;195;137;Tidak;Tidak;Tidak;97;Penyakit jantung koroner
+43;Tuti Alawiyah;65; P;129;82;129/82;218;123;Ya;Ya;Tidak;119;Penyakit jantung koroner
+44;Udin Samsudin;50; L;130;83;130/83;189;94;Ya;Tidak;Tidak;79;Jantung bawaan biru (Riwayat)
+45;Vera Febrianti;49; P;130;77;130/77;170;101;Ya;Ya;Tidak;74;Demam reumatik (Dampak)
+46;Wawan Ridwan;60; L;149;104;149/104;280;128;Tidak;Ya;Ya;109;Penyakit jantung koroner
+47;Yati Maryati;47; P;131;81;131/81;257;140;Ya;Tidak;Tidak;87;Penyakit jantung koroner
+48;Zainal Arifin;53; L;139;83;139/83;200;149;Ya;Ya;Tidak;51;Demam reumatik (Dampak)
+49;Zuhariah;68; P;110;71;110/71;211;127;Tidak;Tidak;Tidak;110;Penyakit jantung koroner
+50;Agus Salim;42; L;135;83;135/83;212;123;Tidak;Ya;Tidak;98;Jantung bawaan biru (Riwayat)
+51;Siti Fatimah;56; P;117;85;117/85;170;147;Tidak;Tidak;Tidak;55;Penyakit jantung koroner
+52;Budi Raharjo;64; L;171;109;171/109;257;140;Tidak;Tidak;Tidak;84;Penyakit jantung koroner
+53;Retno Susanti;43; P;189;118;189/118;264;122;Ya;Tidak;Ya;56;Penyakit jantung koroner
+54;Joko Santoso;57; L;114;90;114/90;202;157;Tidak;Tidak;Tidak;112;Penyakit jantung koroner
+55;Eko Wibowo;62; P;153;90;153/90;259;175;Tidak;Tidak;Tidak;105;Penyakit jantung koroner
+56;Sri Mulyani;46; L;110;85;110/85;184;114;Ya;Ya;Tidak;80;Demam reumatik (Dampak)
+57;Rudianto;54; P;126;85;126/85;179;139;Tidak;Tidak;Ya;67;Gagal jantung
+58;Ani Suryani;69; L;143;101;143/101;233;147;Tidak;Tidak;Tidak;62;Penyakit jantung koroner
+59;Bambang Nugroho;40; P;118;83;118/83;173;123;Ya;Tidak;Tidak;61;Demam reumatik (Dampak)
+60;Diah Lestari;59; L;130;89;130/89;183;104;Tidak;Tidak;Ya;72;Tidak Ada
+61;Taufik Rahman;52; P;114;90;114/90;205;126;Tidak;Tidak;Tidak;67;Tidak Ada
+62;Nurhayati;61; L;122;90;122/90;205;91;Tidak;Tidak;Tidak;72;Tidak Ada
+63;Asep Hidayat;48; P;177;108;177/108;279;111;Tidak;Tidak;Tidak;64;Penyakit jantung koroner
+64;Lina Susanti;55; L;117;71;117/71;183;93;Tidak;Tidak;Ya;82;Tidak Ada
+65;Dadang Iskandar;67; P;158;97;158/97;206;112;Tidak;Tidak;Tidak;99;Penyakit jantung koroner
+66;Ira Fauziah;41; L;114;88;114/88;171;148;Tidak;Tidak;Ya;65;Tidak Ada
+67;Heru Prasetyo;59; P;116;72;116/72;204;118;Tidak;Tidak;Tidak;113;Penyakit jantung koroner
+68;Yuli Ningsih;63; L;123;90;123/90;215;108;Tidak;Tidak;Tidak;109;Penyakit jantung koroner
+69;Wahyu Saputro;45; P;162;86;162/86;209;144;Tidak;Tidak;Ya;88;Penyakit jantung koroner
+70;Endang Puspitasari;58; L;122;90;122/90;206;111;Ya;Tidak;Tidak;61;Penyakit jantung koroner
+71;Sugeng Handoyo;51; P;119;87;119/87;177;142;Tidak;Ya;Ya;100;Gagal jantung
+72;Rina Wulandari;44; L;133;78;133/78;175;113;Tidak;Tidak;Tidak;69;Tidak Ada
+73;Ahmad Riyadi;65; P;139;97;139/97;249;139;Ya;Tidak;Ya;90;Penyakit jantung koroner
+74;Kartika Dewi;50; L;128;98;128/98;247;146;Tidak;Tidak;Tidak;75;Penyakit jantung koroner
+75;Ujang Rahman;49; P;138;96;138/96;204;99;Ya;Ya;Ya;61;Demam reumatik (Dampak)
+76;Dewi Puspita;60; L;132;109;132/109;204;124;Ya;Tidak;Tidak;75;Penyakit jantung koroner
+77;Maman Sudirman;47; P;134;109;134/109;230;117;Tidak;Ya;Tidak;72;Penyakit jantung koroner
+78;Nina Agustina;53; L;118;75;118/75;174;142;Tidak;Tidak;Tidak;115;Penyakit jantung koroner
+79;Ade Firmansyah;68; P;118;77;118/77;177;127;Tidak;Tidak;Tidak;120;Penyakit jantung koroner
+80;Fifie Karlina;42; L;125;97;125/97;226;145;Tidak;Tidak;Ya;114;Penyakit jantung koroner
+81;Cecep Suryana;56; P;166;86;166/86;240;113;Tidak;Ya;Ya;86;Gagal jantung
+82;Gina Lestari;64; L;125;99;125/99;191;150;Tidak;Ya;Tidak;99;Penyakit jantung koroner
+83;Iwan Hermawan;43; P;151;82;151/82;207;122;Tidak;Tidak;Tidak;87;Penyakit jantung koroner
+84;Lely Marlina;57; L;129;98;129/98;196;110;Tidak;Tidak;Tidak;72;Penyakit jantung koroner
+85;Kusmana;62; P;110;86;110/86;170;100;Tidak;Tidak;Tidak;91;Tidak Ada
+86;Neneng Suryani;46; L;121;86;121/86;246;146;Tidak;Tidak;Ya;76;Penyakit jantung koroner
+87;Oman Somantri;54; P;137;99;137/99;221;130;Ya;Tidak;Ya;80;Penyakit jantung koroner
+88;Pipit Karlina;69; L;151;90;151/90;207;149;Tidak;Tidak;Ya;117;Penyakit jantung koroner
+89;Qodir Jaelani;40; P;137;73;137/73;218;124;Tidak;Ya;Tidak;114;Jantung bawaan biru (Riwayat)
+90;Ratih Handayani;59; L;117;86;117/86;219;120;Ya;Tidak;Ya;63;Demam reumatik (Dampak)
+91;Sobari;52; P;139;92;139/92;215;118;Ya;Tidak;Tidak;53;Demam reumatik (Dampak)
+92;Tuti Susilawati;61; L;135;71;135/71;200;111;Tidak;Tidak;Ya;64;Gagal jantung
+93;Udin Badut;48; P;125;81;125/81;173;137;Tidak;Ya;Tidak;51;Demam reumatik (Dampak)
+94;Vera Susanti;55; L;135;95;135/95;215;148;Tidak;Tidak;Tidak;50;Penyakit jantung koroner
+95;Wawan Darmawan;67; P;138;97;138/97;257;119;Tidak;Tidak;Ya;92;Penyakit jantung koroner
+96;Yati Rokayah;41; L;121;86;121/86;177;97;Tidak;Tidak;Tidak;88;Tidak Ada
+97;Zainal Mustofa;59; P;133;100;133/100;251;111;Tidak;Ya;Ya;107;Demam reumatik (Dampak)
+98;Zuhairah;63; L;113;81;113/81;189;105;Tidak;Tidak;Tidak;55;Demam reumatik (Dampak)
+99;Agus Wiguna;45; P;121;89;121/89;251;132;Tidak;Tidak;Ya;60;Tidak Ada
+100;Siti Jubaedah;58; L;139;91;139/91;252;108;Tidak;Tidak;Tidak;55;Penyakit jantung koroner
+101;Budianto;51; P;135;120;135/120;233;110;Ya;Tidak;Tidak;74;Jantung bawaan biru (Riwayat)
+102;Retno Anggraini;44; L;116;90;116/90;180;172;Tidak;Tidak;Tidak;117;Demam reumatik (Dampak)
+103;Joko Waluyo;65; P;132;114;132/114;258;106;Tidak;Ya;Tidak;62;Gagal jantung
+104;Eko Nugroho;50; L;136;89;136/89;184;107;Tidak;Tidak;Tidak;91;Tidak Ada
+105;Sri Wahyuni;49; P;189;92;189/92;262;180;Ya;Tidak;Ya;109;Demam reumatik (Dampak)
+106;Rudi Hermawan;60; L;112;83;112/83;189;121;Tidak;Ya;Ya;104;Jantung bawaan biru (Riwayat)
+107;Ani Sumiati;47; P;160;89;160/89;235;150;Tidak;Tidak;Tidak;73;Demam reumatik (Dampak)
+108;Bambang Susilo;53; L;154;115;154/115;241;161;Tidak;Tidak;Ya;67;Gagal jantung
+109;Diah Ningsih;68; P;160;85;160/85;252;104;Tidak;Tidak;Tidak;69;Jantung bawaan biru (Riwayat)
+110;Taufik Iskandar;42; L;168;115;168/115;263;137;Ya;Tidak;Tidak;108;Demam reumatik (Dampak)
+111;Nurlela;56; P;124;97;124/97;242;95;Tidak;Tidak;Tidak;96;Tidak Ada
+112;Asep Rahmat;64; L;166;106;166/106;214;130;Tidak;Tidak;Tidak;90;Gagal jantung
+113;Lina Ningsih;43; P;120;81;120/81;225;105;Tidak;Ya;Tidak;85;Gagal jantung
+114;Dadang Kurniawan;57; L;151;100;151/100;199;158;Tidak;Tidak;Ya;74;Tidak Ada
+115;Ira Rusdiana;62; P;146;81;146/81;194;104;Ya;Ya;Tidak;79;Demam reumatik (Dampak)
+116;Heru Irawan;46; L;157;90;157/90;279;178;Tidak;Tidak;Ya;68;Gagal jantung
+117;Yuli Handayani;54; P;182;87;182/87;235;145;Ya;Ya;Tidak;87;Gagal jantung
+118;Wahyu Hidayat;69; L;145;100;145/100;256;110;Tidak;Ya;Tidak;68;Gagal jantung
+119;Endang Setyowati;40; P;112;72;112/72;194;134;Tidak;Ya;Tidak;119;Demam reumatik (Dampak)
+120;Sugeng Prayitno;59; L;130;70;130/70;216;122;Tidak;Tidak;Ya;73;Tidak Ada
+121;Rina Nofitasari;52; P;182;101;182/101;257;134;Tidak;Tidak;Tidak;61;Gagal jantung
+122;Ahmad Hidayat;61; L;181;98;181/98;236;153;Tidak;Tidak;Tidak;88;Gagal jantung
+123;Kartika Handayani;48; P;121;71;121/71;195;108;Tidak;Tidak;Tidak;68;Tidak Ada
+124;Ujang Sumardi;55; L;183;109;183/109;232;129;Ya;Ya;Ya;82;Gagal jantung
+125;Dewi Susanti;67; P;158;95;158/95;241;114;Tidak;Tidak;Tidak;53;Demam reumatik (Dampak)
+126;Maman Suryana;41; L;157;80;157/80;206;92;Tidak;Tidak;Tidak;67;Demam reumatik (Dampak)
+127;Nina Susanti;59; P;130;91;130/91;277;136;Tidak;Tidak;Ya;57;Gagal jantung
+128;Ade Sobari;63; L;130;74;130/74;207;127;Tidak;Tidak;Ya;74;Tidak Ada
+129;Fifie Handayani;45; P;117;71;117/71;212;91;Tidak;Tidak;Ya;105;Demam reumatik (Dampak)
+130;Cecep Abdullah;58; L;127;91;127/91;195;139;Tidak;Ya;Ya;94;Jantung bawaan biru (Riwayat)
+131;Gina Susanti;51; P;125;80;125/80;254;104;Tidak;Tidak;Tidak;51;Demam reumatik (Dampak)
+132;Iwan Gunawan;44; L;146;105;146/105;219;144;Ya;Tidak;Tidak;81;Jantung bawaan biru (Riwayat)
+133;Lely Nuraeni;65; P;114;83;114/83;172;143;Tidak;Ya;Ya;111;Demam reumatik (Dampak)
+134;Kusmiati;50; L;181;101;181/101;241;132;Tidak;Tidak;Ya;88;Gagal jantung
+135;Neneng Fatimah;49; P;141;101;141/101;246;122;Tidak;Tidak;Ya;91;Gagal jantung
+136;Oman Fauzi;60; L;137;113;137/113;200;115;Tidak;Tidak;Tidak;71;Tidak Ada
+137;Pipit Susilawati;47; P;119;86;119/86;200;111;Tidak;Tidak;Ya;79;Tidak Ada
+138;Qosim;53; L;127;76;127/76;183;128;Ya;Tidak;Tidak;65;Demam reumatik (Dampak)
+139;Ratih Susanti;68; P;133;102;133/102;242;124;Tidak;Tidak;Tidak;119;Gagal jantung
+140;Sobur;42; L;124;87;124/87;192;146;Ya;Tidak;Ya;101;Demam reumatik (Dampak)
+141;Tuti Rahayu;56; P;136;83;136/83;241;137;Tidak;Tidak;Ya;80;Tidak Ada
+142;Udin Saripudin;64; L;122;91;122/91;232;90;Tidak;Tidak;Tidak;56;Demam reumatik (Dampak)
+143;Vera Ningsih;43; P;133;82;133/82;193;137;Tidak;Tidak;Tidak;83;Tidak Ada
+144;Wawan Setiawan;57; L;166;88;166/88;260;133;Tidak;Ya;Tidak;57;Gagal jantung
+145;Yati Rohayati;62; P;139;97;139/97;207;133;Ya;Tidak;Ya;92;Gagal jantung
+146;Zainal Abidin;46; L;138;80;138/80;231;127;Tidak;Tidak;Ya;57;Gagal jantung
+147;Zuhriyah;54; P;120;82;120/82;170;96;Tidak;Tidak;Tidak;81;Jantung bawaan biru (Riwayat)
+148;Agus Budiman;69; L;157;81;157/81;233;106;Tidak;Tidak;Tidak;55;Jantung bawaan biru (Riwayat)
+149;Siti Khadijah;40; P;183;97;183/97;265;167;Tidak;Tidak;Ya;61;Gagal jantung
+150;Budi Kusuma;59; L;151;83;151/83;224;146;Tidak;Ya;Ya;89;Gagal jantung
+151;Retno Kumala;52; P;141;100;141/100;256;152;Tidak;Tidak;Tidak;71;Jantung bawaan biru (Riwayat)
+152;Joko Nugroho;61; L;121;72;121/72;193;110;Tidak;Tidak;Ya;52;Jantung bawaan biru (Riwayat)
+153;Eko Budiman;48; P;157;90;157/90;208;143;Ya;Ya;Tidak;115;Demam reumatik (Dampak)
+154;Sri Budiarti;55; L;118;84;118/84;186;103;Tidak;Tidak;Tidak;116;Demam reumatik (Dampak)
+155;Rudi Nugroho;67; P;185;99;185/99;272;142;Ya;Ya;Tidak;97;Gagal jantung
+156;Ani Fauziah;41; L;153;100;153/100;200;180;Ya;Ya;Tidak;50;Demam reumatik (Dampak)
+157;Bambang Wijaya;59; P;136;89;136/89;201;146;Tidak;Tidak;Tidak;85;Jantung bawaan biru (Riwayat)
+158;Diah Suryani;63; L;169;92;169/92;266;142;Ya;Tidak;Tidak;50;Demam reumatik (Dampak)
+159;Taufik Imansyah;45; P;141;118;141/118;258;127;Ya;Tidak;Ya;73;Gagal jantung
+160;Nur Khasanah;58; L;116;78;116/78;177;106;Tidak;Ya;Tidak;62;Demam reumatik (Dampak)
+161;Asep Mulyana;51; P;134;79;134/79;184;122;Tidak;Tidak;Tidak;86;Tidak Ada
+162;Lina Novianti;44; L;129;83;129/83;241;122;Ya;Tidak;Ya;60;Demam reumatik (Dampak)
+163;Dadang Hidayat;65; P;131;96;131/96;211;121;Ya;Tidak;Ya;59;Demam reumatik (Dampak)
+164;Ira Kumala;50; L;137;95;137/95;245;108;Ya;Ya;Ya;68;Demam reumatik (Dampak)
+165;Heru Nugroho;49; P;133;75;133/75;219;119;Tidak;Tidak;Tidak;99;Tidak Ada
+166;Yuli Fauziah;60; L;134;80;134/80;215;145;Tidak;Tidak;Ya;68;Gagal jantung
+167;Wahyu Kurniawan;47; P;112;88;112/88;190;131;Ya;Ya;Tidak;78;Demam reumatik (Dampak)
+168;Endang Ningsih;53; L;176;97;176/97;236;148;Tidak;Tidak;Tidak;51;Gagal jantung
+169;Sugeng Santoso;68; P;160;87;160/87;253;104;Tidak;Ya;Ya;95;Gagal jantung
+170;Rina Agustin;42; L;143;81;143/81;238;94;Tidak;Tidak;Ya;92;Gagal jantung
+171;Ahmad Kurniawan;56; P;113;89;113/89;187;139;Ya;Tidak;Tidak;53;Demam reumatik (Dampak)
+172;Kartika Wati;64; L;145;82;145/82;203;131;Tidak;Tidak;Tidak;71;Tidak Ada
+173;Ujang Saepudin;43; P;121;85;121/85;219;137;Ya;Tidak;Tidak;69;Demam reumatik (Dampak)
+174;Dewi Ratna;57; L;161;120;161/120;217;176;Ya;Tidak;Tidak;64;Gagal jantung
+175;Maman Hidayat;62; P;133;88;133/88;260;142;Tidak;Ya;Tidak;53;Demam reumatik (Dampak)
+176;Nina Ratnasari;46; L;139;88;139/88;197;117;Ya;Ya;Ya;99;Demam reumatik (Dampak)
+177;Ade Supriyadi;54; P;133;85;133/85;214;137;Tidak;Tidak;Tidak;107;Demam reumatik (Dampak)
+178;Fifie Luthfiah;69; L;137;117;137/117;242;134;Ya;Tidak;Tidak;65;Jantung bawaan biru (Riwayat)
+179;Cecep Samsudin;40; P;111;81;111/81;174;103;Ya;Tidak;Tidak;64;Demam reumatik (Dampak)
+180;Gina Mardiana;59; L;132;94;132/94;234;90;Tidak;Ya;Tidak;112;Demam reumatik (Dampak)
+181;Iwan Suryana;52; P;142;99;142/99;213;138;Tidak;Tidak;Tidak;72;Demam reumatik (Dampak)
+182;Lely Agustina;61; L;139;82;139/82;199;116;Ya;Ya;Ya;105;Demam reumatik (Dampak)
+183;Kusmianto;48; P;130;85;130/85;196;142;Tidak;Tidak;Ya;77;Gagal jantung
+184;Neneng Fauziah;55; L;156;96;156/96;197;173;Ya;Tidak;Tidak;51;Demam reumatik (Dampak)
+185;Oman Abdul Ghani;67; P;139;90;139/90;208;130;Ya;Tidak;Tidak;61;Demam reumatik (Dampak)
+186;Pipit Karlina;41; L;126;86;126/86;221;119;Tidak;Tidak;Tidak;99;Tidak Ada
+187;Qodriyah;59; P;112;79;112/79;199;137;Tidak;Ya;Tidak;57;Demam reumatik (Dampak)
+188;Ratih Wulandari;63; L;123;90;123/90;200;148;Tidak;Tidak;Tidak;96;Jantung bawaan biru (Riwayat)
+189;Sobirin Santoso;45; P;145;93;145/93;259;143;Ya;Ya;Tidak;52;Demam reumatik (Dampak)
+190;Tuti Sumiati;58; L;132;89;132/89;208;143;Tidak;Tidak;Tidak;87;Jantung bawaan biru (Riwayat)
+191;Udin Tajudin;51; P;124;78;124/78;174;95;Ya;Tidak;Ya;94;Demam reumatik (Dampak)
+192;Vera Puspitasari;44; L;138;82;138/82;234;141;Tidak;Tidak;Ya;111;Demam reumatik (Dampak)
+193;Wawan Suherman;65; P;127;88;127/88;249;97;Ya;Tidak;Tidak;103;Demam reumatik (Dampak)
+194;Yati Siti;50; L;151;111;151/111;205;179;Tidak;Ya;Tidak;104;Gagal jantung
+195;Zainal Muttaqin;49; P;132;90;132/90;189;116;Tidak;Ya;Tidak;120;Gagal jantung
+196;Zuhairah;60; L;112;81;112/81;190;100;Tidak;Tidak;Tidak;75;Tidak Ada
+197;Agus Santoso;47; P;120;83;120/83;184;141;Tidak;Tidak;Tidak;99;Tidak Ada
+198;Siti Nurjanah;53; L;144;110;144/110;217;176;Tidak;Ya;Tidak;78;Gagal jantung
+199;Budi Riyanto;68; P;151;90;151/90;277;124;Tidak;Tidak;Tidak;117;Jantung bawaan biru (Riwayat)
+200;Retno Wati;42; L;144;88;144/88;206;135;Tidak;Ya;Ya;66;Gagal jantung
+201;Joko Prabowo;56; P;148;89;148/89;211;107;Tidak;Tidak;Tidak;66;Jantung bawaan biru (Riwayat)
+202;Eko Setiawan;64; L;124;79;124/79;198;141;Tidak;Ya;Tidak;111;Jantung bawaan biru (Riwayat)
+203;Sri Untari;43; P;145;96;145/96;207;172;Tidak;Tidak;Ya;91;Gagal jantung
+204;Rudi Wijaya;57; L;128;82;128/82;171;116;Ya;Tidak;Tidak;55;Jantung bawaan biru (Riwayat)
+205;Ani Setiawati;62; P;154;84;154/84;226;102;Ya;Tidak;Tidak;65;Jantung bawaan biru (Riwayat)
+206;Bambang Hermawan;46; L;148;87;148/87;241;130;Tidak;Tidak;Tidak;88;Tidak Ada
+207;Diah Kumala;54; P;156;92;156/92;259;153;Tidak;Ya;Tidak;88;Jantung bawaan biru (Riwayat)
+208;Taufik Akbar;69; L;120;80;120/80;239;127;Ya;Tidak;Ya;76;Gagal jantung
+209;Nurul Huda;40; P;129;77;129/77;209;114;Tidak;Tidak;Tidak;57;Jantung bawaan biru (Riwayat)
+210;Asep Saepuloh;59; L;160;118;160/118;216;163;Tidak;Ya;Ya;74;Gagal jantung
+211;Lina Herlina;52; P;122;83;122/83;183;141;Tidak;Tidak;Tidak;95;Tidak Ada
+212;Dadang Iskandar;61; L;140;89;140/89;266;123;Tidak;Ya;Ya;109;Gagal jantung
+213;Ira Rahmawati;48; P;131;72;131/72;209;114;Tidak;Ya;Tidak;76;Gagal jantung
+214;Heru Susanto;55; L;136;92;136/92;255;140;Tidak;Tidak;Tidak;102;Jantung bawaan biru (Riwayat)
+215;Yulianti;67; P;130;74;130/74;207;150;Tidak;Ya;Ya;67;Gagal jantung
+216;Wahyu Fitrianto;41; L;146;81;146/81;228;103;Tidak;Tidak;Tidak;92;Tidak Ada
+217;Endang Wulandari;59; P;152;102;152/102;268;178;Tidak;Ya;Ya;58;Gagal jantung
+218;Sugeng Winarno;63; L;110;74;110/74;175;150;Tidak;Tidak;Tidak;68;Tidak Ada
+219;Rina Amelia;45; P;159;100;159/100;235;177;Tidak;Ya;Tidak;91;Jantung bawaan biru (Riwayat)
+220;Ahmad Yani;58; L;150;114;150/114;214;112;Tidak;Tidak;Tidak;92;Gagal jantung
+221;Kartika Sari;51; P;133;98;133/98;237;138;Tidak;Tidak;Ya;57;Gagal jantung
+222;Ujang Kosasih;44; L;163;117;163/117;203;169;Tidak;Tidak;Ya;64;Gagal jantung
+223;Dewi Lestari;65; P;110;79;110/79;176;119;Ya;Tidak;Tidak;84;Jantung bawaan biru (Riwayat)
+224;Maman Setiawan;50; L;128;81;128/81;195;140;Ya;Tidak;Tidak;103;Jantung bawaan biru (Riwayat)
+225;Nina Karmila;49; P;121;84;121/84;240;137;Tidak;Tidak;Ya;98;Gagal jantung
+226;Ade Irawan;60; L;143;86;143/86;213;111;Tidak;Tidak;Ya;81;Gagal jantung
+227;Fifie Marlia;47; P;142;99;142/99;200;153;Tidak;Ya;Tidak;89;Gagal jantung
+228;Cecep Rahmat;53; L;129;78;129/78;205;116;Tidak;Tidak;Tidak;55;Jantung bawaan biru (Riwayat)
+229;Gina Mariana;68; P;123;98;123/98;218;145;Ya;Tidak;Tidak;108;Jantung bawaan biru (Riwayat)
+230;Iwan Kurniawan;42; L;147;106;147/106;204;141;Tidak;Tidak;Ya;119;Gagal jantung
+231;Lely Suryawati;56; P;147;91;147/91;269;179;Tidak;Tidak;Tidak;50;Gagal jantung
+232;Kusuma Ningrum;64; L;160;104;160/104;210;146;Ya;Tidak;Tidak;102;Jantung bawaan biru (Riwayat)
+233;Neneng Rohaeti;43; P;126;89;126/89;198;141;Tidak;Tidak;Tidak;52;Jantung bawaan biru (Riwayat)
+234;Oman Iskandar;57; L;147;100;147/100;239;126;Tidak;Tidak;Ya;81;Gagal jantung
+235;Pipit Susanti;62; P;132;71;132/71;209;144;Tidak;Tidak;Tidak;77;Gagal jantung
+236;Qomarudin;46; L;168;109;168/109;225;139;Tidak;Ya;Tidak;105;Gagal jantung
+237;Ratih Purnama;54; P;189;86;189/86;225;94;Ya;Ya;Tidak;68;Gagal jantung
+238;Sobri;69; L;125;74;125/74;204;109;Tidak;Tidak;Ya;84;Jantung bawaan biru (Riwayat)
+239;Tuti Sunarti;40; P;140;78;140/78;193;173;Tidak;Tidak;Tidak;120;Tidak Ada
+240;Udin Jaenudin;59; L;126;95;126/95;210;125;Tidak;Tidak;Tidak;107;Jantung bawaan biru (Riwayat)
+241;Vera Agustina;52; P;145;106;145/106;217;177;Tidak;Tidak;Tidak;85;Gagal jantung
+242;Wawan Rachman;61; L;163;88;163/88;212;128;Tidak;Tidak;Tidak;71;Jantung bawaan biru (Riwayat)
+243;Yati Hartati;48; P;126;84;126/84;236;94;Tidak;Ya;Tidak;114;Demam reumatik (Dampak)
+244;Zainal Fanani;55; L;112;70;112/70;192;91;Ya;Tidak;Tidak;81;Jantung bawaan biru (Riwayat)
+245;Zuhairiyah;67; P;130;97;130/97;250;104;Tidak;Tidak;Tidak;50;Gagal jantung
+246;Agus Mulyadi;41; L;127;91;127/91;207;110;Tidak;Tidak;Tidak;90;Tidak Ada
+247;Siti Maryam;59; P;131;86;131/86;207;124;Tidak;Tidak;Tidak;99;Tidak Ada
+248;Budi Laksana;63; L;116;78;116/78;175;120;Ya;Tidak;Tidak;73;Tidak Ada
+249;Retno Puspita;45; P;121;80;121/80;196;100;Ya;Tidak;Tidak;77;Jantung bawaan biru (Riwayat)
+250;Joko Priyanto;58; L;153;99;153/99;210;147;Ya;Tidak;Ya;88;Tidak Ada
+251;Eko Cokro;51; P;154;84;154/84;245;125;Tidak;Tidak;Tidak;81;Jantung bawaan biru (Riwayat)
+252;Sri Utami;44; L;156;91;156/91;239;150;Tidak;Tidak;Tidak;98;Jantung bawaan biru (Riwayat)
+253;Rudi Santoso;65; P;173;119;173/119;261;125;Ya;Tidak;Tidak;60;Gagal jantung
+254;Ani Wulandari;50; L;167;96;167/96;219;162;Tidak;Ya;Tidak;102;Jantung bawaan biru (Riwayat)
+255;Bambang Sunaryo;49; P;129;92;129/92;239;117;Tidak;Ya;Tidak;68;Jantung bawaan biru (Riwayat)
+256;Diah Kumalasari;60; L;143;88;143/88;242;149;Tidak;Ya;Ya;84;Gagal jantung
+257;Taufik Akbar;47; P;133;82;133/82;208;106;Ya;Tidak;Tidak;83;Jantung bawaan biru (Riwayat)
+258;Nurul Fauziah;53; L;133;80;133/80;203;114;Tidak;Tidak;Tidak;92;Jantung bawaan biru (Riwayat)
+259;Asep Lukman;68; P;158;94;158/94;257;118;Ya;Tidak;Tidak;61;Jantung bawaan biru (Riwayat)
+260;Lina Puspita;42; L;122;94;122/94;240;144;Tidak;Tidak;Tidak;103;Jantung bawaan biru (Riwayat)
+261;Dadang Hermawan;56; P;138;93;138/93;219;146;Tidak;Ya;Ya;80;Gagal jantung
+262;Ira Diana;64; L;184;103;184/103;200;164;Tidak;Tidak;Tidak;76;Jantung bawaan biru (Riwayat)
+263;Heru Budiman;43; P;149;100;149/100;258;165;Tidak;Tidak;Ya;57;Tidak Ada
+264;Yuli Fatimah;57; L;169;118;169/118;238;115;Ya;Tidak;Tidak;51;Jantung bawaan biru (Riwayat)
+265;Wahyu Adi;62; P;142;89;142/89;257;99;Tidak;Ya;Tidak;89;Tidak Ada
+266;Endang Supriati;46; L;159;86;159/86;193;113;Ya;Ya;Ya;115;Jantung bawaan biru (Riwayat)
+267;Sugeng Widodo;54; P;135;119;135/119;264;148;Tidak;Ya;Tidak;79;Jantung bawaan biru (Riwayat)
+268;Rina Karlina;69; L;139;81;139/81;258;141;Ya;Tidak;Ya;90;Jantung bawaan biru (Riwayat)
+269;Ahmad Ghozali;40; P;120;97;120/97;212;106;Tidak;Tidak;Ya;119;Tidak Ada
+270;Kartika Anggraini;59; L;143;97;143/97;242;133;Tidak;Tidak;Tidak;60;Jantung bawaan biru (Riwayat)
+271;Ujang Maman;52; P;159;100;159/100;262;168;Ya;Ya;Tidak;65;Tidak Ada
+272;Dewi Anggraeni;61; L;129;71;129/71;191;137;Tidak;Tidak;Tidak;109;Penyakit jantung koroner
+273;Maman Kurdi;48; P;144;81;144/81;223;109;Ya;Tidak;Tidak;93;Jantung bawaan biru (Riwayat)
+274;Nina Suryani;55; L;131;79;131/79;204;146;Tidak;Ya;Ya;120;Jantung bawaan biru (Riwayat)
+275;Ade Hidayat;67; P;178;104;178/104;270;177;Ya;Tidak;Tidak;57;Tidak Ada
+276;Fifie Mariana;41; L;126;79;126/79;196;98;Ya;Tidak;Tidak;120;Tidak Ada
+277;Cecep Wahyu;59; P;167;104;167/104;258;127;Tidak;Tidak;Tidak;83;Jantung bawaan biru (Riwayat)
+278;Gina Rahayu;63; L;128;86;128/86;208;144;Tidak;Tidak;Tidak;101;Jantung bawaan biru (Riwayat)
+279;Iwan Darmawan;45; P;124;77;124/77;174;95;Tidak;Tidak;Ya;79;Tidak Ada
+280;Lely Ningsih;58; L;165;110;165/110;274;148;Tidak;Tidak;Tidak;72;Tidak Ada
+281;Kusno;51; P;150;105;150/105;273;147;Tidak;Tidak;Tidak;85;Tidak Ada
+282;Neneng Siti;44; L;137;85;137/85;220;101;Tidak;Tidak;Ya;65;Jantung bawaan biru (Riwayat)
+283;Oman Rukman;65; P;111;84;111/84;182;100;Ya;Tidak;Tidak;82;Tidak Ada
+284;Pipit Fatimah;50; L;159;83;159/83;192;117;Ya;Tidak;Tidak;69;Tidak Ada
+285;Qodir;49; P;126;89;126/89;196;131;Tidak;Tidak;Tidak;101;Tidak Ada
+286;Ratih Anggraeni;60; L;127;88;127/88;214;138;Tidak;Tidak;Tidak;81;Tidak Ada
+287;Sobari;47; P;150;85;150/85;213;110;Tidak;Tidak;Tidak;65;Tidak Ada
+288;Tuti Susanti;53; L;118;74;118/74;193;97;Tidak;Tidak;Ya;106;Tidak Ada
+289;Udin Jamaludin;68; P;128;100;128/100;252;127;Tidak;Tidak;Tidak;59;Jantung bawaan biru (Riwayat)
+290;Vera Karlina;42; L;120;76;120/76;220;114;Tidak;Tidak;Ya;79;Tidak Ada
+291;Wawan Sutiawan;56; P;173;99;173/99;225;129;Tidak;Tidak;Tidak;72;Jantung bawaan biru (Riwayat)
+292;Yati Nurhayati;64; L;136;85;136/85;250;137;Ya;Ya;Tidak;62;Jantung bawaan biru (Riwayat)
+293;Zainal Muttaqin;43; P;126;85;126/85;194;144;Tidak;Tidak;Tidak;72;Jantung bawaan biru (Riwayat)
+294;Zuhriyah;57; L;159;93;159/93;191;159;Ya;Ya;Ya;56;Tidak Ada
+295;Agus Fathurrahman;62; P;126;83;126/83;193;109;Tidak;Tidak;Tidak;117;Jantung bawaan biru (Riwayat)
+296;Siti Zulaikha;46; L;129;79;129/79;215;133;Tidak;Tidak;Tidak;50;Tidak Ada
+297;Budi Santoso;54; P;144;93;144/93;254;113;Ya;Tidak;Ya;66;Tidak Ada
+298;Retno Wati;69; L;121;94;121/94;199;99;Tidak;Tidak;Tidak;94;Tidak Ada
+299;Joko Susanto;40; P;135;87;135/87;217;127;Tidak;Tidak;Ya;94;Penyakit jantung koroner
+300;Eko Wahyudi;59; L;180;105;180/105;205;169;Tidak;Tidak;Tidak;105;Tidak Ada

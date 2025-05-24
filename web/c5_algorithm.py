@@ -436,7 +436,7 @@ def calculate_accuracy(tree, X, y):
     correct = 0
     for i in range(len(X)):
         instance = X.iloc[i].to_dict()
-        prediction = predict_c5_instance(tree, instance)
+        prediction, confidence = predict_c5_instance(tree, instance)
         if prediction == y.iloc[i]:
             correct += 1
     
@@ -487,11 +487,10 @@ class C5Booster:
                 max_depth=self.max_depth, 
                 min_samples_split=self.min_samples_split
             )
-            
-            # Make predictions
+              # Make predictions
             predictions = []
             for j in range(len(X)):
-                pred = predict_c5_instance(tree, X.iloc[j].to_dict())
+                pred, confidence = predict_c5_instance(tree, X.iloc[j].to_dict())
                 predictions.append(pred)
             
             # Calculate error rate
@@ -538,7 +537,7 @@ class C5Booster:
             votes = {}
             
             for j, tree in enumerate(self.trees):
-                pred = predict_c5_instance(tree, instance_dict)
+                pred, confidence = predict_c5_instance(tree, instance_dict)
                 votes[pred] = votes.get(pred, 0) + self.weights[j]
             
             # Get the class with highest weighted votes

@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C5.0 Simulation - Heart Disease Diagnosis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .sidebar {
+            transition: all 0.3s;
+        }
+        .sidebar.collapsed {
+            width: 70px;
+        }
+        .sidebar.collapsed .sidebar-text {
+            display: none;
+        }
+        .sidebar.collapsed .logo-text {
+            display: none;
+        }
+        .sidebar.collapsed .nav-item {
+            justify-content: center;
+        }
+        .main-content {
+            transition: all 0.3s;
+        }
+        .sidebar.collapsed + .main-content {
+            margin-left: 70px;
+        }
+        .step-card {
+            border-left: 4px solid #3b82f6;
+            transition: all 0.3s;
+        }
+        .step-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .simulation-step.active {
+            background-color: #1d4ed8;
+            color: white;
+        }
+        .entropy-table th {
+            background-color: #f3f4f6;
+        }
+        .tree-node {
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 8px;
+            margin: 4px;
+            background-color: #f9fafb;
+        }
+        .tree-leaf {
+            background-color: #dcfce7;
+            border-color: #16a34a;
+        }
+        .rule-box {
+            background-color: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 6px;
+            padding: 12px;
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="sidebar bg-blue-800 text-white w-64 flex-shrink-0 flex flex-col">
+            <div class="p-4 flex items-center space-x-2 border-b border-blue-700">
+                <i class="fas fa-brain text-2xl"></i>
+                <span class="logo-text text-xl font-bold">Model Analytics</span>
+            </div>
+            <div class="p-4 flex justify-between items-center border-b border-blue-700">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center">
+                        <span class="text-sm">AD</span>
+                    </div>
+                    <div class="sidebar-text">
+                        <div class="text-sm font-medium">Admin</div>
+                        <div class="text-xs text-blue-200">Data Scientist</div>
+                    </div>
+                </div>
+                <button id="toggleSidebar" class="text-blue-200 hover:text-white">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <nav class="flex-1 overflow-y-auto py-4">
+                <div class="px-4 space-y-1">
+                    <a href="/" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span class="sidebar-text">Dashboard</span>
+                    </a>
+                    <a href="/training_data" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                        <i class="fas fa-database"></i>
+                        <span class="sidebar-text">Training Data</span>
+                    </a>
+                    <a href="/test_data" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                        <i class="fas fa-vial"></i>
+                        <span class="sidebar-text">Test Data</span>
+                    </a>
+                    <a href="/training" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span class="sidebar-text">Training</span>
+                    </a>
+                    <a href="/tree_visualization" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                        <i class="fas fa-project-diagram"></i>
+                        <span class="sidebar-text">Tree Visualization</span>
+                    </a>
+                    <a href="/rules_visualization" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                        <i class="fas fa-list-check"></i>
+                        <span class="sidebar-text">Rules Visualization</span>
+                    </a>
+                    <a href="/results" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                        <i class="fas fa-poll"></i>
+                        <span class="sidebar-text">Results</span>
+                    </a>
+                    <a href="/simulation" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md bg-blue-900 text-white">
+                        <i class="fas fa-play-circle"></i>
+                        <span class="sidebar-text">Simulation</span>
+                    </a>
+                    <a href="#" class="nav-item flex items-center space-x-2 px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                        <i class="fas fa-cog"></i>
+                        <span class="sidebar-text">Settings</span>
+                    </a>
+                </div>
+            </nav>
+            <div class="p-4 border-t border-blue-700">
+                <button class="nav-item flex items-center space-x-2 w-full px-2 py-2 text-sm font-medium rounded-md text-blue-100 hover:bg-blue-700 hover:text-white">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="sidebar-text">Logout</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content flex-1 overflow-auto">
+            <div class="p-6">
+                <!-- Header -->
+                <div class="flex justify-between items-center mb-6">
+                    <h1 class="text-3xl font-bold text-gray-800">
+                        <i class="fas fa-play-circle text-blue-600 mr-2"></i>
+                        C5.0 Simulation - Heart Disease Diagnosis
+                    </h1>
+                    <div class="flex items-center space-x-4">
+                        <button id="runSimulation" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors">
+                            <i class="fas fa-play mr-2"></i>Run Simulation
+                        </button>
+                        <button id="resetSimulation" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md transition-colors">
+                            <i class="fas fa-redo mr-2"></i>Reset
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Simulation Steps Navigation -->
+                <div class="bg-white rounded-lg shadow mb-6 p-4">
+                    <div class="flex flex-wrap justify-center space-x-2 lg:space-x-4" id="simulation-steps">
+                        <button class="simulation-step px-4 py-2 rounded-md text-sm font-medium transition-colors mb-2 lg:mb-0 bg-blue-600 text-white" data-step="1">
+                            <i class="fas fa-database mr-1"></i>Input Data & Split
+                        </button>
+                        <button class="simulation-step px-4 py-2 rounded-md text-sm font-medium transition-colors mb-2 lg:mb-0 bg-gray-200 text-gray-700" data-step="2">
+                            <i class="fas fa-cogs mr-1"></i>Training Iterations
+                        </button>
+                        <button class="simulation-step px-4 py-2 rounded-md text-sm font-medium transition-colors mb-2 lg:mb-0 bg-gray-200 text-gray-700" data-step="3">
+                            <i class="fas fa-chart-bar mr-1"></i>Testing
+                        </button>
+                        <button class="simulation-step px-4 py-2 rounded-md text-sm font-medium transition-colors mb-2 lg:mb-0 bg-gray-200 text-gray-700" data-step="4">
+                            <i class="fas fa-search mr-1"></i>Rule Matching
+                        </button>
+                        <button class="simulation-step px-4 py-2 rounded-md text-sm font-medium transition-colors mb-2 lg:mb-0 bg-gray-200 text-gray-700" data-step="5">
+                            <i class="fas fa-check-circle mr-1"></i>Final Results
+                        </button>
+                    </div>
+                </div>                <!-- Simulation Content -->
+                <div id="simulation-content">
+                    <!-- Step 1: Input Data & Split -->
+                    <div id="step1" class="step-content">
+                        <div class="step-card bg-white rounded-lg shadow p-6 mb-6">
+                            <div class="border-b pb-4 mb-4">
+                                <h2 class="text-xl font-semibold text-gray-800">
+                                    <i class="fas fa-database text-blue-600 mr-2"></i>
+                                    Step 1: Input Data, Split Data & Parameters
+                                </h2>
+                            </div>
+                              <!-- Input Mode Selection -->
+                            <div class="mb-6 bg-blue-50 p-4 rounded-lg">
+                                <h3 class="text-lg font-semibold mb-3">Input Mode Selection</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="flex items-center space-x-2 cursor-pointer">
+                                            <input type="radio" name="inputMode" value="dataset" checked 
+                                                   class="form-radio text-blue-600 focus:ring-blue-500">
+                                            <span class="text-sm font-medium">Use Dataset</span>
+                                        </label>
+                                        <p class="text-xs text-gray-500 ml-6">Train and test using existing datasets</p>
+                                    </div>
+                                    <div>
+                                        <label class="flex items-center space-x-2 cursor-pointer">
+                                            <input type="radio" name="inputMode" value="manual" 
+                                                   class="form-radio text-blue-600 focus:ring-blue-500">
+                                            <span class="text-sm font-medium">Manual Input</span>
+                                        </label>
+                                        <p class="text-xs text-gray-500 ml-6">Single test data using rules only</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Dataset Selection -->
+                            <div id="dataset-section" class="mb-6 bg-gray-50 p-4 rounded-lg">
+                                <h3 class="text-lg font-semibold mb-3">Dataset Selection</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Available Datasets</label>
+                                        <select id="datasetSelect" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                            <option value="data_latih_2.csv">Default Heart Disease Dataset (300 records)</option>
+                                            <option value="custom">Upload Custom Dataset</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Dataset Info</label>
+                                        <div class="p-3 bg-white rounded border text-sm">
+                                            <div id="dataset-info">300 patients with heart disease data</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="upload-section" class="mt-4 hidden">
+                                    <input type="file" id="customDatasetFile" accept=".csv" 
+                                           class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                </div>
+                            </div>
+
+                            <!-- Manual Input Form -->
+                            <div id="manual-input-section" class="mb-6 bg-green-50 p-4 rounded-lg hidden">
+                                <h3 class="text-lg font-semibold mb-3">Manual Patient Data Input</h3>
+                                <p class="text-sm text-gray-600 mb-4">Enter patient data for rule-based heart disease diagnosis</p>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Patient Name</label>
+                                        <input type="text" id="manual-nama" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Enter patient name">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Age</label>
+                                        <input type="number" id="manual-usia" min="1" max="120" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Age">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Gender</label>
+                                        <select id="manual-jenis-kelamin" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                            <option value="">Select Gender</option>
+                                            <option value="L">Male (L)</option>
+                                            <option value="P">Female (P)</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Systolic BP</label>
+                                        <input type="number" id="manual-sistolik" min="80" max="250" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="mmHg">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Diastolic BP</label>
+                                        <input type="number" id="manual-diastolik" min="50" max="150" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="mmHg">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Cholesterol</label>
+                                        <input type="number" id="manual-kolesterol" min="100" max="400" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="mg/dL">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Blood Sugar</label>
+                                        <input type="number" id="manual-gula-darah" min="70" max="300" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="mg/dL">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Chest Pain</label>
+                                        <select id="manual-nyeri-dada" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                            <option value="">Select</option>
+                                            <option value="Ya">Yes</option>
+                                            <option value="Tidak">No</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Shortness of Breath</label>
+                                        <select id="manual-sesak-napas" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                            <option value="">Select</option>
+                                            <option value="Ya">Yes</option>
+                                            <option value="Tidak">No</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Fatigue</label>
+                                        <select id="manual-kelelahan" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                            <option value="">Select</option>
+                                            <option value="Ya">Yes</option>
+                                            <option value="Tidak">No</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Heart Rate</label>
+                                        <input type="number" id="manual-denyut-jantung" min="40" max="200" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="bpm">
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4 flex items-center space-x-4">
+                                    <button id="processManualInput" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-md transition-colors">
+                                        <i class="fas fa-stethoscope mr-2"></i>Diagnose with Rules
+                                    </button>
+                                    <button id="clearManualInput" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md transition-colors">
+                                        <i class="fas fa-eraser mr-2"></i>Clear
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Initial Data Display -->
+                            <div id="initial-data-display" class="mb-6">
+                                <h3 class="text-lg font-semibold mb-3">Dataset Preview</h3>
+                                <div id="initial-dataset-table" class="mb-4"></div>
+                            </div>
+                            
+                            <!-- Train/Test Split Control -->
+                            <div class="mb-6 bg-gray-50 p-4 rounded-lg">
+                                <h3 class="text-lg font-semibold mb-3">Train/Test Split Configuration</h3>
+                                <div class="flex items-center space-x-4 mb-4">
+                                    <label class="text-sm font-medium text-gray-700">Train Data Ratio:</label>
+                                    <input type="range" id="train-test-slider" min="0.5" max="0.9" step="0.05" value="0.8" 
+                                           class="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                                    <span id="slider-value" class="text-sm font-medium text-blue-600 min-w-[40px]">80%</span>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-blue-50 p-3 rounded text-center">
+                                        <div class="text-sm text-gray-600">Training Data</div>
+                                        <div id="train-count" class="text-lg font-bold text-blue-600">80%</div>
+                                    </div>
+                                    <div class="bg-green-50 p-3 rounded text-center">
+                                        <div class="text-sm text-gray-600">Test Data</div>
+                                        <div id="test-count" class="text-lg font-bold text-green-600">20%</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="input-params" class="mb-4"></div>
+                            <div id="dataset-preview"></div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Training Iterations -->
+                    <div id="step2" class="step-content hidden">
+                        <div class="step-card bg-white rounded-lg shadow p-6 mb-6">
+                            <div class="border-b pb-4 mb-4">
+                                <h2 class="text-xl font-semibold text-gray-800">
+                                    <i class="fas fa-cogs text-green-600 mr-2"></i>
+                                    Step 2: Training Iterations & Visualization
+                                </h2>
+                            </div>
+                            <div id="training-iterations"></div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Testing -->
+                    <div id="step3" class="step-content hidden">
+                        <div class="step-card bg-white rounded-lg shadow p-6 mb-6">
+                            <div class="border-b pb-4 mb-4">
+                                <h2 class="text-xl font-semibold text-gray-800">
+                                    <i class="fas fa-chart-bar text-indigo-600 mr-2"></i>
+                                    Step 3: Testing with Test Data
+                                </h2>
+                            </div>
+                            <div id="test-preview" class="mb-4"></div>
+                            <div id="test-results"></div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Rule Matching -->
+                    <div id="step4" class="step-content hidden">
+                        <div class="step-card bg-white rounded-lg shadow p-6 mb-6">
+                            <div class="border-b pb-4 mb-4">
+                                <h2 class="text-xl font-semibold text-gray-800">
+                                    <i class="fas fa-search text-yellow-600 mr-2"></i>
+                                    Step 4: Rule Matching Process
+                                </h2>
+                            </div>
+                            <div id="rule-matching"></div>
+                        </div>
+                    </div>
+
+                    <!-- Step 5: Final Results -->
+                    <div id="step5" class="step-content hidden">
+                        <div class="step-card bg-white rounded-lg shadow p-6 mb-6">
+                            <div class="border-b pb-4 mb-4">
+                                <h2 class="text-xl font-semibold text-gray-800">
+                                    <i class="fas fa-check-circle text-purple-600 mr-2"></i>
+                                    Step 5: Final Simulation Results
+                                </h2>
+                            </div>
+                            <div id="simulation-result"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    <script>
+        // Global simulation data
+        let simulationData = null;
+        let currentStep = 1;
+        let initialDataset = null;
+        let currentTrainTestRatio = 0.8;
+
+        // Initialize initial data display
+        async function loadInitialData() {
+            try {
+                const response = await fetch('/api/simulation_data');
+                if (!response.ok) throw new Error('Failed to load initial data');
+                
+                initialDataset = await response.json();
+                displayInitialDataset();
+                updateSplitDisplay();
+            } catch (error) {
+                console.error('Error loading initial data:', error);
+                document.getElementById('initial-dataset-table').innerHTML = 
+                    '<p class="text-red-500">Error loading dataset. Please check if data_latih_2.csv is available.</p>';
+            }
+        }
+
+        function displayInitialDataset() {
+            if (!initialDataset || !initialDataset.dataset_preview) {
+                document.getElementById('initial-dataset-table').innerHTML = 
+                    '<p class="text-gray-500">No dataset available</p>';
+                return;
+            }
+
+            const data = initialDataset.dataset_preview;
+            const columns = Object.keys(data[0] || {});
+            
+            let html = '<div class="overflow-x-auto mb-4">';
+            html += '<table class="min-w-full bg-white border border-gray-200 rounded-lg">';
+            html += '<thead class="bg-gray-50"><tr>';
+            columns.forEach(col => {
+                html += `<th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">${col}</th>`;
+            });
+            html += '</tr></thead><tbody class="divide-y divide-gray-200">';
+            
+            data.forEach((row, index) => {
+                html += `<tr class="${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'} hover:bg-gray-100">`;
+                columns.forEach(col => {
+                    html += `<td class="px-4 py-2 text-sm text-gray-900">${row[col] || ''}</td>`;
+                });
+                html += '</tr>';
+            });
+            
+            html += '</tbody></table></div>';
+            html += `<div class="text-sm text-gray-600">Showing ${data.length} of ${initialDataset.total_records} total records</div>`;
+            
+            document.getElementById('initial-dataset-table').innerHTML = html;
+        }
+
+        function updateSplitDisplay() {
+            if (!initialDataset) return;
+            
+            const trainRatio = currentTrainTestRatio;
+            const testRatio = 1 - trainRatio;
+            const totalRecords = initialDataset.total_records;
+            
+            const trainRecords = Math.floor(totalRecords * trainRatio);
+            const testRecords = totalRecords - trainRecords;
+            
+            document.getElementById('slider-value').textContent = `${Math.round(trainRatio * 100)}%`;
+            document.getElementById('train-count').innerHTML = `${Math.round(trainRatio * 100)}%<br><span class="text-sm text-gray-600">(${trainRecords} records)</span>`;
+            document.getElementById('test-count').innerHTML = `${Math.round(testRatio * 100)}%<br><span class="text-sm text-gray-600">(${testRecords} records)</span>`;
+        }
+
+        // Helper Functions
+        function renderTable(data, columns, className = '') {
+            if (!data || data.length === 0) return '<p class="text-gray-500">No data available</p>';
+            
+            let html = `<div class="overflow-x-auto"><table class="min-w-full bg-white border border-gray-200 rounded-lg ${className}">`;
+            html += '<thead class="bg-gray-50"><tr>';
+            columns.forEach(col => html += `<th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">${col}</th>`);
+            html += '</tr></thead><tbody class="divide-y divide-gray-200">';
+            
+            data.forEach((row, index) => {
+                html += `<tr class="${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'} hover:bg-gray-100">`;
+                columns.forEach(col => html += `<td class="px-4 py-2 text-sm text-gray-900">${row[col] ?? ''}</td>`);
+                html += '</tr>';
+            });
+            html += '</tbody></table></div>';
+            return html;
+        }
+
+        function renderConfusionMatrix(matrix) {
+            if (!matrix) return '<p class="text-gray-500">No confusion matrix available</p>';
+            
+            let labels = Object.keys(matrix);
+            let html = '<div class="overflow-x-auto"><table class="min-w-full bg-white border border-gray-200 rounded-lg">';
+            html += '<thead class="bg-gray-50"><tr><th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Actual\\Predicted</th>';
+            labels.forEach(l => html += `<th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase">Pred: ${l}</th>`);
+            html += '</tr></thead><tbody class="divide-y divide-gray-200">';
+            
+            labels.forEach((actual, index) => {
+                html += `<tr class="${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}">`;
+                html += `<th class="px-4 py-2 text-center font-medium text-gray-900 bg-gray-50">Actual: ${actual}</th>`;
+                labels.forEach(pred => {
+                    const value = matrix[actual][pred] ?? 0;
+                    const bgColor = value > 0 ? (actual === pred ? 'bg-green-100' : 'bg-red-100') : '';
+                    html += `<td class="px-4 py-2 text-center ${bgColor}">${value}</td>`;
+                });
+                html += '</tr>';
+            });
+            html += '</tbody></table></div>';
+            return html;
+        }
+
+        function renderBarChart(ctx, labels, data, label, color = '#3b82f6') {
+            return new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: label,
+                        data: data,
+                        backgroundColor: color,
+                        borderColor: color,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderEntropyTable(entropyData) {
+            if (!entropyData) return '<p class="text-gray-500">No entropy data available</p>';
+            
+            let html = '<div class="overflow-x-auto"><table class="entropy-table min-w-full bg-white border border-gray-200 rounded-lg">';
+            html += '<thead class="bg-gray-50"><tr>';
+            html += '<th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Attribute</th>';
+            html += '<th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Entropy</th>';
+            html += '<th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Information Gain</th>';
+            html += '</tr></thead><tbody class="divide-y divide-gray-200">';
+            
+            Object.keys(entropyData).forEach((attr, index) => {
+                const data = entropyData[attr];
+                html += `<tr class="${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'} hover:bg-gray-100">`;
+                html += `<td class="px-4 py-2 text-sm font-medium text-gray-900">${attr}</td>`;
+                html += `<td class="px-4 py-2 text-sm text-gray-900">${data.entropy ? data.entropy.toFixed(4) : 'N/A'}</td>`;
+                html += `<td class="px-4 py-2 text-sm text-gray-900">${data.gain ? data.gain.toFixed(4) : 'N/A'}</td>`;
+                html += '</tr>';
+            });
+            html += '</tbody></table></div>';
+            return html;
+        }
+
+        function renderTreeStructure(treeData) {
+            if (!treeData) return '<p class="text-gray-500">No tree structure available</p>';
+            
+            function renderNode(node, level = 0) {
+                const indent = '  '.repeat(level);
+                const isLeaf = !node.children || node.children.length === 0;
+                const nodeClass = isLeaf ? 'tree-leaf' : 'tree-node';
+                
+                let html = `<div class="${nodeClass}" style="margin-left: ${level * 20}px;">`;
+                if (isLeaf) {
+                    html += `<i class="fas fa-leaf text-green-600 mr-2"></i><strong>Prediction:</strong> ${node.prediction || node.value}`;
+                } else {
+                    html += `<i class="fas fa-code-branch text-blue-600 mr-2"></i><strong>${node.attribute}</strong>`;
+                    if (node.value) html += ` = ${node.value}`;
+                }
+                html += '</div>';
+                
+                if (node.children) {
+                    node.children.forEach(child => {
+                        html += renderNode(child, level + 1);
+                    });
+                }
+                return html;
+            }
+            
+            return `<div class="tree-visualization bg-gray-50 p-4 rounded-lg border">${renderNode(treeData)}</div>`;
+        }
+
+        function renderRules(rules) {
+            if (!rules || rules.length === 0) return '<p class="text-gray-500">No rules available</p>';
+            
+            let html = '<div class="space-y-3">';
+            rules.forEach((rule, index) => {
+                html += `<div class="rule-box">`;
+                html += `<div class="flex items-center mb-2">`;
+                html += `<span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm font-medium mr-2">Rule ${index + 1}</span>`;
+                html += `<span class="text-sm text-gray-600">Confidence: ${rule.confidence ? (rule.confidence * 100).toFixed(1) + '%' : 'N/A'}</span>`;
+                html += `</div>`;
+                html += `<div class="text-sm"><strong>IF</strong> ${rule.conditions.join(' <strong>AND</strong> ')} <strong>THEN</strong> ${rule.prediction}</div>`;
+                html += `</div>`;
+            });
+            html += '</div>';
+            return html;
+        }        // Step rendering functions
+        function renderStep1(simulationSteps) {
+            const step1 = simulationSteps.find(step => step.step === 1);
+            if (!step1) return;
+            
+            const step1Data = step1.data;
+            
+            // Parameters
+            let paramsHtml = '<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">';
+            paramsHtml += `<div class="bg-blue-50 p-4 rounded-lg"><div class="text-sm text-gray-600">Training Split</div><div class="text-xl font-bold text-blue-600">${step1Data.train_split}%</div></div>`;
+            paramsHtml += `<div class="bg-green-50 p-4 rounded-lg"><div class="text-sm text-gray-600">Test Split</div><div class="text-xl font-bold text-green-600">${step1Data.test_split}%</div></div>`;
+            paramsHtml += `<div class="bg-purple-50 p-4 rounded-lg"><div class="text-sm text-gray-600">Total Records</div><div class="text-xl font-bold text-purple-600">${step1Data.total_records}</div></div>`;
+            paramsHtml += '</div>';
+            
+            document.getElementById('input-params').innerHTML = paramsHtml;
+            
+            // Dataset preview
+            let datasetHtml = '<h3 class="text-lg font-semibold mb-3">Dataset Preview</h3>';
+            datasetHtml += renderTable(step1Data.dataset_preview, step1Data.columns);
+            
+            datasetHtml += '<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">';
+            datasetHtml += '<div><h4 class="text-md font-semibold mb-2">Training Data</h4>';
+            datasetHtml += renderTable(step1Data.train_data, step1Data.columns);
+            datasetHtml += '</div>';
+            datasetHtml += '<div><h4 class="text-md font-semibold mb-2">Test Data</h4>';
+            datasetHtml += renderTable(step1Data.test_data, step1Data.columns);
+            datasetHtml += '</div></div>';
+            
+            document.getElementById('dataset-preview').innerHTML = datasetHtml;
+        }        function renderStep2(simulationSteps) {
+            const step2 = simulationSteps.find(step => step.step === 2);
+            if (!step2) return;
+            
+            const step2Data = step2.data;
+            let html = '';
+            
+            step2Data.iterations.forEach((iteration, index) => {
+                html += `<div class="border border-gray-200 rounded-lg mb-6">`;
+                html += `<div class="bg-gray-50 px-4 py-3 border-b border-gray-200">`;
+                html += `<h3 class="text-lg font-semibold text-gray-800">Iteration ${index + 1}</h3>`;
+                html += `</div>`;
+                html += `<div class="p-4">`;
+                
+                // Tree structure
+                if (iteration.tree_structure) {
+                    html += `<div class="mb-6">`;
+                    html += `<h4 class="text-md font-semibold mb-3">Decision Tree Structure</h4>`;
+                    html += renderTreeStructure(iteration.tree_structure);
+                    html += `</div>`;
+                }
+                
+                // Extracted rules
+                if (iteration.rules) {
+                    html += `<div class="mb-6">`;
+                    html += `<h4 class="text-md font-semibold mb-3">Extracted Rules</h4>`;
+                    html += renderRules(iteration.rules);
+                    html += `</div>`;
+                }
+                
+                // Tree metrics
+                if (iteration.tree_metrics) {
+                    html += `<div class="mb-6">`;
+                    html += `<h4 class="text-md font-semibold mb-3">Tree Metrics</h4>`;
+                    html += `<div class="grid grid-cols-3 gap-4">`;
+                    html += `<div class="bg-blue-50 p-3 rounded text-center">`;
+                    html += `<div class="text-sm text-gray-600">Nodes</div>`;
+                    html += `<div class="text-lg font-bold text-blue-600">${iteration.tree_metrics.nodes || 'N/A'}</div>`;
+                    html += `</div>`;
+                    html += `<div class="bg-green-50 p-3 rounded text-center">`;
+                    html += `<div class="text-sm text-gray-600">Leaves</div>`;
+                    html += `<div class="text-lg font-bold text-green-600">${iteration.tree_metrics.leaves || 'N/A'}</div>`;
+                    html += `</div>`;
+                    html += `<div class="bg-purple-50 p-3 rounded text-center">`;
+                    html += `<div class="text-sm text-gray-600">Depth</div>`;
+                    html += `<div class="text-lg font-bold text-purple-600">${iteration.tree_metrics.depth || 'N/A'}</div>`;
+                    html += `</div>`;
+                    html += `</div>`;
+                    html += `</div>`;
+                }
+                
+                html += `</div></div>`;
+            });
+            
+            document.getElementById('training-iterations').innerHTML = html;
+        }        function renderStep3(simulationSteps) {
+            const step3 = simulationSteps.find(step => step.step === 3);
+            const step1 = simulationSteps.find(step => step.step === 1);
+            if (!step3 || !step1) return;
+            
+            const step3Data = step3.data;
+            const step1Data = step1.data;
+            
+            // Test data preview
+            let testHtml = '<h3 class="text-lg font-semibold mb-3">Test Data Preview</h3>';
+            testHtml += renderTable(step3Data.test_data_preview, step1Data.columns);
+            document.getElementById('test-preview').innerHTML = testHtml;
+            
+            // Test results
+            let resultsHtml = '<h3 class="text-lg font-semibold mb-3">Prediction Results</h3>';
+            resultsHtml += renderTable(step3Data.predictions, ['actual', 'predicted', 'correct']);
+            document.getElementById('test-results').innerHTML = resultsHtml;
+        }        function renderStep4(simulationSteps) {
+            const step4 = simulationSteps.find(step => step.step === 4);
+            if (!step4) return;
+            
+            const step4Data = step4.data;
+            let html = '';
+            
+            if (step4Data.matching_examples && step4Data.matching_examples.length > 0) {
+                step4Data.matching_examples.forEach((example, index) => {
+                    html += `<div class="border border-gray-200 rounded-lg mb-4">`;
+                    html += `<div class="bg-gray-50 px-4 py-3 border-b border-gray-200">`;
+                    html += `<h4 class="font-semibold">Test Case ${example.test_case_index}</h4>`;
+                    html += `</div>`;
+                    html += `<div class="p-4">`;
+                    html += `<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">`;
+                    html += `<div><strong>Actual:</strong> ${example.actual}</div>`;
+                    html += `<div><strong>Predicted:</strong> ${example.predicted}</div>`;
+                    html += `</div>`;
+                    
+                    if (example.matching_process && example.matching_process.matched_rule) {
+                        html += `<div class="mb-3"><strong>Matched Rule:</strong></div>`;
+                        html += `<div class="bg-yellow-50 p-3 rounded border-l-4 border-yellow-400">`;
+                        const rule = example.matching_process.matched_rule;
+                        if (rule.conditions && rule.prediction) {
+                            html += `<div class="text-sm"><strong>IF</strong> ${rule.conditions.join(' <strong>AND</strong> ')} <strong>THEN</strong> ${rule.prediction}</div>`;
+                        }
+                        html += `<div class="text-xs text-gray-600 mt-2">Confidence: ${rule.confidence ? (rule.confidence * 100).toFixed(1) + '%' : 'N/A'}</div>`;
+                        html += `</div>`;
+                    }
+                    
+                    html += `</div></div>`;
+                });
+            } else {
+                html = '<p class="text-gray-500">No rule matching examples available</p>';
+            }
+            
+            document.getElementById('rule-matching').innerHTML = html;
+        }        function renderStep5(simulationSteps) {
+            const step5 = simulationSteps.find(step => step.step === 5);
+            if (!step5) return;
+            
+            const step5Data = step5.data;
+            
+            let html = '<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">';
+            html += `<div class="bg-blue-50 p-6 rounded-lg text-center">`;
+            html += `<div class="text-3xl font-bold text-blue-600 mb-2">${(step5Data.accuracy).toFixed(2)}%</div>`;
+            html += `<div class="text-sm text-gray-600">Model Accuracy</div>`;
+            html += `</div>`;
+            html += `<div class="bg-green-50 p-6 rounded-lg text-center">`;
+            html += `<div class="text-3xl font-bold text-green-600 mb-2">${step5Data.correct_predictions}</div>`;
+            html += `<div class="text-sm text-gray-600">Correct Predictions</div>`;
+            html += `</div>`;
+            html += `<div class="bg-purple-50 p-6 rounded-lg text-center">`;
+            html += `<div class="text-3xl font-bold text-purple-600 mb-2">${step5Data.total_tests}</div>`;
+            html += `<div class="text-sm text-gray-600">Total Predictions</div>`;
+            html += `</div>`;
+            html += '</div>';
+            
+            // Confusion Matrix
+            if (step5Data.confusion_matrix) {
+                html += '<div class="mb-6">';
+                html += '<h3 class="text-lg font-semibold mb-3">Confusion Matrix</h3>';
+                html += renderConfusionMatrix(step5Data.confusion_matrix);
+                html += '</div>';
+            }
+            
+            // Model Summary
+            if (step5Data.model_summary) {
+                html += '<div class="mb-6">';
+                html += '<h3 class="text-lg font-semibold mb-3">Model Summary</h3>';
+                html += '<div class="bg-gray-50 p-4 rounded-lg">';
+                html += `<div class="grid grid-cols-1 md:grid-cols-2 gap-4">`;
+                html += `<div><strong>Algorithm:</strong> ${step5Data.model_summary.type || 'C5.0'}</div>`;
+                html += `<div><strong>Trees:</strong> ${step5Data.model_summary.trees || 1}</div>`;
+                html += `<div><strong>Rules:</strong> ${step5Data.model_summary.rules || 'N/A'}</div>`;
+                html += `<div><strong>Max Depth:</strong> ${step5Data.model_summary.max_depth || 'N/A'}</div>`;
+                html += `</div>`;
+                html += '</div>';
+                html += '</div>';
+            }
+            
+            document.getElementById('simulation-result').innerHTML = html;
+        }
+
+        // Step navigation
+        function showStep(stepNumber) {
+            // Hide all steps
+            document.querySelectorAll('.step-content').forEach(step => {
+                step.classList.add('hidden');
+            });
+            
+            // Show selected step
+            document.getElementById(`step${stepNumber}`).classList.remove('hidden');
+            
+            // Update step buttons
+            document.querySelectorAll('.simulation-step').forEach(btn => {
+                btn.classList.remove('bg-blue-600', 'text-white');
+                btn.classList.add('bg-gray-200', 'text-gray-700');
+            });
+            document.querySelector(`[data-step="${stepNumber}"]`).classList.remove('bg-gray-200', 'text-gray-700');
+            document.querySelector(`[data-step="${stepNumber}"]`).classList.add('bg-blue-600', 'text-white');
+            
+            currentStep = stepNumber;
+        }        // Main simulation function
+        async function runSimulation() {
+            try {
+                document.getElementById('runSimulation').disabled = true;
+                document.getElementById('runSimulation').innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Running...';
+                
+                const simulationParams = {
+                    input_type: 'dataset',
+                    train_test_ratio: currentTrainTestRatio,
+                    max_depth: 3,
+                    min_samples_split: 2,
+                    boosting: false,
+                    boosting_rounds: 5
+                };
+                
+                const response = await fetch('/api/simulation_run', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(simulationParams)
+                });
+                
+                if (!response.ok) throw new Error('Simulation failed');
+                  const result = await response.json();
+                simulationData = result;
+                
+                // Check if response has simulation_steps
+                if (result.simulation_steps) {
+                    // Render all steps
+                    renderStep1(result.simulation_steps);
+                    renderStep2(result.simulation_steps);
+                    renderStep3(result.simulation_steps);
+                    renderStep4(result.simulation_steps);
+                    renderStep5(result.simulation_steps);
+                } else {
+                    throw new Error('Invalid response format: missing simulation_steps');
+                }
+                
+                // Enable step navigation buttons
+                document.querySelectorAll('.simulation-step').forEach(btn => {
+                    btn.disabled = false;
+                    btn.style.opacity = '1';
+                });
+                
+                alert('Simulation completed successfully!');
+                
+            } catch (error) {
+                console.error('Simulation error:', error);
+                alert('Simulation failed: ' + error.message);
+            } finally {
+                document.getElementById('runSimulation').disabled = false;
+                document.getElementById('runSimulation').innerHTML = '<i class="fas fa-play mr-2"></i>Run Simulation';
+            }
+        }
+
+        function resetSimulation() {
+            simulationData = null;
+            currentStep = 1;
+            
+            // Clear all content
+            ['input-params', 'dataset-preview', 'training-iterations', 'test-preview', 'test-results', 'rule-matching', 'simulation-result'].forEach(id => {
+                document.getElementById(id).innerHTML = '';
+            });
+            
+            // Reset navigation
+            showStep(1);
+            
+            // Disable step navigation buttons except first one
+            document.querySelectorAll('.simulation-step').forEach((btn, index) => {
+                if (index > 0) {
+                    btn.disabled = true;
+                    btn.style.opacity = '0.5';
+                } else {
+                    btn.disabled = false;
+                    btn.style.opacity = '1';
+                }
+            });
+        }        // Input mode switching functions
+        function switchInputMode() {
+            const datasetMode = document.querySelector('input[name="inputMode"][value="dataset"]').checked;
+            const datasetSection = document.getElementById('dataset-section');
+            const manualSection = document.getElementById('manual-input-section');
+            const initialDataDisplay = document.getElementById('initial-data-display');
+            
+            if (datasetMode) {
+                datasetSection.classList.remove('hidden');
+                manualSection.classList.add('hidden');
+                initialDataDisplay.classList.remove('hidden');
+            } else {
+                datasetSection.classList.add('hidden');
+                manualSection.classList.remove('hidden');
+                initialDataDisplay.classList.add('hidden');
+            }
+        }
+
+        // Dataset selection handling
+        function handleDatasetSelection() {
+            const select = document.getElementById('datasetSelect');
+            const uploadSection = document.getElementById('upload-section');
+            const info = document.getElementById('dataset-info');
+            
+            if (select.value === 'custom') {
+                uploadSection.classList.remove('hidden');
+                info.textContent = 'Upload your own CSV file with patient data';
+            } else {
+                uploadSection.classList.add('hidden');
+                info.textContent = '300 patients with heart disease data';
+            }
+        }
+
+        // Manual input processing
+        async function processManualInput() {
+            try {
+                // Collect form data
+                const manualData = {
+                    nama: document.getElementById('manual-nama').value,
+                    usia: parseInt(document.getElementById('manual-usia').value),
+                    jenis_kelamin: document.getElementById('manual-jenis-kelamin').value,
+                    sistolik: parseInt(document.getElementById('manual-sistolik').value),
+                    diastolik: parseInt(document.getElementById('manual-diastolik').value),
+                    kolesterol: parseInt(document.getElementById('manual-kolesterol').value),
+                    gula_darah: parseInt(document.getElementById('manual-gula-darah').value),
+                    nyeri_dada: document.getElementById('manual-nyeri-dada').value,
+                    sesak_napas: document.getElementById('manual-sesak-napas').value,
+                    kelelahan: document.getElementById('manual-kelelahan').value,
+                    denyut_jantung: parseInt(document.getElementById('manual-denyut-jantung').value)
+                };
+
+                // Validate required fields
+                const requiredFields = ['nama', 'usia', 'jenis_kelamin', 'sistolik', 'diastolik', 
+                                      'kolesterol', 'gula_darah', 'nyeri_dada', 'sesak_napas', 
+                                      'kelelahan', 'denyut_jantung'];
+                
+                for (const field of requiredFields) {
+                    if (!manualData[field] && manualData[field] !== 0) {
+                        alert(`Please fill in the ${field.replace('_', ' ')} field`);
+                        return;
+                    }
+                }
+
+                // Show processing state
+                const processBtn = document.getElementById('processManualInput');
+                processBtn.disabled = true;
+                processBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
+
+                // Send to backend
+                const response = await fetch('/api/manual_diagnosis', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(manualData)
+                });
+
+                if (!response.ok) throw new Error('Manual diagnosis failed');
+
+                const result = await response.json();
+                
+                // Display results
+                displayManualResults(result);
+
+            } catch (error) {
+                console.error('Manual input error:', error);
+                alert('Manual diagnosis failed: ' + error.message);
+            } finally {
+                const processBtn = document.getElementById('processManualInput');
+                processBtn.disabled = false;
+                processBtn.innerHTML = '<i class="fas fa-stethoscope mr-2"></i>Diagnose with Rules';
+            }
+        }
+
+        // Display manual input results
+        function displayManualResults(result) {
+            // Create or update results section
+            let resultsSection = document.getElementById('manual-results-section');
+            if (!resultsSection) {
+                resultsSection = document.createElement('div');
+                resultsSection.id = 'manual-results-section';
+                resultsSection.className = 'mt-6 bg-blue-50 p-4 rounded-lg';
+                document.getElementById('manual-input-section').appendChild(resultsSection);
+            }
+
+            resultsSection.innerHTML = `
+                <h3 class="text-lg font-semibold mb-3 text-blue-800">
+                    <i class="fas fa-clipboard-check mr-2"></i>Diagnosis Results
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-white p-4 rounded border">
+                        <h4 class="font-medium text-gray-800 mb-2">Patient Information</h4>
+                        <div class="text-sm space-y-1">
+                            <div><span class="font-medium">Name:</span> ${result.patient_data.nama}</div>
+                            <div><span class="font-medium">Age:</span> ${result.patient_data.usia} years</div>
+                            <div><span class="font-medium">Gender:</span> ${result.patient_data.jenis_kelamin}</div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-4 rounded border">
+                        <h4 class="font-medium text-gray-800 mb-2">Diagnosis</h4>
+                        <div class="text-lg font-bold ${result.prediction === 'Ya' ? 'text-red-600' : 'text-green-600'}">
+                            ${result.prediction === 'Ya' ? 'Heart Disease Detected' : 'No Heart Disease'}
+                        </div>
+                        <div class="text-sm text-gray-600 mt-1">
+                            Confidence: ${(result.confidence * 100).toFixed(1)}%
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 bg-white p-4 rounded border">
+                    <h4 class="font-medium text-gray-800 mb-2">Applied Rules</h4>
+                    <div class="space-y-2">
+                        ${result.applied_rules.map(rule => `
+                            <div class="rule-box text-sm">
+                                <strong>Rule:</strong> ${rule.rule}<br>
+                                <strong>Match:</strong> ${rule.match ? 'Yes' : 'No'}<br>
+                                <strong>Prediction:</strong> ${rule.prediction}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Clear manual input form
+        function clearManualInput() {
+            const fields = ['manual-nama', 'manual-usia', 'manual-jenis-kelamin', 'manual-sistolik', 
+                          'manual-diastolik', 'manual-kolesterol', 'manual-gula-darah', 'manual-nyeri-dada',
+                          'manual-sesak-napas', 'manual-kelelahan', 'manual-denyut-jantung'];
+            
+            fields.forEach(id => {
+                const element = document.getElementById(id);
+                if (element.type === 'select-one') {
+                    element.selectedIndex = 0;
+                } else {
+                    element.value = '';
+                }
+            });
+
+            // Remove results section if exists
+            const resultsSection = document.getElementById('manual-results-section');
+            if (resultsSection) {
+                resultsSection.remove();
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load initial dataset
+            loadInitialData();
+            
+            // Setup train/test slider
+            const slider = document.getElementById('train-test-slider');
+            slider.addEventListener('input', (e) => {
+                currentTrainTestRatio = parseFloat(e.target.value);
+                updateSplitDisplay();
+            });
+            
+            // Toggle sidebar
+            document.getElementById('toggleSidebar').addEventListener('click', () => {
+                document.querySelector('.sidebar').classList.toggle('collapsed');
+            });
+            
+            // Step navigation
+            document.querySelectorAll('.simulation-step').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const step = parseInt(btn.dataset.step);
+                    if (!btn.disabled) {
+                        showStep(step);
+                    }
+                });
+            });
+            
+            // Simulation controls
+            document.getElementById('runSimulation').addEventListener('click', runSimulation);
+            document.getElementById('resetSimulation').addEventListener('click', resetSimulation);
+            
+            // Input mode handling
+            document.querySelectorAll('input[name="inputMode"]').forEach(radio => {
+                radio.addEventListener('change', switchInputMode);
+            });
+            
+            // Dataset selection handling
+            document.getElementById('datasetSelect').addEventListener('change', handleDatasetSelection);
+            
+            // Manual input controls
+            document.getElementById('processManualInput').addEventListener('click', processManualInput);
+            document.getElementById('clearManualInput').addEventListener('click', clearManualInput);
+            
+            // Initialize
+            resetSimulation();
+            switchInputMode(); // Set initial state
+        });</script>
+</body>
+</html>

@@ -1,5 +1,4 @@
 import pandas as pd
-import pandas as pd
 import numpy as np
 import math
 import traceback
@@ -24,12 +23,26 @@ extracted_rules = []
 df = pd.read_csv('data_latih_2.csv', sep=';')
 
 # Fix duplicated columns issue in data_latih_2.csv
-if len(df.columns) > 13 and 'Nama.1' in df.columns:
+if len(df.columns) > 13:
     print("Fixing duplicated columns in dataset...")
-    original_columns = ['#', 'Nama', 'Usia', 'Jenis_Kelamin', 'Tekanan_Darah', 
-                        'Kolesterol', 'Gula_Darah', 'Nyeri_Dada', 'Sesak_Napas', 
-                        'Kelelahan', 'Denyut_Jantung', 'Penyakit_Jantung']
-    df = df[original_columns]
+    # Take only the first set of columns (before the duplicate)
+    expected_columns = ['#', 'Nama', 'Usia', 'Jenis_Kelamin', 'Sistolik', 'Diastolik', 'Tekanan_Darah', 
+                       'Kolesterol', 'Gula_Darah', 'Nyeri_Dada', 'Sesak_Napas', 'Kelelahan', 'Denyut_Jantung', 'Penyakit_Jantung']
+    # Find the actual columns - take the first occurrence of each
+    actual_columns = []
+    seen_names = set()
+    for col in df.columns:
+        base_name = col.split('.')[0]  # Remove .1, .2 etc suffixes
+        if base_name not in seen_names:
+            actual_columns.append(col)
+            seen_names.add(base_name)
+            if len(actual_columns) >= 14:  # We expect 14 columns
+                break
+    
+    df = df[actual_columns[:14]]  # Take first 14 columns
+    # Rename columns to expected names
+    if len(actual_columns) >= 14:
+        df.columns = expected_columns
 
 # Handle specific issues in the data
 if '#' in df.columns:
@@ -39,9 +52,14 @@ if '#' in df.columns:
 if 'Jenis_Kelamin' in df.columns:
     df['Jenis_Kelamin'] = df['Jenis_Kelamin'].str.strip()
 
-# Split the blood pressure into systolic and diastolic
-df[['Sistolik', 'Diastolik']] = df['Tekanan_Darah'].str.split('/', expand=True).astype(int)
-df = df.drop('Tekanan_Darah', axis=1)
+# Handle Tekanan_Darah column - split into systolic and diastolic if it exists
+if 'Tekanan_Darah' in df.columns:
+    # Split the blood pressure into systolic and diastolic
+    df[['Sistolik', 'Diastolik']] = df['Tekanan_Darah'].str.split('/', expand=True).astype(int)
+    df = df.drop('Tekanan_Darah', axis=1)
+
+# Set target variable
+target = 'Penyakit_Jantung'
 
 # Encode categorical variables for the old model
 df_encoded = df.copy()
@@ -501,7 +519,7 @@ def predict_single_tree_with_depth(node, sample, depth=0):
         else:
             return predict_single_tree_with_depth(node.right, sample, depth + 1)
     elif node.threshold == 0.5:  # For binary features, typically encoded as 0 or 1
-        if sample[feature] <= 0.5:  # Treat as binary decision
+        if sample[feature] <= 0.5: # Treat as binary decision
             return predict_single_tree_with_depth(node.left, sample, depth + 1)
         else:
             return predict_single_tree_with_depth(node.right, sample, depth + 1)
@@ -617,9 +635,10 @@ def predict(sample, use_rules=True, use_boosting=False):
             elif conditions_met > max_conditions_met:
                 best_partial_match_rule = rule
                 max_conditions_met = conditions_met
+                max_confidence = confidence * match_ratio  # Adjust confidence for partial matches
             elif conditions_met == max_conditions_met and confidence > max_confidence:
                 best_partial_match_rule = rule
-                max_confidence = confidence
+                max_confidence = confidence * match_ratio  # Adjust confidence for partial matches
         
         # Return prediction based on the best matching rule
         if best_full_match_rule is not None:
@@ -684,6 +703,10 @@ def rules_visualization_page():
 @app.route('/results')
 def results_page():
     return render_template('result.html', page='results')
+
+@app.route('/simulation')
+def simulation_page():
+    return render_template('simulation.html', page='simulation')
 
 @app.route('/api/all_predictions')
 def get_all_predictions():
@@ -1085,7 +1108,6 @@ def get_rules():
         'prediction_counts': prediction_counts,
         'avg_conditions': avg_conditions
     }
-
     return jsonify({
         'data': paginated_rules,
         'total': total_rules,
@@ -1093,6 +1115,580 @@ def get_rules():
         'page': page,
         'per_page': per_page
     })
+
+@app.route('/api/simulation_data')
+def get_simulation_data():
+    """Get data for simulation steps"""
+    global df, target
+    try:
+        if df.empty:
+            return jsonify({'error': 'Dataset not loaded'}), 400
+            
+        # Get feature columns (exclude target and non-feature columns)
+        features = [col for col in df.columns if col not in [target, 'Nama', '#']]
+        
+        return jsonify({
+            'total_records': len(df),
+            'features': features,
+            'target': target,
+            'dataset_preview': df.head(10).to_dict('records'),
+            'columns': list(df.columns)
+        })
+    except Exception as e:
+        return jsonify({'error': f'Failed to load simulation data: {str(e)}'}), 500
+
+@app.route('/api/simulation_run', methods=['POST'])
+def run_simulation():
+    """Run complete C5.0 simulation with detailed steps"""
+    global df, train_data, test_data, tree, extracted_rules, boosted_trees, boosted_alphas, is_boosted, target, features
+    simulation_steps = []
+    try:
+        data = request.get_json() or {}
+        input_type = data.get('input_type', 'dataset')
+        train_test_ratio = float(data.get('train_test_ratio', 0.8))
+        max_depth = int(data.get('max_depth', 3))
+        min_samples_split = int(data.get('min_samples_split', 2))
+        boosting = data.get('boosting', False)
+        boosting_rounds = int(data.get('boosting_rounds', 5))
+        
+        # Step 1: Input Data, Split Data dan Input Parameter
+        if input_type == 'manual':
+            manual_data = data.get('manual_data', {})
+            simulation_steps.append({
+                'step': 1,
+                'title': 'Input Data Manual',
+                'data': {'type': 'manual', 'input_data': manual_data}
+            })
+        else:
+            if df.empty:
+                return jsonify({'error': 'Dataset tidak tersedia'}), 400
+            
+            # Split data with the provided ratio
+            if sk_train_test_split:
+                train_data, test_data = sk_train_test_split(
+                    df, 
+                    test_size=(1-train_test_ratio), 
+                    random_state=42, 
+                    stratify=df[target] if target in df.columns else None
+                )
+            else:
+                # Manual split if sklearn not available
+                shuffled_df = df.sample(frac=1, random_state=42).reset_index(drop=True)
+                split_index = int(len(shuffled_df) * train_test_ratio)
+                train_data = shuffled_df[:split_index]
+                test_data = shuffled_df[split_index:]
+            
+            # Get feature columns
+            feature_columns = [col for col in df.columns if col not in [target, 'Nama', '#']]
+            
+            simulation_steps.append({
+                'step': 1,
+                'title': 'Input Data dan Split Data',
+                'data': {
+                    'type': 'dataset',
+                    'total_records': len(df),
+                    'dataset_preview': df.head(10).to_dict('records'),
+                    'columns': list(df.columns),
+                    'train_data': train_data.head(10).to_dict('records'),
+                    'test_data': test_data.head(10).to_dict('records'),
+                    'train_records': len(train_data),
+                    'test_records': len(test_data),
+                    'train_split': round(train_test_ratio * 100),
+                    'test_split': round((1 - train_test_ratio) * 100),
+                    'train_ratio': train_test_ratio,
+                    'features': feature_columns,
+                    'target': target,
+                    'parameters': {
+                        'max_depth': max_depth,
+                        'min_samples_split': min_samples_split,
+                        'boosting': boosting,
+                        'boosting_rounds': boosting_rounds if boosting else 0
+                    },
+                    'train_distribution': train_data[target].value_counts().to_dict() if target in train_data.columns else {},
+                    'test_distribution': test_data[target].value_counts().to_dict() if target in test_data.columns else {}
+                }
+            })        # Step 2: Iterasi pelatihan model
+        # Define feature columns consistently - exclude target, 'Nama', and '#' columns
+        feature_columns = [col for col in train_data.columns if col not in [target, 'Nama', '#'] and not col.startswith('#')]
+        feature_types = {col: ('numerical' if pd.api.types.is_numeric_dtype(train_data[col]) else 'categorical') for col in feature_columns}
+        training_iterations = []
+        
+        if boosting:
+            is_boosted = True
+            
+            # Prepare data for C5.0 algorithm using consistent feature columns
+            X_train = train_data[feature_columns]
+            y_train = train_data[target]
+            
+            # Create C5Booster instance
+            booster = C5Booster(
+                max_depth=max_depth, 
+                min_samples_split=min_samples_split,
+                n_estimators=boosting_rounds
+            )
+            
+            # Fit the boosted model
+            booster.fit(X_train, y_train, feature_types=feature_types)
+            boosted_trees = booster.trees
+            boosted_alphas = booster.weights
+              # Create training iterations data for visualization
+            for round_num in range(len(boosted_trees)):
+                current_tree = boosted_trees[round_num]
+                alpha = boosted_alphas[round_num]
+                
+                tree_rules = extract_rules_from_c5_tree(current_tree, feature_names=feature_types)
+                tree_structure = tree_to_visualization_dict(current_tree)
+                
+                iteration_data = {
+                    'round': round_num + 1,
+                    'tree_structure': tree_structure,
+                    'rules': tree_rules,
+                    'alpha': alpha,
+                    'tree_metrics': {
+                        'nodes': count_tree_nodes(current_tree),
+                        'leaves': count_tree_leaves(current_tree),
+                        'depth': calculate_tree_depth(current_tree)
+                    }
+                }
+                training_iterations.append(iteration_data)
+            
+            tree = boosted_trees[0] if boosted_trees else None
+        else:
+            is_boosted = False
+            boosted_trees = []
+            boosted_alphas = []            # Prepare data for C5.0 algorithm using consistent feature columns
+            X_train = train_data[feature_columns]
+            y_train = train_data[target]
+            tree = build_c5_tree(X_train, y_train, feature_columns, feature_types, max_depth=max_depth, min_samples_split=min_samples_split)
+            tree_rules = extract_rules_from_c5_tree(tree, feature_names=feature_types)
+            tree_structure = tree_to_visualization_dict(tree)
+            training_iterations.append({
+                'round': 1,
+                'tree_structure': tree_structure,
+                'rules': tree_rules,
+                'tree_metrics': {
+                    'nodes': count_tree_nodes(tree),
+                    'leaves': count_tree_leaves(tree),
+                    'depth': calculate_tree_depth(tree)
+                }            })
+        if tree:
+            extracted_rules = extract_rules_from_c5_tree(tree, feature_names=feature_types)
+        simulation_steps.append({
+            'step': 2,
+            'title': 'Proses Pelatihan Model',
+            'data': {
+                'method': 'boosting' if boosting else 'single_tree',
+                'iterations': training_iterations,
+                'final_model': {
+                    'is_boosted': is_boosted,
+                    'num_trees': len(boosted_trees) if is_boosted else 1,
+                    'total_rules': len(extracted_rules)
+                }
+            }
+        })        # Step 3: Pengujian menggunakan data uji
+        test_results = []
+        if not test_data.empty:
+            for idx, row in test_data.iterrows():
+                if is_boosted and boosted_trees and boosted_alphas:
+                    weighted_votes = {}
+                    for b_tree, alpha in zip(boosted_trees, boosted_alphas):
+                        pred, confidence = predict_c5_instance(b_tree, row.to_dict())
+                        if pred:
+                            weighted_votes[pred] = weighted_votes.get(pred, 0) + alpha
+                    prediction = max(weighted_votes, key=weighted_votes.get) if weighted_votes else None
+                else:
+                    prediction, confidence = predict_c5_instance(tree, row.to_dict()) if tree else (None, 0)
+                test_results.append({
+                    'actual': row[target],
+                    'predicted': prediction,
+                    'correct': row[target] == prediction,
+                    'data': {k: v for k, v in row.to_dict().items() if k != target}
+                })
+        simulation_steps.append({
+            'step': 3,
+            'title': 'Pengujian dengan Data Uji',
+            'data': {
+                'test_size': len(test_data),
+                'test_data_preview': test_data.head(10).to_dict('records'),
+                'predictions': test_results
+            }
+        })
+        # Step 4: Proses pencocokan rules dengan data uji
+        rule_matching_examples = []
+        if extracted_rules and test_results:
+            for i, test_case in enumerate(test_results[:5]):
+                matching_process = analyze_rule_matching(test_case['data'], extracted_rules)
+                rule_matching_examples.append({
+                    'test_case_index': i + 1,
+                    'input_data': test_case['data'],
+                    'actual': test_case['actual'],
+                    'predicted': test_case['predicted'],
+                    'matching_process': matching_process
+                })
+        simulation_steps.append({
+            'step': 4,
+            'title': 'Proses Pencocokan Rules dengan Data Uji',
+            'data': {
+                'total_rules': len(extracted_rules),
+                'rules_summary': extracted_rules[:5],
+                'matching_examples': rule_matching_examples
+            }
+        })
+        # Step 5: Menampilkan hasil
+        if test_results:
+            correct_predictions = sum(1 for r in test_results if r['correct'])
+            accuracy = (correct_predictions / len(test_results)) * 100
+            confusion_matrix = {}
+            for result in test_results:
+                actual = result['actual']
+                predicted = result['predicted']
+                if actual not in confusion_matrix:
+                    confusion_matrix[actual] = {}
+                if predicted not in confusion_matrix[actual]:
+                    confusion_matrix[actual][predicted] = 0
+                confusion_matrix[actual][predicted] += 1
+        else:
+            accuracy = 0
+            confusion_matrix = {}
+            correct_predictions = 0
+        simulation_steps.append({
+            'step': 5,
+            'title': 'Hasil Simulasi',
+            'data': {
+                'accuracy': accuracy,
+                'total_tests': len(test_results),
+                'correct_predictions': correct_predictions,
+                'confusion_matrix': confusion_matrix,
+                'model_summary': {
+                    'type': 'Boosted C5.0' if is_boosted else 'Single C5.0 Tree',
+                    'trees': len(boosted_trees) if is_boosted else 1,
+                    'rules': len(extracted_rules),                    'max_depth': max_depth,
+                    'min_samples_split': min_samples_split
+                }
+            }
+        })
+        
+        return jsonify({'status': 'success', 'simulation_steps': simulation_steps})
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': f'Simulation failed: {str(e)}'}), 500
+
+
+@app.route('/api/manual_diagnosis', methods=['POST'])
+def manual_diagnosis():
+    """Process manual patient data input using rules only"""
+    global extracted_rules, tree, boosted_trees, boosted_alphas, is_boosted
+    
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'No data provided'}), 400
+        
+        # Validate required fields
+        required_fields = ['nama', 'usia', 'jenis_kelamin', 'sistolik', 'diastolik', 
+                          'kolesterol', 'gula_darah', 'nyeri_dada', 'sesak_napas', 
+                          'kelelahan', 'denyut_jantung']
+        
+        for field in required_fields:
+            if field not in data or data[field] is None or data[field] == '':
+                return jsonify({'error': f'Missing required field: {field}'}), 400
+        
+        # Format patient data to match expected column names
+        patient_data = {
+            'Nama': data['nama'],
+            'Usia': int(data['usia']),
+            'Jenis_Kelamin': data['jenis_kelamin'],
+            'Sistolik': int(data['sistolik']),
+            'Diastolik': int(data['diastolik']),
+            'Kolesterol': int(data['kolesterol']),
+            'Gula_Darah': int(data['gula_darah']),
+            'Nyeri_Dada': data['nyeri_dada'],
+            'Sesak_Napas': data['sesak_napas'],
+            'Kelelahan': data['kelelahan'],
+            'Denyut_Jantung': int(data['denyut_jantung'])
+        }
+        
+        # Calculate derived features if needed
+        if 'Tekanan_Darah' not in patient_data:
+            # Calculate blood pressure category based on systolic/diastolic
+            sistolik = patient_data['Sistolik']
+            diastolik = patient_data['Diastolik']
+            if sistolik >= 140 or diastolik >= 90:
+                patient_data['Tekanan_Darah'] = 'Tinggi'
+            elif sistolik >= 120 or diastolik >= 80:
+                patient_data['Tekanan_Darah'] = 'Normal Tinggi'
+            else:
+                patient_data['Tekanan_Darah'] = 'Normal'
+        
+        # Use rule-based prediction if rules are available
+        applied_rules = []
+        prediction = 'Tidak'  # Default to no heart disease
+        confidence = 0.5
+        
+        if extracted_rules:
+            # Apply rules to patient data
+            for rule in extracted_rules:
+                rule_match = True
+                rule_conditions = []
+                
+                # Parse rule conditions if it's in machine format
+                if 'machine_rule' in rule and 'conditions' in rule['machine_rule']:
+                    conditions = rule['machine_rule']['conditions']
+                    rule_prediction = rule['machine_rule']['prediction']
+                    
+                    for condition in conditions:
+                        if isinstance(condition, tuple) and len(condition) == 3:
+                            feature, operator, value = condition
+                            
+                            # Check if feature exists in patient data
+                            if feature in patient_data:
+                                patient_value = patient_data[feature]
+                                condition_met = False
+                                
+                                # Apply condition based on operator
+                                if operator == '<=':
+                                    condition_met = patient_value <= value
+                                elif operator == '>':
+                                    condition_met = patient_value > value
+                                elif operator == '==':
+                                    condition_met = patient_value == value
+                                elif operator == '!=':
+                                    condition_met = patient_value != value
+                                elif operator == '<':
+                                    condition_met = patient_value < value
+                                elif operator == '>=':
+                                    condition_met = patient_value >= value
+                                else:
+                                    condition_met = False
+                                
+                                if not condition_met:
+                                    rule_match = False
+                                    break
+                                    
+                                rule_conditions.append(f"{feature} {operator} {value}")
+                            else:
+                                rule_match = False
+                                break
+                    
+                    # If rule matches, use its prediction
+                    if rule_match:
+                        prediction = rule_prediction
+                        confidence = 0.8  # High confidence for rule-based prediction
+                        applied_rules.append({
+                            'rule': ' AND '.join(rule_conditions),
+                            'match': True,
+                            'prediction': rule_prediction
+                        })
+                        break  # Use first matching rule
+                    else:
+                        applied_rules.append({
+                            'rule': ' AND '.join(rule_conditions) if rule_conditions else 'Complex rule',
+                            'match': False,
+                            'prediction': rule_prediction
+                        })
+        
+        # If no rules available or no rule matched, try tree-based prediction
+        if not applied_rules or not any(rule['match'] for rule in applied_rules):
+            if tree:
+                try:
+                    # Use tree prediction as fallback
+                    pred_result = predict_c5_instance(tree, patient_data)
+                    if isinstance(pred_result, tuple):
+                        prediction, confidence = pred_result
+                    else:
+                        prediction = pred_result
+                        confidence = 0.6
+                    
+                    applied_rules.append({
+                        'rule': 'Tree-based prediction (fallback)',
+                        'match': True,
+                        'prediction': prediction
+                    })
+                except Exception as e:
+                    print(f"Tree prediction failed: {e}")
+                    # Use default prediction
+                    applied_rules.append({
+                        'rule': 'Default prediction (no rules/tree available)',
+                        'match': True,
+                        'prediction': prediction
+                    })
+        
+        # Return diagnosis results
+        return jsonify({
+            'status': 'success',
+            'patient_data': {
+                'nama': data['nama'],
+                'usia': data['usia'],
+                'jenis_kelamin': data['jenis_kelamin']
+            },
+            'prediction': prediction,
+            'confidence': confidence,
+            'applied_rules': applied_rules,
+            'diagnosis_method': 'rules_based'
+        })
+        
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': f'Manual diagnosis failed: {str(e)}'}), 500
+
+
+def tree_to_visualization_dict(node, node_id=0):
+    """Convert tree node to dictionary for visualization"""
+    if node is None:
+        return None
+    
+    if hasattr(node, 'prediction') and node.prediction is not None:
+        # Leaf node
+        return {
+            'id': node_id,
+            'type': 'leaf',
+            'prediction': node.prediction,
+            'confidence': getattr(node, 'confidence', 0.5)
+        }
+    else:
+        # Internal node
+        left_child = tree_to_visualization_dict(getattr(node, 'left', None), node_id * 2 + 1) if hasattr(node, 'left') else None
+        right_child = tree_to_visualization_dict(getattr(node, 'right', None), node_id * 2 + 2) if hasattr(node, 'right') else None
+        
+        return {
+            'id': node_id,
+            'type': 'internal',
+            'feature': getattr(node, 'feature', ''),
+            'threshold': getattr(node, 'threshold', None),
+            'condition': getattr(node, 'condition', ''),
+            'left': left_child,
+            'right': right_child
+        }
+
+def count_tree_nodes(node):
+    """Count total nodes in tree"""
+    if node is None:
+        return 0
+    
+    count = 1
+    if hasattr(node, 'left') and node.left:
+        count += count_tree_nodes(node.left)
+    if hasattr(node, 'right') and node.right:
+        count += count_tree_nodes(node.right)
+    
+    return count
+
+def count_tree_leaves(node):
+    """Count leaf nodes in tree"""
+    if node is None:
+        return 0
+    
+    if hasattr(node, 'prediction') and node.prediction is not None:
+        return 1
+    
+    count = 0
+    if hasattr(node, 'left') and node.left:
+        count += count_tree_leaves(node.left)
+    if hasattr(node, 'right') and node.right:
+        count += count_tree_leaves(node.right)
+    
+    return count
+
+def calculate_tree_depth(node):
+    """Calculate tree depth"""
+    if node is None:
+        return 0
+    
+    if hasattr(node, 'prediction') and node.prediction is not None:
+        return 1
+    
+    left_depth = calculate_tree_depth(getattr(node, 'left', None)) if hasattr(node, 'left') else 0
+    right_depth = calculate_tree_depth(getattr(node, 'right', None)) if hasattr(node, 'right') else 0
+    
+    return 1 + max(left_depth, right_depth)
+
+def analyze_rule_matching(test_data, rules):
+    """Analyze how rules match with test data"""
+    matching_process = []
+    
+    for i, rule in enumerate(rules):
+        if 'conditions' not in rule:
+            continue
+            
+        conditions = rule['conditions']
+        prediction = rule.get('prediction', 'Unknown')
+        confidence = rule.get('confidence', 0.0)
+        
+        conditions_met = 0
+        total_conditions = len(conditions)
+        condition_details = []
+        
+        for condition in conditions:
+            # Handle both tuple format (feature, operator, value) and string format
+            if isinstance(condition, tuple) and len(condition) >= 3:
+                feature = condition[0]
+                operator = condition[1]
+                value = condition[2]
+                condition_str = f"{feature} {operator} {value}"
+            elif isinstance(condition, str):
+                # Parse condition (format: "feature operator value")
+                parts = condition.split()
+                if len(parts) >= 3:
+                    feature = parts[0]
+                    operator = parts[1]
+                    value = ' '.join(parts[2:])
+                    condition_str = condition
+                else:
+                    continue
+            else:
+                continue
+                
+            # Check if condition is met
+            if feature in test_data:
+                test_value = test_data[feature]
+                condition_met = check_condition(test_value, operator, value)
+                if condition_met:
+                    conditions_met += 1
+                
+                condition_details.append({
+                    'condition': condition_str,
+                    'test_value': test_value,
+                    'met': condition_met
+                })
+            else:
+                condition_details.append({
+                    'condition': condition_str,
+                    'test_value': 'N/A',
+                    'met': False
+                })
+        
+        match_ratio = conditions_met / total_conditions if total_conditions > 0 else 0
+        
+        matching_process.append({
+            'rule_index': i + 1,
+            'prediction': prediction,
+            'confidence': confidence,
+            'conditions_met': conditions_met,
+            'total_conditions': total_conditions,
+            'match_ratio': match_ratio,
+            'condition_details': condition_details,
+            'fully_matched': conditions_met == total_conditions
+        })
+    
+    return matching_process
+
+def check_condition(test_value, operator, rule_value):
+    """Check if a condition is met"""
+    try:
+        if operator == '<=':
+            return float(test_value) <= float(rule_value)
+        elif operator == '>':
+            return float(test_value) > float(rule_value)
+        elif operator == '==' or operator == '=':
+            return str(test_value) == str(rule_value)
+        elif operator == '!=':
+            return str(test_value) != str(rule_value)
+        else:
+            return False
+    except (ValueError, TypeError):
+        return str(test_value) == str(rule_value)
 
 @app.route('/upload_training_data', methods=['POST'])
 def upload_training_data():
@@ -1346,10 +1942,10 @@ def train_model():
                  if node is None or node.value is not None: return 0
                  left_depth = calculate_tree_depth(node.left) if hasattr(node, 'left') else 0
                  right_depth = calculate_tree_depth(node.right) if hasattr(node, 'right') else 0
-                 return max(left_depth, right_depth) + 1
+                 return max(left_depth, right_depth) +  1
 
              def calculate_total_nodes(node):
-                 if node is None: return 0
+                 if node is None: return  0
                  left_nodes = calculate_total_nodes(node.left) if hasattr(node, 'left') else 0
                  right_nodes = calculate_total_nodes(node.right) if hasattr(node, 'right') else 0
                  return 1 + left_nodes + right_nodes
